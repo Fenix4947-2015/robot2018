@@ -13,19 +13,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem {
 
-	private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(RobotMap.leftMotor1Address); // encoder
-	private WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(RobotMap.leftMotor2Address);
+	private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(RobotMap.Left_Motor1_Address); // encoder
+	private WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(RobotMap.Left_Motor2_Address);
 	private SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(leftMotor1, leftMotor2);
 	
-	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.rightMotor1Address); // encoder
-	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.rightMotor2Address);
+	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.Right_Motor1_Address); // encoder
+	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.Right_Motor2_Address);
 	private SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(rightMotor1, rightMotor2);
 	
 	double targetPositionRotations;
 	
-	public Solenoid gearboxSpeedSolenoid = new Solenoid(RobotMap.gearboxSpeedSolenoidAddress);
+	public Solenoid gearboxSpeedSolenoid = new Solenoid(RobotMap.Gearbox_SpeedSolenoid_Address);
 
-	public AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroAddress);
+	public AnalogGyro gyro = new AnalogGyro(RobotMap.Analog_Gyro_Address);
 	private static final double kVoltsPerDegreePerSecond = 0.0128/2; // gyro sensitivity, estimated 2017, jp choiniere
 	
 	private DifferentialDrive robotDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);

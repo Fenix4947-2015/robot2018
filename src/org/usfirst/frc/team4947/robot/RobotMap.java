@@ -25,13 +25,13 @@ public class RobotMap {
 	// public static int rangefinderModule = 1;
 	
 	// Branchements du driveTrain
-	public static int leftMotor1Address =11;	
-	public static int leftMotor2Address =13;
+	public static final int Left_Motor1_Address =11;	
+	public static final int Left_Motor2_Address =13;
 	
-	public static int rightMotor1Address =17;
-	public static int rightMotor2Address =18;
+	public static final int Right_Motor1_Address =17;
+	public static final int Right_Motor2_Address =18;
 	
-	public static int gearboxSpeedSolenoidAddress = 7;
-	public static int AnalogGyroAddress = 0;
+	public static final int Gearbox_SpeedSolenoid_Address = 7;
+	public static final int Analog_Gyro_Address = 0;
 	
 }
