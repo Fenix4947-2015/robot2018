@@ -7,17 +7,18 @@
 
 package org.usfirst.frc.team4947.robot;
 
+import org.usfirst.frc.team4947.robot.commands.AutoDefault;
+import org.usfirst.frc.team4947.robot.commands.AutoRobotLeftSwitch;
+import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
+
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team4947.robot.commands.AutoDefault;
-import org.usfirst.frc.team4947.robot.commands.AutoRobotLeftSwitch;
-import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -89,9 +90,32 @@ public class Robot extends TimedRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) 
-		{
-			m_autonomousCommand.start();
+		if (m_autonomousCommand != null) {
+			String gameData = DriverStation.getInstance().getGameSpecificMessage();
+			if (gameData != null) {
+				planAutonomous(gameData);
+			}
+		}
+	}
+	
+	private void planAutonomous(String gameData) {
+		String commandName = m_autonomousCommand.getName();
+		switch (commandName) {
+			case "DriveAutoLine":
+				break;
+
+			case "TakeSwitch":
+				Side sideOfSwitch = Side.ofSwitch(gameData);
+				
+				// TODO: Plan autonomous commands based on side of switch (left, right).
+				//TakeSwitchCommand takeSwitchCommand = ((TakeSwitchCommand) m_autonomousCommand);
+				//takeSwitchCommand.setSide(sideOfSwitch);
+				//takeSwitchCommand.start();
+				break;
+
+			default:
+				System.out.format("Command not supported (command=%s).%n", commandName);
+				break;
 		}
 	}
 
