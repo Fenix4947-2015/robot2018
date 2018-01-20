@@ -10,6 +10,7 @@ package org.usfirst.frc.team4947.robot;
 import org.usfirst.frc.team4947.robot.commands.AutoDefault;
 import org.usfirst.frc.team4947.robot.commands.AutoRobotLeftSwitch;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4947.robot.subsystems.PlatformLeft;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -30,7 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
-
+	public static final PlatformLeft platformLeft = new PlatformLeft();	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
