@@ -34,4 +34,8 @@ public class RobotMap {
 	public static final int Gearbox_SpeedSolenoid_Address = 7;
 	public static final int Analog_Gyro_Address = 0;
 	
+	// Gripper subsystem.
+	public static final int GRIPPER_LEFT_MOTOR_DEVICE_NUMBER = -1;
+	public static final int GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER = -1;
+	public static final int GRIPPER_OPENER_SOLENOID_CHANNEL = -1;
 }
