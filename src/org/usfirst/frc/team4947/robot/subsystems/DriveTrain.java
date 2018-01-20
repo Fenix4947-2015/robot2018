@@ -1,43 +1,34 @@
 package org.usfirst.frc.team4947.robot.subsystems;
-
 import org.usfirst.frc.team4947.robot.Robot;
+import org.usfirst.frc.team4947.robot.RobotMap;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
-
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem {
 
-	private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(11); // encoder
-	private WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(13);
+	private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(RobotMap.leftMotor1Address); // encoder
+	private WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(RobotMap.leftMotor2Address);
 	private SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(leftMotor1, leftMotor2);
 	
-	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(12); // encoder
-	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(14);
+	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.rightMotor1Address); // encoder
+	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.rightMotor2Address);
 	private SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(rightMotor1, rightMotor2);
 	
 	double targetPositionRotations;
 	
-	public Solenoid gearboxSpeedSolenoid = new Solenoid(7);
+	public Solenoid gearboxSpeedSolenoid = new Solenoid(RobotMap.gearboxSpeedSolenoidAddress);
 
-	public AnalogGyro gyro = new AnalogGyro(0);
+	public AnalogGyro gyro = new AnalogGyro(RobotMap.AnalogGyroAddress);
 	private static final double kVoltsPerDegreePerSecond = 0.0128/2; // gyro sensitivity, estimated 2017, jp choiniere
-
 	
 	private DifferentialDrive robotDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
-	
-	public PowerDistributionPanel powerDistPanel = new PowerDistributionPanel(1);
 	
 	public DriveTrain()
 	{
