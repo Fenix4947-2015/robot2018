@@ -25,14 +25,14 @@ public class RobotMap {
 	// public static int rangefinderModule = 1;
 	
 	// Branchements du driveTrain
-	public static final int Left_Motor1_Address =11;	
-	public static final int Left_Motor2_Address =13;
+	public static final int LEFT_MOTOR1_ADDRESS =11;	
+	public static final int LEFT_MOTOR2_ADDRESS =13;
 	
-	public static final int Right_Motor1_Address =17;
-	public static final int Right_Motor2_Address =18;
+	public static final int RIGHT_MOTOR1_ADDRESS =17;
+	public static final int RIGHT_MOTOR2_ADDRESS =18;
 	
-	public static final int Gearbox_SpeedSolenoid_Address = 7;
-	public static final int Analog_Gyro_Address = 0;
+	public static final int GEARBOX_SPEEDSOLENOID_ADDRESS = 7;
+	public static final int ANALOG_GYRO_ADDRESS = 0;
 	
 	// Gripper subsystem.
 	public static final int GRIPPER_LEFT_MOTOR_DEVICE_NUMBER = -1;

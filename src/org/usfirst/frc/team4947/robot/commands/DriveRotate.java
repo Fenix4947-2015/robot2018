@@ -26,17 +26,17 @@ public class DriveRotate extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.gyro.reset();
+    	Robot.driveTrain.ResetGyroAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {  
-    	if (angle<Robot.driveTrain.gyro.getAngle())
+    	if (angle<Robot.driveTrain.GetGyroAngle())
     	{     		
     	//Robot.driveTrain.robotDrive.tankDrive(-speed*convertspd2degpsec, speed*convertspd2degpsec);
     		Robot.driveTrain.DriveArcadeMethod(0, speed*convertspd2degpsec);
     	}
-    	else if (Robot.driveTrain.gyro.getAngle()<angle)
+    	else if (Robot.driveTrain.GetGyroAngle()<angle)
     	{     		
         	//Robot.driveTrain.robotDrive.tankDrive(speed*convertspd2degpsec, -speed*convertspd2degpsec);
     		Robot.driveTrain.DriveArcadeMethod(0, -speed*convertspd2degpsec);
@@ -45,19 +45,17 @@ public class DriveRotate extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs((Robot.driveTrain.gyro.getAngle() - angle)) < Tolerance ;//<>
+        return Math.abs((Robot.driveTrain.GetGyroAngle() - angle)) < Tolerance ;//<>
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	// Stop the robot when interrupted
-    	//Robot.driveTrain.robotDrive.tankDrive(0, 0);
-    	Robot.driveTrain.DriveArcadeMethod(0, 0);
+    	Robot.driveTrain.DriveStop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+    	Robot.driveTrain.DriveStop();
     }
 }

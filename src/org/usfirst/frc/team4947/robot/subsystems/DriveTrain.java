@@ -13,22 +13,39 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem {
 
-	private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(RobotMap.Left_Motor1_Address); // encoder
-	private WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(RobotMap.Left_Motor2_Address);
+	private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(RobotMap.LEFT_MOTOR1_ADDRESS); // encoder
+	private WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(RobotMap.LEFT_MOTOR2_ADDRESS);
 	private SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(leftMotor1, leftMotor2);
 	
-	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.Right_Motor1_Address); // encoder
-	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.Right_Motor2_Address);
+	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR1_ADDRESS); // encoder
+	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR2_ADDRESS);
 	private SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(rightMotor1, rightMotor2);
 	
 	double targetPositionRotations;
 	
-	public Solenoid gearboxSpeedSolenoid = new Solenoid(RobotMap.Gearbox_SpeedSolenoid_Address);
+	private Solenoid gearboxSpeedSolenoid = new Solenoid(RobotMap.GEARBOX_SPEEDSOLENOID_ADDRESS);
 
-	public AnalogGyro gyro = new AnalogGyro(RobotMap.Analog_Gyro_Address);
+	private AnalogGyro gyro = new AnalogGyro(RobotMap.ANALOG_GYRO_ADDRESS);
 	private static final double kVoltsPerDegreePerSecond = 0.0128/2; // gyro sensitivity, estimated 2017, jp choiniere
 	
 	private DifferentialDrive robotDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
+	
+	// Define names for the shifter possibilities.
+	public enum ShifterSpeed
+	{
+		Fast(true),
+		Slow(false);
+		
+		private boolean value;
+		ShifterSpeed(boolean value){
+			this.value = value;
+		}
+		
+		public boolean getValue() {
+			return value;
+		}
+	}
+	
 	
 	public DriveTrain()
 	{
@@ -44,10 +61,21 @@ public class DriveTrain extends Subsystem {
 			
 	}
 	
-    public void initDefaultCommand() {
+    public void initDefaultCommand() 
+    {
         setDefaultCommand(new DriveArcade());
     }
     
+    public void DriveToDistance(double distance_meters)
+    {
+    	// todo : faire la boucle fermée
+    }
+    
+    public double GetEncoderDistanceError()
+    {
+    	// return error remaining on the closed loop, in meters. 
+    	return  0.1;
+    }
 
     public void DriveArcadeMethod(double Speed, double Rotation) {
     	//ptoSolenoid.set(true);
@@ -66,7 +94,28 @@ public class DriveTrain extends Subsystem {
     	
     }
     
-
+    public void DriveStop()
+    {
+    	robotDrive.arcadeDrive(0,0);
+    }
+    
+    
+    public void GearboxShift(ShifterSpeed speed)
+    {
+    	gearboxSpeedSolenoid.set(speed.getValue());  
+    	// Change the mapping in the ShifterSpeed enum, if required.
+    }
+    
+    public double GetGyroAngle()
+    {
+    	return gyro.getAngle();
+    }
+    
+    public void ResetGyroAngle()
+    {
+    	gyro.reset();
+    }
+    
     public void log()
     {
     	SmartDashboard.putNumber("GyroAngleAbsolute", gyro.getAngle());
