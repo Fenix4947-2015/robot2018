@@ -12,12 +12,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class PlatformLeft extends Subsystem {
-	private TalonSRX LiftMotor = new TalonSRX(RobotMap.Lift_Motor_Address);
-	private Solenoid UnlockerSolenoid = new Solenoid(RobotMap.Unlocker_Solenoid_Address);
+public class Platform extends Subsystem {
+	private TalonSRX LiftMotor;
+	private Solenoid UnlockerSolenoid;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+	public Platform(int talonDeviceNumber, int solenoidChannel) {
+		LiftMotor = new TalonSRX(talonDeviceNumber);
+		UnlockerSolenoid = new Solenoid(solenoidChannel);
+		
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

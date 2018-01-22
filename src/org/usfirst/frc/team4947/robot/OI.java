@@ -89,6 +89,8 @@ public class OI {
         JoystickButton helperLeftStick = new JoystickButton(joystickHelper, XBoxButton.LeftStick.getValue());
         JoystickButton helperRightStick = new JoystickButton(joystickHelper, XBoxButton.RightStick.getValue());
 
+        
+        
         // TODO Link button state to execute commands
         // example : driverA.whenPressed(new RobotPickGear());
         

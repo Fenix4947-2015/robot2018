@@ -34,8 +34,11 @@ public class RobotMap {
 	public static final int GEARBOX_SPEEDSOLENOID_ADDRESS = 7;
 	public static final int ANALOG_GYRO_ADDRESS = 0;
 	
-	public static final int Unlocker_Solenoid_Address = 1;
-	public static final int Lift_Motor_Address = 2;
+	public static final int UNLOCKER_SOLENOID_ADDRESS_LEFT = 1;
+	public static final int LIFT_MOTOR_ADDRESS_LEFT = 2;
+	
+	public static final int UNLOCKER_SOLENOID_ADDRESS_RIGHT = 3;
+	public static final int LIFT_MOTOR_ADDRESS_RIGHT = 4;
 	
 	
 	// Gripper subsystem.
