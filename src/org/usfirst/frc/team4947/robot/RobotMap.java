@@ -40,9 +40,9 @@ public class RobotMap {
 	public static final int UNLOCKER_SOLENOID_ADDRESS_RIGHT = 3;
 	public static final int LIFT_MOTOR_ADDRESS_RIGHT = 4;
 	
-	
 	// Gripper subsystem.
 	public static final int GRIPPER_LEFT_MOTOR_DEVICE_NUMBER = -1;
 	public static final int GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER = -1;
 	public static final int GRIPPER_OPENER_SOLENOID_CHANNEL = -1;
+	public static final int GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL = -1;
 }

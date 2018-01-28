@@ -1,51 +1,67 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 
-import org.usfirst.frc.team4947.robot.RobotMap;
+import static org.usfirst.frc.team4947.robot.RobotMap.GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL;
+import static org.usfirst.frc.team4947.robot.RobotMap.GRIPPER_LEFT_MOTOR_DEVICE_NUMBER;
+import static org.usfirst.frc.team4947.robot.RobotMap.GRIPPER_OPENER_SOLENOID_CHANNEL;
+import static org.usfirst.frc.team4947.robot.RobotMap.GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Gripper extends Subsystem {
 	
-	private final TalonSRX gripperLeftMotor;
-	private final TalonSRX gripperRightMotor;
+	// Members.
+	private final TalonSRX leftMotor;
+	private final TalonSRX rightMotor;
 	private final Solenoid openerSolenoid;
+	private final DigitalInput cubePresenceDigitalInput;
 
 	public Gripper() {
-		gripperLeftMotor = createGripperLeftMotor();
-		gripperRightMotor = createGripperRightMotor();
+		leftMotor = createLeftMotor();
+		rightMotor = createRightMotor();
 		openerSolenoid = createOpenerSolenoid();
+		cubePresenceDigitalInput = createCubePresenceDigitalInput();
 	}
 	
-	private static TalonSRX createGripperLeftMotor() {
-		TalonSRX motor = new TalonSRX(RobotMap.GRIPPER_LEFT_MOTOR_DEVICE_NUMBER);
+	private static TalonSRX createLeftMotor() {
+		TalonSRX motor = new TalonSRX(GRIPPER_LEFT_MOTOR_DEVICE_NUMBER);
 		return motor;
 	}
 	
-	private static TalonSRX createGripperRightMotor() {
-		TalonSRX motor = new TalonSRX(RobotMap.GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER);
+	private static TalonSRX createRightMotor() {
+		TalonSRX motor = new TalonSRX(GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER);
 		return motor;
 	}
 	
 	private static Solenoid createOpenerSolenoid() {
-		Solenoid solenoid = new Solenoid(RobotMap.GRIPPER_OPENER_SOLENOID_CHANNEL);
+		Solenoid solenoid = new Solenoid(GRIPPER_OPENER_SOLENOID_CHANNEL);
 		return solenoid;
+	}
+	
+	private static DigitalInput createCubePresenceDigitalInput() {
+		DigitalInput digitalInput = new DigitalInput(GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL);
+		return digitalInput;
 	}
 
 	public void initDefaultCommand() {
 	}
 
-	public TalonSRX getGripperLeftMotor() {
-		return gripperLeftMotor;
+	public TalonSRX getLeftMotor() {
+		return leftMotor;
 	}
 
-	public TalonSRX getGripperRightMotor() {
-		return gripperRightMotor;
+	public TalonSRX getRightMotor() {
+		return rightMotor;
 	}
 
 	public Solenoid getOpenerSolenoid() {
 		return openerSolenoid;
+	}
+
+	public DigitalInput getCubePresenceDigitalInput() {
+		return cubePresenceDigitalInput;
 	}
 }

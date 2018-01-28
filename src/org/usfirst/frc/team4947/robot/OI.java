@@ -7,12 +7,11 @@
 
 package org.usfirst.frc.team4947.robot;
 
-import org.usfirst.frc.team4947.robot.OI.XBoxAxis;
-import org.usfirst.frc.team4947.robot.OI.XBoxButton;
-import edu.wpi.first.wpilibj.Joystick;
+import org.usfirst.frc.team4947.robot.subsystems.Gripper;
+
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -65,7 +64,7 @@ public class OI {
     private Joystick joystickHelper = new Joystick(1);
 
     @SuppressWarnings("unused")
-	public OI() {
+	public OI(Gripper gripper) {
         // Create all required button in case we need them
         JoystickButton driverA = new JoystickButton(joystickDriver, XBoxButton.A.getValue());
         JoystickButton driverB = new JoystickButton(joystickDriver, XBoxButton.B.getValue());
