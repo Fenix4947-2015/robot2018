@@ -7,6 +7,12 @@
 
 package org.usfirst.frc.team4947.robot;
 
+import org.usfirst.frc.team4947.robot.commands.gripper.GripperPull;
+import org.usfirst.frc.team4947.robot.commands.gripper.GripperReject;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotToSwitchPosition;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 
@@ -15,129 +21,133 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
+ * This class is the glue that binds the controls on the physical operator interface to the commands and command groups 
+ * that allow control of the robot.
  */
 public class OI {
-	
-	public enum XBoxAxis{
-		LeftStickX(0),
-		LeftStickY(1),
-		LeftTrigger(2),
-		RightTrigger(3),
-		RightStickX(4),
-		RightStickY(5);		
 
-		private int value;
-		XBoxAxis(int value){
+	public static enum XBoxAxis {
+		LEFT_STICK_X(0), 
+		LEFT_STICK_Y(1), 
+		LEFT_TRIGGER(2), 
+		RIGHT_TRIGGER(3), 
+		RIGHT_STICK_X(4), 
+		RIGHT_STICK_Y(5);
+
+		private final int value;
+
+		private XBoxAxis(int value) {
 			this.value = value;
 		}
-		
+
 		public int getValue() {
 			return value;
 		}
 	}
-	
-	public enum XBoxButton{
-		A(1),
-		B(2),
-		X(3),
-		Y(4),
-		LB(5),
-		RB(6),
-		Back(7),
-		Start(8),
-		LeftStick(9),
-		RightStick(10);
 
-		private int value;
-		XBoxButton(int value){
+	public static enum XBoxButton {
+		A(1), 
+		B(2), 
+		X(3), 
+		Y(4), 
+		LB(5), 
+		RB(6), 
+		BACK(7), 
+		START(8),
+		LEFT_STICK(9), 
+		RIGHT_STICK(10);
+
+		private final int value;
+
+		private XBoxButton(int value) {
 			this.value = value;
 		}
-		
+
 		public int getValue() {
 			return value;
 		}
-	}	
-	
+	}
 
-    private Joystick joystickDriver = new Joystick(0);
-    private Joystick joystickHelper = new Joystick(1);
+	// Members.
+	private final Joystick joystickDriver;
+	private final Joystick joystickHelper;
 
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public OI(Gripper gripper, Pivot pivot) {
-        // Create all required button in case we need them
-        JoystickButton driverA = new JoystickButton(joystickDriver, XBoxButton.A.getValue());
-        JoystickButton driverB = new JoystickButton(joystickDriver, XBoxButton.B.getValue());
-        JoystickButton driverX = new JoystickButton(joystickDriver, XBoxButton.X.getValue());
-        JoystickButton driverY = new JoystickButton(joystickDriver, XBoxButton.Y.getValue());
-        JoystickButton driverLB = new JoystickButton(joystickDriver, XBoxButton.LB.getValue());
-        JoystickButton driverRB = new JoystickButton(joystickDriver, XBoxButton.RB.getValue());
-        JoystickButton driverBack = new JoystickButton(joystickDriver, XBoxButton.Back.getValue());
-        JoystickButton driverStart = new JoystickButton(joystickDriver, XBoxButton.Start.getValue());
-        JoystickButton driverLeftStick = new JoystickButton(joystickDriver, XBoxButton.LeftStick.getValue());
-        JoystickButton driverRightStick = new JoystickButton(joystickDriver, XBoxButton.RightStick.getValue());
-        
-        JoystickButton helperA = new JoystickButton(joystickHelper, XBoxButton.A.getValue());
-        JoystickButton helperB = new JoystickButton(joystickHelper, XBoxButton.B.getValue());
-        JoystickButton helperX = new JoystickButton(joystickHelper, XBoxButton.X.getValue());
-        JoystickButton helperY = new JoystickButton(joystickHelper, XBoxButton.Y.getValue());
-        JoystickButton helperLB = new JoystickButton(joystickHelper, XBoxButton.LB.getValue());
-        JoystickButton helperRB = new JoystickButton(joystickHelper, XBoxButton.RB.getValue());
-        JoystickButton helperBack = new JoystickButton(joystickHelper, XBoxButton.Back.getValue());
-        JoystickButton helperStart = new JoystickButton(joystickHelper, XBoxButton.Start.getValue());
-        JoystickButton helperLeftStick = new JoystickButton(joystickHelper, XBoxButton.LeftStick.getValue());
-        JoystickButton helperRightStick = new JoystickButton(joystickHelper, XBoxButton.RightStick.getValue());
+		joystickDriver = new Joystick(RobotMap.JOYSTICK_DRIVER_PORT);
+		joystickHelper = new Joystick(RobotMap.JOYSTICK_HELPER_PORT);
+		
+		// Create all required button in case we need them
+		JoystickButton driverA = new JoystickButton(joystickDriver, XBoxButton.A.getValue());
+		JoystickButton driverB = new JoystickButton(joystickDriver, XBoxButton.B.getValue());
+		JoystickButton driverX = new JoystickButton(joystickDriver, XBoxButton.X.getValue());
+		JoystickButton driverY = new JoystickButton(joystickDriver, XBoxButton.Y.getValue());
+		JoystickButton driverLB = new JoystickButton(joystickDriver, XBoxButton.LB.getValue());
+		JoystickButton driverRB = new JoystickButton(joystickDriver, XBoxButton.RB.getValue());
+		JoystickButton driverBack = new JoystickButton(joystickDriver, XBoxButton.BACK.getValue());
+		JoystickButton driverStart = new JoystickButton(joystickDriver, XBoxButton.START.getValue());
+		JoystickButton driverLeftStick = new JoystickButton(joystickDriver, XBoxButton.LEFT_STICK.getValue());
+		JoystickButton driverRightStick = new JoystickButton(joystickDriver, XBoxButton.RIGHT_STICK.getValue());
 
-        
-        
-        // TODO Link button state to execute commands
-        // example : driverA.whenPressed(new RobotPickGear());
-        
-        
-        // TODO Add buttons to smart dashboard 
-        // example :SmartDashboard.putData("RobotLift", new RobotLift());
-    }
-    
-    public double getJoystickDriverAxis(XBoxAxis axis) {
-        return joystickDriver.getRawAxis(axis.getValue());
-    }
+		JoystickButton helperA = new JoystickButton(joystickHelper, XBoxButton.A.getValue());
+		JoystickButton helperB = new JoystickButton(joystickHelper, XBoxButton.B.getValue());
+		JoystickButton helperX = new JoystickButton(joystickHelper, XBoxButton.X.getValue());
+		JoystickButton helperY = new JoystickButton(joystickHelper, XBoxButton.Y.getValue());
+		JoystickButton helperLB = new JoystickButton(joystickHelper, XBoxButton.LB.getValue());
+		JoystickButton helperRB = new JoystickButton(joystickHelper, XBoxButton.RB.getValue());
+		JoystickButton helperBack = new JoystickButton(joystickHelper, XBoxButton.BACK.getValue());
+		JoystickButton helperStart = new JoystickButton(joystickHelper, XBoxButton.START.getValue());
+		JoystickButton helperLeftStick = new JoystickButton(joystickHelper, XBoxButton.LEFT_STICK.getValue());
+		JoystickButton helperRightStick = new JoystickButton(joystickHelper, XBoxButton.RIGHT_STICK.getValue());
 
-    public double getJoystickDriverAxis(XBoxAxis axis, double deadBand) {
-    	double axisValue = joystickDriver.getRawAxis(axis.getValue());
-    	
-    	if(Math.abs(axisValue) <= deadBand){
-    		axisValue = 0;
-    	}
-    	
-    	return axisValue;
-    }
-    
-    public void setJoystickDriverRumble(RumbleType rumbleType, float value){
-    	joystickDriver.setRumble(rumbleType, value);
-    }
-    
-    public boolean getJoystickDriverButton(XBoxButton button) {
-        return joystickDriver.getRawButton(button.getValue());
-    }
-    
-    public double getJoystickHelperAxis(XBoxAxis axis) {
-        return joystickHelper.getRawAxis(axis.getValue());
-    }
+		// TODO Link button state to execute commands
+		// example : driverA.whenPressed(new RobotPickGear());
+		driverRB.whenPressed(new GripperPull(gripper));
+		driverLB.whenPressed(new GripperReject(gripper));
+		
+		driverA.whenPressed(new PivotToLowPosition(pivot));
+		driverB.whenPressed(new PivotToExchangePosition(pivot));
+		driverX.whenPressed(new PivotToSwitchPosition(pivot));
+		driverY.whenPressed(new PivotToHighPosition(pivot));
 
-    public double getJoystickHelperAxis(XBoxAxis axis, double deadBand) {
-    	double axisValue = joystickHelper.getRawAxis(axis.getValue());
-    	
-    	if(Math.abs(axisValue) <= deadBand){
-    		axisValue = 0;
-    	}
-    	
-    	return axisValue;
-    }
-    
-    public boolean getJoystickHelperButton(XBoxButton button) {
-        return joystickHelper.getRawButton(button.getValue());
-    }
-    
+		// TODO Add buttons to smart dashboard
+		// example :SmartDashboard.putData("RobotLift", new RobotLift());
+	}
+
+	public double getJoystickDriverAxis(XBoxAxis axis) {
+		return joystickDriver.getRawAxis(axis.getValue());
+	}
+
+	public double getJoystickDriverAxis(XBoxAxis axis, double deadBand) {
+		return getAxisWithDeadBand(joystickDriver, axis, deadBand);
+	}
+
+	public boolean getJoystickDriverButton(XBoxButton button) {
+		return joystickDriver.getRawButton(button.getValue());
+	}
+
+	public double getJoystickHelperAxis(XBoxAxis axis) {
+		return joystickHelper.getRawAxis(axis.getValue());
+	}
+
+	public double getJoystickHelperAxis(XBoxAxis axis, double deadBand) {
+		return getAxisWithDeadBand(joystickHelper, axis, deadBand);
+	}
+
+	public boolean getJoystickHelperButton(XBoxButton button) {
+		return joystickHelper.getRawButton(button.getValue());
+	}
+
+	public void setJoystickDriverRumble(RumbleType rumbleType, float value) {
+		joystickDriver.setRumble(rumbleType, value);
+	}
 	
+	private static double getAxisWithDeadBand(Joystick joystick, XBoxAxis axis, double deadBand) {
+		double axisValue = joystick.getRawAxis(axis.getValue());
+		if (Math.abs(axisValue) <= deadBand) {
+			axisValue = 0;
+		}
+
+		return axisValue;
+	}
 }
