@@ -8,6 +8,7 @@
 package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
+import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -64,7 +65,7 @@ public class OI {
     private Joystick joystickHelper = new Joystick(1);
 
     @SuppressWarnings("unused")
-	public OI(Gripper gripper) {
+	public OI(Gripper gripper, Pivot pivot) {
         // Create all required button in case we need them
         JoystickButton driverA = new JoystickButton(joystickDriver, XBoxButton.A.getValue());
         JoystickButton driverB = new JoystickButton(joystickDriver, XBoxButton.B.getValue());

@@ -11,6 +11,7 @@ import org.usfirst.frc.team4947.robot.commands.AutoDefault;
 import org.usfirst.frc.team4947.robot.commands.AutoRobotLeftSwitch;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
+import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 import org.usfirst.frc.team4947.robot.subsystems.Platform;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
 	private Gripper gripper;
+	private Pivot pivot;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -46,8 +48,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		gripper = new Gripper();
+		pivot = new Pivot();
 		
-		oi = new OI(gripper);
+		oi = new OI(gripper, pivot);
 		m_chooser.addDefault("Default Auto", new AutoDefault());
 		m_chooser.addObject("Robot a gauche - switch", new AutoRobotLeftSwitch());
 		// todo : ajouter les autres modes autonomes 

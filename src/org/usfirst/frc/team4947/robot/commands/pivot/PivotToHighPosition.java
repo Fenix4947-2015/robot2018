@@ -1,30 +1,31 @@
-package org.usfirst.frc.team4947.robot.commands.gripper;
+package org.usfirst.frc.team4947.robot.commands.pivot;
 
-import org.usfirst.frc.team4947.robot.subsystems.Gripper;
+import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GripperPull extends Command {
-	
+public class PivotToHighPosition extends Command {
+
 	// Constants.
 	static final double MOTOR_PERCENT_OUTPUT = 0.5;
-	static final boolean STATE_CUBE_PRESENT = true;
+	static final boolean STATE_POSITION_REACHED = true;
 
 	// Members.
-	private Gripper gripper;
+	private final Pivot pivot;
 
-	public GripperPull(Gripper gripper) {
-		requires(gripper);
+	public PivotToHighPosition(Pivot pivot) {
+		requires(pivot);
 		
-		this.gripper = gripper;
+		this.pivot = pivot;
+		
+		setInterruptible(false);
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		gripper.getLeftMotor().set(ControlMode.PercentOutput, MOTOR_PERCENT_OUTPUT);
-		gripper.getRightMotor().set(ControlMode.PercentOutput, MOTOR_PERCENT_OUTPUT);
+		pivot.getMotor().set(ControlMode.PercentOutput, MOTOR_PERCENT_OUTPUT);
 	}
 
 	// Called repeatedly when the command is scheduled to run.
@@ -38,12 +39,11 @@ public class GripperPull extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return (gripper.getCubePresenceDigitalInput().get() == STATE_CUBE_PRESENT);
+		return (pivot.getHighPosDigitalInput().get() == STATE_POSITION_REACHED);
 	}
 
 	// Called once after isFinished returns TRUE.
 	protected void end() {
-		gripper.getRightMotor().set(ControlMode.PercentOutput, 0.0);
-		gripper.getLeftMotor().set(ControlMode.PercentOutput, 0.0);
+		pivot.getMotor().set(ControlMode.PercentOutput, 0.0);
 	}
 }
