@@ -8,7 +8,7 @@
 package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.AutoDefault;
-import org.usfirst.frc.team4947.robot.commands.AutoRobotLeftSwitch;
+import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftTakeSwitch;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 		
 		oi = new OI(gripper, pivot);
 		m_chooser.addDefault("Default Auto", new AutoDefault());
-		m_chooser.addObject("Robot a gauche - switch", new AutoRobotLeftSwitch());
+		m_chooser.addObject("Robot a gauche - switch", new AutoLeftTakeSwitch(driveTrain, pivot, gripper));
 		// todo : ajouter les autres modes autonomes 
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
@@ -114,13 +114,12 @@ public class Robot extends TimedRobot {
 			case "DriveAutoLine":
 				break;
 
-			case "TakeSwitch":
+			case AutoLeftTakeSwitch.NAME:
 				Side sideOfSwitch = Side.ofSwitch(gameData);
-				
-				// TODO: Plan autonomous commands based on side of switch (left, right).
-				//TakeSwitchCommand takeSwitchCommand = ((TakeSwitchCommand) m_autonomousCommand);
-				//takeSwitchCommand.setSide(sideOfSwitch);
-				//takeSwitchCommand.start();
+
+				AutoLeftTakeSwitch autoLeftTakeSwitch = ((AutoLeftTakeSwitch) m_autonomousCommand);
+				autoLeftTakeSwitch.setSide(sideOfSwitch);
+				autoLeftTakeSwitch.start();
 				break;
 
 			default:
