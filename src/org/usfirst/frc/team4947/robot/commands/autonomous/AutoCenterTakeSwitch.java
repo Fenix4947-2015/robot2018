@@ -10,17 +10,17 @@ import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutoLeftTakeSwitch extends CommandGroup {
+public class AutoCenterTakeSwitch extends CommandGroup {
 	
 	// Constants.
-	public static final String NAME = "AutoLeftTakeSwitch";
+	public static final String NAME = "AutoCenterTakeSwitch";
 
 	// Members.
 	private final DriveTrain driveTrain;
 	private final Pivot pivot;
 	private final Gripper gripper;
 	
-	public AutoLeftTakeSwitch(DriveTrain driveTrain, Pivot pivot, Gripper gripper) {
+	public AutoCenterTakeSwitch(DriveTrain driveTrain, Pivot pivot, Gripper gripper) {
 		super(NAME);
 
 		this.driveTrain = driveTrain;
@@ -31,25 +31,26 @@ public class AutoLeftTakeSwitch extends CommandGroup {
 	public void setSide(Side side) {
 		if (side == Side.LEFT) {
 
-			addSequential(new DriveDistance(driveTrain, 14.0));	// Drive to switch.
-			addSequential(new DriveRotate(90.0));			    // Turn right.
-			addSequential(new DriveDistance(driveTrain, 1.5));	// Drive to touch switch.
+			addSequential(new DriveDistance(driveTrain, 1.0));	// Drive to turn.
+			addSequential(new DriveRotate(-25.0));			    // Turn to the switch
+			addSequential(new DriveDistance(driveTrain, 10.0)); //drive to the switch
+			addSequential(new DriveRotate(25.0));			    // Turn to the switch for real
 			addSequential(new PivotToSwitchPosition(pivot));	// Set pivot output to height of switch.
 			addSequential(new GripperShootSwitch(gripper));		// Throw cube.
 			addSequential(new DriveDistance(driveTrain, -1.5));	// Get out of there to let other teams do their thing using the switch.
 		} else if (side == Side.RIGHT) {
 
-			addSequential(new DriveDistance(driveTrain, 6.0));// foward
-			addSequential(new DriveRotate(90.0));	//turn right
-			addSequential(new DriveDistance(driveTrain, 10.0)); //drive to right switch
-			addSequential(new DriveRotate(-90.0));	//turn left
-			addSequential(new DriveDistance(driveTrain, 6.0));// foward
+			addSequential(new DriveDistance(driveTrain, 1.0));	// Drive to turn.
+			addSequential(new DriveRotate(25.0));			    // Turn to the switch
+			addSequential(new DriveDistance(driveTrain, 10.0)); //drive to the switch
+			addSequential(new DriveRotate(-25.0));			    // Turn to the switch for real
 			addSequential(new PivotToSwitchPosition(pivot));	// Set pivot output to height of switch.
 			addSequential(new GripperShootSwitch(gripper));		// Throw cube.
 			addSequential(new DriveDistance(driveTrain, -1.5));	// Get out of there to let other teams do their thing using the switch.
 		} else {
 
-			addSequential(new DriveDistance(driveTrain, 14.0));	// Drive to switch.
+			addSequential(new DriveRotate(35.0));	
+			addSequential(new DriveDistance(driveTrain, 16.0));	// Drive to nothing ;-)
 		}
 	}
 }

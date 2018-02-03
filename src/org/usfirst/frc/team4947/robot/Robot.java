@@ -8,7 +8,12 @@
 package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.AutoDefault;
+import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterFoward;
+import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterTakeSwitch;
+import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftTakeSwitch;
+import org.usfirst.frc.team4947.robot.commands.autonomous.AutoRightFoward;
+import org.usfirst.frc.team4947.robot.commands.autonomous.AutoRightTakeSwitch;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
@@ -52,7 +57,12 @@ public class Robot extends TimedRobot {
 		
 		oi = new OI(gripper, pivot);
 		m_chooser.addDefault("Default Auto", new AutoDefault());
-		m_chooser.addObject("Robot a gauche - switch", new AutoLeftTakeSwitch(driveTrain, pivot, gripper));
+		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch(driveTrain, pivot, gripper));
+		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch(driveTrain, pivot, gripper));
+		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch(driveTrain, pivot, gripper));
+		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftFoward(driveTrain, pivot, gripper));
+		m_chooser.addDefault("Robot au centre - switch", new AutoCenterFoward(driveTrain, pivot, gripper));
+		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch(driveTrain, pivot, gripper));
 		// todo : ajouter les autres modes autonomes 
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
@@ -110,16 +120,42 @@ public class Robot extends TimedRobot {
 	
 	private void planAutonomous(String gameData) {
 		String commandName = m_autonomousCommand.getName();
+		Side sideOfSwitch = Side.ofSwitch(gameData);
+		//TODO: do a delay with the smartDashBoard for all the autonomus commands
 		switch (commandName) {
-			case "DriveAutoLine":
+			case AutoLeftFoward.NAME:
+				AutoLeftFoward autoLeftFoward = ((AutoLeftFoward) m_autonomousCommand);
+				autoLeftFoward.start();
+				break;
+			case AutoCenterFoward.NAME:
+				AutoCenterFoward autoCenterFoward = ((AutoCenterFoward) m_autonomousCommand);
+				autoCenterFoward.start();
+				break;
+				
+			case AutoRightFoward.NAME:
+				AutoRightFoward autoRightFoward = ((AutoRightFoward) m_autonomousCommand);
+				autoRightFoward.start();
 				break;
 
 			case AutoLeftTakeSwitch.NAME:
-				Side sideOfSwitch = Side.ofSwitch(gameData);
-
+					
 				AutoLeftTakeSwitch autoLeftTakeSwitch = ((AutoLeftTakeSwitch) m_autonomousCommand);
 				autoLeftTakeSwitch.setSide(sideOfSwitch);
 				autoLeftTakeSwitch.start();
+				break;
+			case AutoCenterTakeSwitch.NAME:
+				
+				AutoCenterTakeSwitch autoCenterTakeSwitch = ((AutoCenterTakeSwitch) m_autonomousCommand);
+				autoCenterTakeSwitch.setSide(sideOfSwitch);
+				autoCenterTakeSwitch.start();
+				
+				break;
+			case AutoRightTakeSwitch.NAME:
+				
+				AutoRightTakeSwitch autoRightTakeSwitch = ((AutoRightTakeSwitch) m_autonomousCommand);
+				autoRightTakeSwitch.setSide(sideOfSwitch);
+				autoRightTakeSwitch.start();
+				
 				break;
 
 			default:
