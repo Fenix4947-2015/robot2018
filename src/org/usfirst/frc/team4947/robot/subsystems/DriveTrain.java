@@ -66,9 +66,9 @@ public class DriveTrain extends Subsystem {
         setDefaultCommand(new DriveArcade());
     }
     
-    public void DriveToDistance(double distance_meters)
+    public void DriveToDistance(double distance_feet)
     {
-    	// todo : faire la boucle fermée
+    	// TODO : faire la boucle fermée
     }
     
     public double GetEncoderDistanceError()

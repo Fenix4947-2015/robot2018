@@ -8,15 +8,16 @@ public class DriveDistance extends Command {
 	
 	// Members.
 	private final DriveTrain driveTrain;
-	private final double feet;
+	private final double distance_feet;
 
-	public DriveDistance(DriveTrain driveTrain, double feet) {
+	public DriveDistance(DriveTrain driveTrain, double distance_feet) {
 		this.driveTrain = driveTrain;
-		this.feet = feet;
+		this.distance_feet = distance_feet;
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
+		driveTrain.DriveToDistance(distance_feet);
 	}
 	
 	// Called repeatedly when the command is scheduled to run.
