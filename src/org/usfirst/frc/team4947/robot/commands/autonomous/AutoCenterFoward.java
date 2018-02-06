@@ -26,7 +26,7 @@ public class AutoCenterFoward extends CommandGroup {
 		this.driveTrain = driveTrain;
 		this.pivot = pivot;
 		this.gripper = gripper;
-
+		addSequential(new DriveDistance(driveTrain, 0.5));
 		addSequential(new DriveRotate(35.0));	
 		addSequential(new DriveDistance(driveTrain, 16.0));	// Drive to nothing ;-)
 	}

@@ -19,7 +19,7 @@ public class DriveDistance extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(10); // todo : validate if the timeout is required and if the value is appropriate. 
+    	setTimeout(10); // TODO: validate if the timeout is required and if the value is appropriate. 
     	Robot.driveTrain.DriveToDistance(desiredDistance);
     }
 

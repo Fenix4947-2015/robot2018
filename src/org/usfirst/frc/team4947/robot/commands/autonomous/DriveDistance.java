@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4947.robot.commands.autonomous;
 
+import org.usfirst.frc.team4947.robot.Robot;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,7 +10,7 @@ public class DriveDistance extends Command {
 	// Members.
 	private final DriveTrain driveTrain;
 	private final double distance_feet;
-
+	double DISTANCE_THRESHOLD = 0.003;
 	public DriveDistance(DriveTrain driveTrain, double distance_feet) {
 		this.driveTrain = driveTrain;
 		this.distance_feet = distance_feet;
@@ -17,6 +18,7 @@ public class DriveDistance extends Command {
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
+		setTimeout(10);
 		driveTrain.DriveToDistance(distance_feet);
 	}
 	
@@ -31,10 +33,12 @@ public class DriveDistance extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return false;
+		boolean reachedPosition = (Robot.driveTrain.GetEncoderDistanceError()<DISTANCE_THRESHOLD);
+        return (reachedPosition|| isTimedOut());
 	}
 
 	// Called once after isFinished returns TRUE.
 	protected void end() {
+		Robot.driveTrain.DriveStop();
 	}
 }

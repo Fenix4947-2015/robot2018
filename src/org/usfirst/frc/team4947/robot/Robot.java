@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team4947.robot;
 
-import org.usfirst.frc.team4947.robot.commands.AutoDefault;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterTakeSwitch;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftFoward;
@@ -18,6 +17,7 @@ import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 import org.usfirst.frc.team4947.robot.subsystems.Platform;
+import org.usfirst.frc.team4947.robot.subsystems.DriveTrain.ShifterSpeed;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -56,14 +56,12 @@ public class Robot extends TimedRobot {
 		pivot = new Pivot();
 		
 		oi = new OI(gripper, pivot);
-		m_chooser.addDefault("Default Auto", new AutoDefault());
 		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftFoward(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot au centre - switch", new AutoCenterFoward(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch(driveTrain, pivot, gripper));
-		// todo : ajouter les autres modes autonomes 
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		// Camera sur le dashboard
@@ -121,6 +119,8 @@ public class Robot extends TimedRobot {
 	private void planAutonomous(String gameData) {
 		String commandName = m_autonomousCommand.getName();
 		Side sideOfSwitch = Side.ofSwitch(gameData);
+		ShifterSpeed shifterSpeed= ShifterSpeed.Slow;
+		Robot.driveTrain.GearboxShift(shifterSpeed);
 		//TODO: do a delay with the smartDashBoard for all the autonomus commands
 		switch (commandName) {
 			case AutoLeftFoward.NAME:

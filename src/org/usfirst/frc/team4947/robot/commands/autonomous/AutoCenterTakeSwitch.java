@@ -48,7 +48,7 @@ public class AutoCenterTakeSwitch extends CommandGroup {
 			addSequential(new GripperShootSwitch(gripper));		// Throw cube.
 			addSequential(new DriveDistance(driveTrain, -1.5));	// Get out of there to let other teams do their thing using the switch.
 		} else {
-
+			addSequential(new DriveDistance(driveTrain, 0.5));
 			addSequential(new DriveRotate(35.0));	
 			addSequential(new DriveDistance(driveTrain, 16.0));	// Drive to nothing ;-)
 		}
