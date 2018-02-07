@@ -19,7 +19,7 @@ public class DriveDistance extends Command {
 	// Called just before the command runs the first time.
 	protected void initialize() {
 		setTimeout(10);
-		driveTrain.DriveToDistance(distance_feet);
+		driveTrain.driveToDistance(distance_feet);
 	}
 	
 	// Called repeatedly when the command is scheduled to run.
@@ -33,12 +33,12 @@ public class DriveDistance extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		boolean reachedPosition = (Robot.driveTrain.GetEncoderDistanceError()<DISTANCE_THRESHOLD);
+		boolean reachedPosition = (driveTrain.getEncoderDistanceError()<DISTANCE_THRESHOLD);
         return (reachedPosition|| isTimedOut());
 	}
 
 	// Called once after isFinished returns TRUE.
 	protected void end() {
-		Robot.driveTrain.DriveStop();
+		driveTrain.driveStop();
 	}
 }

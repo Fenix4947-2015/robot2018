@@ -102,10 +102,10 @@ public class DriveTrain extends Subsystem {
 	
     public void initDefaultCommand() 
     {
-        setDefaultCommand(new DriveArcade());
+        setDefaultCommand(new DriveArcade(new DriveTrain()));
     }
     
-    public void DriveToDistance(double distance_feet)
+    public void driveToDistance(double distance_feet)
     {
     	
 		/* lets grab the 360 degree position of the MagEncoder's absolute position */
@@ -120,13 +120,13 @@ public class DriveTrain extends Subsystem {
     	
     }
     
-    public double GetEncoderDistanceError()
+    public double getEncoderDistanceError()
     {
     	// return error remaining on the closed loop, in meters. 
     	return  leftMotor1.getClosedLoopTarget(kPIDLoopIdx);
     }
 
-    public void DriveArcadeMethod(double Speed, double Rotation) {
+    public void driveArcadeMethod(double Speed, double Rotation) {
     	//ptoSolenoid.set(true);
     	SmartDashboard.putNumber("ForwardSpeed", Speed);
     	SmartDashboard.putNumber("RotationSpeed", Rotation);
@@ -143,24 +143,24 @@ public class DriveTrain extends Subsystem {
     	
     }
     
-    public void DriveStop()
+    public void driveStop()
     {
     	robotDrive.arcadeDrive(0,0);
     }
     
     
-    public void GearboxShift(ShifterSpeed speed)
+    public void gearboxShift(ShifterSpeed speed)
     {
     	gearboxSpeedSolenoid.set(speed.getValue());  
     	
     }
     
-    public double GetGyroAngle()
+    public double getGyroAngle()
     {
     	return gyro.getAngle();
     }
     
-    public void ResetGyroAngle()
+    public void resetGyroAngle()
     {
     	gyro.reset();
     }

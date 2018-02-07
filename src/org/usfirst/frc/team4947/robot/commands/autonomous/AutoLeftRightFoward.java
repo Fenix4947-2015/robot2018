@@ -10,25 +10,20 @@ import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutoRightFoward extends CommandGroup {
+public class AutoLeftRightFoward extends CommandGroup {
 	
 	// Constants.
-	public static final String NAME = "AutoRightFoward";
+	public static final String NAME = "AutoLeftFoward";
 
 	// Members.
 	private final DriveTrain driveTrain;
-	private final Pivot pivot;
-	private final Gripper gripper;
+
 	
-	public AutoRightFoward(DriveTrain driveTrain, Pivot pivot, Gripper gripper) {
+	public AutoLeftRightFoward(DriveTrain driveTrain) {
 		super(NAME);
 
 		this.driveTrain = driveTrain;
-		this.pivot = pivot;
-		this.gripper = gripper;
 
 		addSequential(new DriveDistance(driveTrain, 16.0));	// Drive to nothing ;-)
 	}
-	
-	
 	}

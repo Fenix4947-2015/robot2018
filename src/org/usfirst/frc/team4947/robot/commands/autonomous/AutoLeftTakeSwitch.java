@@ -32,7 +32,7 @@ public class AutoLeftTakeSwitch extends CommandGroup {
 		if (side == Side.LEFT) {
 
 			addSequential(new DriveDistance(driveTrain, 14.0));	// Drive to switch.
-			addSequential(new DriveRotate(90.0));			    // Turn right.
+			addSequential(new DriveRotate(driveTrain,90.0));			    // Turn right.
 			addSequential(new DriveDistance(driveTrain, 1.5));	// Drive to touch switch.
 			addSequential(new PivotToSwitchPosition(pivot));	// Set pivot output to height of switch.
 			addSequential(new GripperShootSwitch(gripper));		// Throw cube.
@@ -40,9 +40,9 @@ public class AutoLeftTakeSwitch extends CommandGroup {
 		} else if (side == Side.RIGHT) {
 
 			addSequential(new DriveDistance(driveTrain, 6.0));// foward
-			addSequential(new DriveRotate(90.0));	//turn right
+			addSequential(new DriveRotate(driveTrain,90.0));	//turn right
 			addSequential(new DriveDistance(driveTrain, 10.0)); //drive to right switch
-			addSequential(new DriveRotate(-90.0));	//turn left
+			addSequential(new DriveRotate(driveTrain,-90.0));	//turn left
 			addSequential(new DriveDistance(driveTrain, 6.0));// foward
 			addSequential(new PivotToSwitchPosition(pivot));	// Set pivot output to height of switch.
 			addSequential(new GripperShootSwitch(gripper));		// Throw cube.

@@ -17,17 +17,13 @@ public class AutoCenterFoward extends CommandGroup {
 	
 	// Members.
 	private final DriveTrain driveTrain;
-	private final Pivot pivot;
-	private final Gripper gripper;
 	
-	public AutoCenterFoward(DriveTrain driveTrain, Pivot pivot, Gripper gripper) {
+	public AutoCenterFoward(DriveTrain driveTrain) {
 		super(NAME);
 
 		this.driveTrain = driveTrain;
-		this.pivot = pivot;
-		this.gripper = gripper;
 		addSequential(new DriveDistance(driveTrain, 0.5));
-		addSequential(new DriveRotate(35.0));	
+		addSequential(new DriveRotate(driveTrain,35.0));	
 		addSequential(new DriveDistance(driveTrain, 16.0));	// Drive to nothing ;-)
 	}
 	

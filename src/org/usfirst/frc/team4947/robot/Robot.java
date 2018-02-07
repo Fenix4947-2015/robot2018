@@ -9,9 +9,8 @@ package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterTakeSwitch;
-import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftFoward;
+import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftRightFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftTakeSwitch;
-import org.usfirst.frc.team4947.robot.commands.autonomous.AutoRightFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoRightTakeSwitch;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
@@ -36,7 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final DriveTrain driveTrain = new DriveTrain();
+	private DriveTrain driveTrain;
 	public static OI oi;
 	public static final Platform platformLeft = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_LEFT ,RobotMap.UNLOCKER_SOLENOID_ADDRESS_LEFT);	
 	public static final Platform platformRight = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_RIGHT ,RobotMap.UNLOCKER_SOLENOID_ADDRESS_RIGHT);	
@@ -52,6 +51,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		driveTrain = new DriveTrain();
 		gripper = new Gripper();
 		pivot = new Pivot();
 		
@@ -59,9 +59,8 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch(driveTrain, pivot, gripper));
-		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftFoward(driveTrain, pivot, gripper));
-		m_chooser.addDefault("Robot au centre - switch", new AutoCenterFoward(driveTrain, pivot, gripper));
-		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch(driveTrain, pivot, gripper));
+		m_chooser.addDefault("Robot a gauche ou droite - avance", new AutoLeftRightFoward(driveTrain));
+		m_chooser.addDefault("Robot au centre - avance", new AutoCenterFoward(driveTrain));
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		// Camera sur le dashboard
@@ -120,21 +119,16 @@ public class Robot extends TimedRobot {
 		String commandName = m_autonomousCommand.getName();
 		Side sideOfSwitch = Side.ofSwitch(gameData);
 		ShifterSpeed shifterSpeed= ShifterSpeed.Slow;
-		Robot.driveTrain.GearboxShift(shifterSpeed);
+		driveTrain.gearboxShift(shifterSpeed);
 		//TODO: do a delay with the smartDashBoard for all the autonomus commands
 		switch (commandName) {
-			case AutoLeftFoward.NAME:
-				AutoLeftFoward autoLeftFoward = ((AutoLeftFoward) m_autonomousCommand);
+			case AutoLeftRightFoward.NAME:
+				AutoLeftRightFoward autoLeftFoward = ((AutoLeftRightFoward) m_autonomousCommand);
 				autoLeftFoward.start();
 				break;
 			case AutoCenterFoward.NAME:
 				AutoCenterFoward autoCenterFoward = ((AutoCenterFoward) m_autonomousCommand);
 				autoCenterFoward.start();
-				break;
-				
-			case AutoRightFoward.NAME:
-				AutoRightFoward autoRightFoward = ((AutoRightFoward) m_autonomousCommand);
-				autoRightFoward.start();
 				break;
 
 			case AutoLeftTakeSwitch.NAME:

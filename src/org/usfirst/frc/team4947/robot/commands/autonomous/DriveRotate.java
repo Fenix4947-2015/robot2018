@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4947.robot.commands.autonomous;
 
 import org.usfirst.frc.team4947.robot.Robot;
+import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -8,35 +9,36 @@ public class DriveRotate extends Command {
 	
 	// Constants.
 	public static final double DEFAULT_SPEED = 0.1;
-
-	double angle=0.0;
-	double speed=DEFAULT_SPEED;
+	private final DriveTrain driveTrain;
+	double degrees;
+	double speed;
 	private double Tolerance = 3 ; // degree 
-	public DriveRotate(double degrees) {
-		this(degrees, DEFAULT_SPEED);
+	public DriveRotate(DriveTrain driveTrain,double degrees) {
+		this(driveTrain,degrees, DEFAULT_SPEED);
 	}
 	
-	public DriveRotate(double degrees, double speed) {
-		angle=degrees;
+	public DriveRotate(DriveTrain drivetrain,double degrees, double speed) {
+		this.driveTrain=drivetrain;
+		degrees=degrees;
 		this.speed=speed;
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		Robot.driveTrain.ResetGyroAngle();
+		driveTrain.resetGyroAngle();
 	}
 	
 	// Called repeatedly when the command is scheduled to run.
 	protected void execute() {
-		if (angle<Robot.driveTrain.GetGyroAngle())
+		if (degrees<driveTrain.getGyroAngle())
     	{     		
     	//Robot.driveTrain.robotDrive.tankDrive(-speed*convertspd2degpsec, speed*convertspd2degpsec);
-    		Robot.driveTrain.DriveArcadeMethod(0, speed);
+    		driveTrain.driveArcadeMethod(0, speed);
     	}
-    	else if (Robot.driveTrain.GetGyroAngle()<angle)
+    	else if (driveTrain.getGyroAngle()<degrees)
     	{     		
         	//Robot.driveTrain.robotDrive.tankDrive(speed*convertspd2degpsec, -speed*convertspd2degpsec);
-    		Robot.driveTrain.DriveArcadeMethod(0, -speed);
+    		driveTrain.driveArcadeMethod(0, -speed);
     	}
 	}
 
@@ -47,11 +49,11 @@ public class DriveRotate extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return Math.abs((Robot.driveTrain.GetGyroAngle() - angle)) < Tolerance ;//<>
+		return Math.abs((driveTrain.getGyroAngle() - degrees)) < Tolerance ;//<>
 	}
 
 	// Called once after isFinished returns TRUE.
 	protected void end() {
-		Robot.driveTrain.DriveStop();
+		driveTrain.driveStop();
 	}
 }
