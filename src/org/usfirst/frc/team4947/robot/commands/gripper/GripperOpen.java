@@ -6,9 +6,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class GripperOpen extends Command {
 	
-	// Constants.
-	static final boolean OPENER_SOLENOID_OUTPUT = true;
-	
 	// Members.
 	private Gripper gripper;
 
@@ -20,7 +17,7 @@ public class GripperOpen extends Command {
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		gripper.getOpenerSolenoid().set(OPENER_SOLENOID_OUTPUT);
+		gripper.open();
 	}
 
 	// Called repeatedly when the command is scheduled to run.

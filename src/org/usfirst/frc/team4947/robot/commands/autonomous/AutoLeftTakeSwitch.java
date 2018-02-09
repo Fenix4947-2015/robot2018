@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4947.robot.commands.autonomous;
 
 import org.usfirst.frc.team4947.robot.Side;
-import org.usfirst.frc.team4947.robot.commands.gripper.GripperShootSwitch;
+import org.usfirst.frc.team4947.robot.commands.gripper.GripperShootToSwitch;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToSwitchPosition;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
@@ -33,7 +33,7 @@ public class AutoLeftTakeSwitch extends CommandGroup {
 			addSequential(new DriveRotate(driveTrain,90.0));	// Turn right.
 			addSequential(new DriveDistance(driveTrain, 1.5));	// Drive to touch switch.
 			addSequential(new PivotToSwitchPosition(pivot));	// Set pivot output to height of switch.
-			addSequential(new GripperShootSwitch(gripper));		// Throw cube.
+			addSequential(new GripperShootToSwitch(gripper));	// Throw cube.
 			addSequential(new DriveDistance(driveTrain, -1.5));	// Get out of there to let other teams do their thing using the switch.
 		} else if (side == Side.RIGHT) {
 			addSequential(new DriveDistance(driveTrain, 6.0));  // Foward.
@@ -42,7 +42,7 @@ public class AutoLeftTakeSwitch extends CommandGroup {
 			addSequential(new DriveRotate(driveTrain,-90.0));	// Turn left.
 			addSequential(new DriveDistance(driveTrain, 6.0));  // Forward.
 			addSequential(new PivotToSwitchPosition(pivot));	// Set pivot output to height of switch.
-			addSequential(new GripperShootSwitch(gripper));		// Throw cube.
+			addSequential(new GripperShootToSwitch(gripper));	// Throw cube.
 			addSequential(new DriveDistance(driveTrain, -1.5));	// Get out of there to let other teams do their thing using the switch.
 		} else {
 			addSequential(new DriveDistance(driveTrain, 14.0));	// Drive to switch.

@@ -1,10 +1,8 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 
-import static org.usfirst.frc.team4947.robot.RobotMap.GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL;
-import static org.usfirst.frc.team4947.robot.RobotMap.GRIPPER_LEFT_MOTOR_DEVICE_NUMBER;
-import static org.usfirst.frc.team4947.robot.RobotMap.GRIPPER_OPENER_SOLENOID_CHANNEL;
-import static org.usfirst.frc.team4947.robot.RobotMap.GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER;
+import org.usfirst.frc.team4947.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -13,6 +11,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Gripper extends Subsystem {
 	
+	// Constants.
+	private static final double MOTOR_PULL_PERCENT_OUTPUT = 0.5;
+	private static final double MOTOR_REJECT_PERCENT_OUTPUT = -0.5;
+	private static final double MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT = 0.5;
+	
+	private static final boolean OPENER_SOLENOID_CLOSE_STATE = false;
+	private static final boolean OPENER_SOLENOID_OPEN_STATE = !OPENER_SOLENOID_CLOSE_STATE;
+	
+	private static final boolean STATE_CUBE_PRESENT = true;
+
 	// Members.
 	private TalonSRX leftMotor;
 	private TalonSRX rightMotor;
@@ -27,41 +35,57 @@ public class Gripper extends Subsystem {
 	}
 	
 	private static TalonSRX createLeftMotor() {
-		TalonSRX motor = new TalonSRX(GRIPPER_LEFT_MOTOR_DEVICE_NUMBER);
+		TalonSRX motor = new TalonSRX(RobotMap.GRIPPER_LEFT_MOTOR_DEVICE_NUMBER);
 		return motor;
 	}
 	
 	private static TalonSRX createRightMotor() {
-		TalonSRX motor = new TalonSRX(GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER);
+		TalonSRX motor = new TalonSRX(RobotMap.GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER);
 		return motor;
 	}
 	
 	private static Solenoid createOpenerSolenoid() {
-		Solenoid solenoid = new Solenoid(GRIPPER_OPENER_SOLENOID_CHANNEL);
+		Solenoid solenoid = new Solenoid(RobotMap.GRIPPER_OPENER_SOLENOID_CHANNEL);
 		return solenoid;
 	}
 	
 	private static DigitalInput createCubePresenceDigitalInput() {
-		DigitalInput digitalInput = new DigitalInput(GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL);
+		DigitalInput digitalInput = new DigitalInput(RobotMap.GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL);
 		return digitalInput;
 	}
 
 	public void initDefaultCommand() {
 	}
-
-	public TalonSRX getLeftMotor() {
-		return leftMotor;
+	
+	public boolean isCubePresent() {
+		return (cubePresenceDigitalInput.get() == STATE_CUBE_PRESENT);
+	}
+	
+	public void close() {
+		openerSolenoid.set(OPENER_SOLENOID_CLOSE_STATE);
+	}
+	
+	public void open() {
+		openerSolenoid.set(OPENER_SOLENOID_OPEN_STATE);
+	}
+	
+	public void pull() {
+		leftMotor.set(ControlMode.PercentOutput, MOTOR_PULL_PERCENT_OUTPUT);
+		rightMotor.set(ControlMode.PercentOutput, MOTOR_PULL_PERCENT_OUTPUT);		
+	}
+	
+	public void reject() {
+		leftMotor.set(ControlMode.PercentOutput, MOTOR_REJECT_PERCENT_OUTPUT);
+		rightMotor.set(ControlMode.PercentOutput, MOTOR_REJECT_PERCENT_OUTPUT);		
+	}
+	
+	public void shootToSwitch() {
+		leftMotor.set(ControlMode.PercentOutput, MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
+		rightMotor.set(ControlMode.PercentOutput, MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
 	}
 
-	public TalonSRX getRightMotor() {
-		return rightMotor;
-	}
-
-	public Solenoid getOpenerSolenoid() {
-		return openerSolenoid;
-	}
-
-	public DigitalInput getCubePresenceDigitalInput() {
-		return cubePresenceDigitalInput;
+	public void stop() {
+		leftMotor.set(ControlMode.PercentOutput, 0.0);
+		rightMotor.set(ControlMode.PercentOutput, 0.0);
 	}
 }
