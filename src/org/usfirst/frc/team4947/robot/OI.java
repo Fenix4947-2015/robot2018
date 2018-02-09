@@ -13,8 +13,10 @@ import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToSwitchPosition;
+import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
+import org.usfirst.frc.team4947.robot.subsystems.Platform;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -73,7 +75,7 @@ public class OI {
 	private final Joystick joystickHelper;
 
 	@SuppressWarnings("unused")
-	public OI(Gripper gripper, Pivot pivot) {
+	public OI(DriveTrain driveTrain, Gripper gripper, Pivot pivot, Platform platformLeft, Platform platformRight) {
 		joystickDriver = new Joystick(RobotMap.JOYSTICK_DRIVER_PORT);
 		joystickHelper = new Joystick(RobotMap.JOYSTICK_HELPER_PORT);
 		

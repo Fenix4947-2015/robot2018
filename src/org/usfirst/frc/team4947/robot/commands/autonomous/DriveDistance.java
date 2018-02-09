@@ -1,25 +1,27 @@
 package org.usfirst.frc.team4947.robot.commands.autonomous;
 
-import org.usfirst.frc.team4947.robot.Robot;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveDistance extends Command {
+
+	// Constants.
+	private static final double DISTANCE_THRESHOLD = 0.003;
 	
 	// Members.
-	private final DriveTrain driveTrain;
-	private final double distance_feet;
-	double DISTANCE_THRESHOLD = 0.003;
-	public DriveDistance(DriveTrain driveTrain, double distance_feet) {
+	private DriveTrain driveTrain;
+	private double distanceFeet;
+	
+	public DriveDistance(DriveTrain driveTrain, double distanceFeet) {
 		this.driveTrain = driveTrain;
-		this.distance_feet = distance_feet;
+		this.distanceFeet = distanceFeet;
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
 		setTimeout(10);
-		driveTrain.driveToDistance(distance_feet);
+		driveTrain.driveToDistance(distanceFeet);
 	}
 	
 	// Called repeatedly when the command is scheduled to run.

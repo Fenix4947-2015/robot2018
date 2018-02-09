@@ -1,40 +1,37 @@
 package org.usfirst.frc.team4947.robot.commands;
 
-import org.usfirst.frc.team4947.robot.Robot;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain.ShifterSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class ShiftUp extends Command {
-	private final DriveTrain driveTrain;
-    public ShiftUp(DriveTrain driveTrain) {
-        this.driveTrain=driveTrain;
-    }
+	
+	private DriveTrain driveTrain;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public ShiftUp(DriveTrain driveTrain) {
+		this.driveTrain = driveTrain;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	driveTrain.gearboxShift(ShifterSpeed.Fast);
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		driveTrain.gearboxShift(ShifterSpeed.Fast);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return true;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

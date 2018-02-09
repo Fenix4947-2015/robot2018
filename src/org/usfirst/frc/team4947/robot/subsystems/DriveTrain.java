@@ -1,12 +1,11 @@
 package org.usfirst.frc.team4947.robot.subsystems;
-import org.usfirst.frc.team4947.robot.Robot;
 import org.usfirst.frc.team4947.robot.RobotMap;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;

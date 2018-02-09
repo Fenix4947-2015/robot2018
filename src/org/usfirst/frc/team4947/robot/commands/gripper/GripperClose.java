@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GripperClose extends Command {
 	
 	// Constants.
-	static final boolean OPENER_SOLENOID_OUTPUT = !GripperOpen.OPENER_SOLENOID_OUTPUT;
+	private static final boolean OPENER_SOLENOID_OUTPUT = !GripperOpen.OPENER_SOLENOID_OUTPUT;
 	
 	// Members.
 	private Gripper gripper;

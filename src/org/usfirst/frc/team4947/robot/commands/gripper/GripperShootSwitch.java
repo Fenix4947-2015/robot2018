@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GripperShootSwitch extends Command {
 	
 	// Constants.
-	static final double MOTOR_PERCENT_OUTPUT = -0.5;
+	private static final double MOTOR_PERCENT_OUTPUT = 0.5;
 
 	// Members.
 	private Gripper gripper;

@@ -22,13 +22,13 @@ public class Pivot extends Subsystem {
 	}
 	
 	// Members.
-	private final TalonSRX motor;
-	private final DigitalInput lowPosDigitalInput;
-	private final DigitalInput highPosDigitalInput;
-	private final DigitalInput exchangePosDigitalInput;
-	private final DigitalInput switchPosDigitalInput;
+	private TalonSRX motor;
+	private DigitalInput lowPosDigitalInput;
+	private DigitalInput highPosDigitalInput;
+	private DigitalInput exchangePosDigitalInput;
+	private DigitalInput switchPosDigitalInput;
 
-	private final Map<Position, DigitalInput> digitalInputs;
+	private Map<Position, DigitalInput> digitalInputs;
 
 	public Pivot() {
 		motor = createMotor();

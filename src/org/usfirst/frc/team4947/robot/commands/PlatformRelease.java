@@ -1,41 +1,39 @@
 package org.usfirst.frc.team4947.robot.commands;
 
-import org.usfirst.frc.team4947.robot.Robot;
+import org.usfirst.frc.team4947.robot.subsystems.Platform;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class PlatformRelease extends Command {
+	
+	private Platform platform;
 
-    public PlatformRelease() {
-    	requires(Robot.platformLeft);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
+	public PlatformRelease(Platform platform) {
+		requires(platform);
+		
+		this.platform = platform;
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	boolean Release = true;
-    	Robot.platformLeft.UnlockPlatform(Release);
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		boolean release = true;
+		platform.unlockPlatform(release);
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return true;
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called when another command which requires one or more of the same subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

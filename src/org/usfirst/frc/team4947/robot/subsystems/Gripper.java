@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Gripper extends Subsystem {
 	
 	// Members.
-	private final TalonSRX leftMotor;
-	private final TalonSRX rightMotor;
-	private final Solenoid openerSolenoid;
-	private final DigitalInput cubePresenceDigitalInput;
+	private TalonSRX leftMotor;
+	private TalonSRX rightMotor;
+	private Solenoid openerSolenoid;
+	private DigitalInput cubePresenceDigitalInput;
 
 	public Gripper() {
 		leftMotor = createLeftMotor();

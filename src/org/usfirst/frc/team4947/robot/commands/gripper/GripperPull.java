@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GripperPull extends Command {
 	
 	// Constants.
-	static final double MOTOR_PERCENT_OUTPUT = 0.5;
-	static final boolean STATE_CUBE_PRESENT = true;
+	private static final double MOTOR_PERCENT_OUTPUT = 0.5;
+	private static final boolean STATE_CUBE_PRESENT = true;
 
 	// Members.
 	private Gripper gripper;

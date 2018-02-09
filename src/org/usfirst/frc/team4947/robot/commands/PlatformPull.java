@@ -7,7 +7,7 @@ import org.usfirst.frc.team4947.robot.subsystems.Platform;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PlatformPull extends Command {
-	
+
 	private Platform platformSubsystem;
 	private XBoxAxis xboxAxis;
 
@@ -25,7 +25,7 @@ public class PlatformPull extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double desiredSpeed = Robot.oi.getJoystickDriverAxis(xboxAxis);
-		platformSubsystem.LiftSpeed(desiredSpeed);
+		platformSubsystem.liftSpeed(desiredSpeed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -36,13 +36,12 @@ public class PlatformPull extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		double desiredSpeed = 0;
-		platformSubsystem.LiftSpeed(desiredSpeed);
+		platformSubsystem.liftSpeed(desiredSpeed);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	// Called when another command which requires one or more of the same subsystems is scheduled to run
 	protected void interrupted() {
 		double desiredSpeed = 0;
-		platformSubsystem.LiftSpeed(desiredSpeed);
+		platformSubsystem.liftSpeed(desiredSpeed);
 	}
 }

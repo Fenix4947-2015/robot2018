@@ -13,10 +13,10 @@ import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftRightFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftTakeSwitch;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoRightTakeSwitch;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4947.robot.subsystems.DriveTrain.ShifterSpeed;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 import org.usfirst.frc.team4947.robot.subsystems.Platform;
-import org.usfirst.frc.team4947.robot.subsystems.DriveTrain.ShifterSpeed;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -35,15 +35,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	private DriveTrain driveTrain;
+
 	public static OI oi;
-	public static final Platform platformLeft = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_LEFT ,RobotMap.UNLOCKER_SOLENOID_ADDRESS_LEFT);	
-	public static final Platform platformRight = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_RIGHT ,RobotMap.UNLOCKER_SOLENOID_ADDRESS_RIGHT);	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
-	
+
+	private DriveTrain driveTrain;
 	private Gripper gripper;
 	private Pivot pivot;
+	private Platform platformLeft;
+	private Platform platformRight;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -54,19 +55,19 @@ public class Robot extends TimedRobot {
 		driveTrain = new DriveTrain();
 		gripper = new Gripper();
 		pivot = new Pivot();
-		
-		oi = new OI(gripper, pivot);
+		platformLeft = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_LEFT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_LEFT);
+		platformRight = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_RIGHT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_RIGHT);
+
+		oi = new OI(driveTrain, gripper, pivot, platformLeft, platformRight);
 		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch(driveTrain, pivot, gripper));
 		m_chooser.addDefault("Robot a gauche ou droite - avance", new AutoLeftRightFoward(driveTrain));
 		m_chooser.addDefault("Robot au centre - avance", new AutoCenterFoward(driveTrain));
 		SmartDashboard.putData("Auto mode", m_chooser);
-		
+
 		// Camera sur le dashboard
 		CameraServer.getInstance().startAutomaticCapture();
-		
-		 
 	}
 
 	/**
@@ -91,7 +92,8 @@ public class Robot extends TimedRobot {
 	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
 	 * getString code to get the auto name from the text box below the Gyro
 	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
+	 * <p>
+	 * You can add additional auto modes by adding additional commands to the
 	 * chooser code above (like the commented example) or additional comparisons
 	 * to the switch structure below with additional strings & commands.
 	 */
@@ -114,44 +116,44 @@ public class Robot extends TimedRobot {
 			}
 		}
 	}
-	
+
 	private void planAutonomous(String gameData) {
-		String commandName = m_autonomousCommand.getName();
 		Side sideOfSwitch = Side.ofSwitch(gameData);
-		ShifterSpeed shifterSpeed= ShifterSpeed.Slow;
-		driveTrain.gearboxShift(shifterSpeed);
-		//TODO: do a delay with the smartDashBoard for all the autonomus commands
+
+		driveTrain.gearboxShift(ShifterSpeed.Slow);
+
+		// TODO: do a delay with the smartDashBoard for all the autonomus
+		// commands
+		String commandName = m_autonomousCommand.getName();
 		switch (commandName) {
 			case AutoLeftRightFoward.NAME:
 				AutoLeftRightFoward autoLeftFoward = ((AutoLeftRightFoward) m_autonomousCommand);
 				autoLeftFoward.start();
 				break;
+	
 			case AutoCenterFoward.NAME:
 				AutoCenterFoward autoCenterFoward = ((AutoCenterFoward) m_autonomousCommand);
 				autoCenterFoward.start();
 				break;
-
+	
 			case AutoLeftTakeSwitch.NAME:
-					
 				AutoLeftTakeSwitch autoLeftTakeSwitch = ((AutoLeftTakeSwitch) m_autonomousCommand);
 				autoLeftTakeSwitch.setSide(sideOfSwitch);
 				autoLeftTakeSwitch.start();
 				break;
+	
 			case AutoCenterTakeSwitch.NAME:
-				
 				AutoCenterTakeSwitch autoCenterTakeSwitch = ((AutoCenterTakeSwitch) m_autonomousCommand);
 				autoCenterTakeSwitch.setSide(sideOfSwitch);
 				autoCenterTakeSwitch.start();
-				
 				break;
+	
 			case AutoRightTakeSwitch.NAME:
-				
 				AutoRightTakeSwitch autoRightTakeSwitch = ((AutoRightTakeSwitch) m_autonomousCommand);
 				autoRightTakeSwitch.setSide(sideOfSwitch);
 				autoRightTakeSwitch.start();
-				
 				break;
-
+	
 			default:
 				System.out.format("Command not supported (command=%s).%n", commandName);
 				break;
@@ -194,13 +196,10 @@ public class Robot extends TimedRobot {
 		LiveWindow.run();
 		log();
 	}
-	
 
-	private void log() 
-	{
-		/*driveTrain.log();
-		intake.log();
-		gripper.log();		
-		visionSystem.log();*/
+	private void log() {
+		/*
+		 * driveTrain.log(); intake.log(); gripper.log(); visionSystem.log();
+		 */
 	}
 }

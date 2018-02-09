@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PivotToLowPosition extends Command {
 
 	// Constants.
-	static final double MOTOR_PERCENT_OUTPUT = -0.5;
-	static final boolean STATE_POSITION_REACHED = true;
+	private static final double MOTOR_PERCENT_OUTPUT = -0.5;
+	private static final boolean STATE_POSITION_REACHED = true;
 
 	// Members.
-	private final Pivot pivot;
+	private Pivot pivot;
 
 	public PivotToLowPosition(Pivot pivot) {
 		requires(pivot);
