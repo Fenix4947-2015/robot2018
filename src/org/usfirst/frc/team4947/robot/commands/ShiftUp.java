@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4947.robot.commands;
 
 import org.usfirst.frc.team4947.robot.Robot;
+import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain.ShifterSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,9 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ShiftUp extends Command {
-
-    public ShiftUp() {
-        requires(Robot.driveTrain);
+	private final DriveTrain driveTrain;
+    public ShiftUp(DriveTrain driveTrain) {
+        this.driveTrain=driveTrain;
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +21,7 @@ public class ShiftUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.GearboxShift(ShifterSpeed.Fast);
+    	driveTrain.gearboxShift(ShifterSpeed.Fast);
     }
 
     // Make this return true when this Command no longer needs to run execute()
