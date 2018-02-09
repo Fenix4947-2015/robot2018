@@ -36,7 +36,7 @@ public class OI {
 		RIGHT_STICK_X(4), 
 		RIGHT_STICK_Y(5);
 
-		private final int value;
+		private int value;
 
 		private XBoxAxis(int value) {
 			this.value = value;
@@ -59,7 +59,7 @@ public class OI {
 		LEFT_STICK(9), 
 		RIGHT_STICK(10);
 
-		private final int value;
+		private int value;
 
 		private XBoxButton(int value) {
 			this.value = value;
@@ -71,8 +71,8 @@ public class OI {
 	}
 
 	// Members.
-	private final Joystick joystickDriver;
-	private final Joystick joystickHelper;
+	private Joystick joystickDriver;
+	private Joystick joystickHelper;
 
 	@SuppressWarnings("unused")
 	public OI(DriveTrain driveTrain, Gripper gripper, Pivot pivot, Platform platformLeft, Platform platformRight) {

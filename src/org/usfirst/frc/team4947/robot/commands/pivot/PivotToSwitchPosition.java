@@ -14,8 +14,8 @@ public class PivotToSwitchPosition extends Command {
 	private static final boolean STATE_POSITION_REACHED = true;
 
 	// Members.
-	private final Pivot pivot;
-	private final Position positionToReach;
+	private Pivot pivot;
+	private Position positionToReach;
 
 	public PivotToSwitchPosition(Pivot pivot) {
 		requires(pivot);

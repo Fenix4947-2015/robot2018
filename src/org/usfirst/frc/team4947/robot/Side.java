@@ -9,7 +9,7 @@ public enum Side {
 	private static final int INDEX_GAME_DATA_SWITCH = 0;
 	private static final int INDEX_GAME_DATA_SCALE = 1;
 	
-	private final char value;
+	private char value;
 	
 	private Side(char c) {
 		value = c;
