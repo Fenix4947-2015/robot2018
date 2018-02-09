@@ -24,7 +24,7 @@ public class PlatformPull extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double desiredSpeed = Robot.oi.getJoystickDriverAxis(xboxAxis);
+		double desiredSpeed = Robot.oi.getJoystickHelperAxis(xboxAxis);
 		platformSubsystem.liftSpeed(desiredSpeed);
 	}
 

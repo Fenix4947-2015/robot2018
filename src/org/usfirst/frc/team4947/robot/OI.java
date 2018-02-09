@@ -7,8 +7,9 @@
 
 package org.usfirst.frc.team4947.robot;
 
-import org.usfirst.frc.team4947.robot.commands.gripper.GripperPull;
-import org.usfirst.frc.team4947.robot.commands.gripper.GripperReject;
+import org.usfirst.frc.team4947.robot.commands.ShiftDown;
+import org.usfirst.frc.team4947.robot.commands.ShiftUp;
+import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameProfile;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
@@ -74,12 +75,18 @@ public class OI {
 	private Joystick joystickDriver;
 	private Joystick joystickHelper;
 
-	@SuppressWarnings("unused")
 	public OI(DriveTrain driveTrain, Gripper gripper, Pivot pivot, Platform platformLeft, Platform platformRight) {
+		initJoystickDriver(driveTrain, gripper, pivot, platformLeft, platformRight);
+		initJoystickHelper(driveTrain, gripper, pivot, platformLeft, platformRight);
+
+		// TODO Add buttons to smart dashboard
+		// example :SmartDashboard.putData("RobotLift", new RobotLift());
+	}
+	
+	private void initJoystickDriver(DriveTrain driveTrain, Gripper gripper, Pivot pivot, Platform platformLeft, Platform platformRight) {
 		joystickDriver = new Joystick(RobotMap.JOYSTICK_DRIVER_PORT);
-		joystickHelper = new Joystick(RobotMap.JOYSTICK_HELPER_PORT);
 		
-		// Create all required button in case we need them
+		// Create all buttons in case we need them.
 		JoystickButton driverA = new JoystickButton(joystickDriver, XBoxButton.A.getValue());
 		JoystickButton driverB = new JoystickButton(joystickDriver, XBoxButton.B.getValue());
 		JoystickButton driverX = new JoystickButton(joystickDriver, XBoxButton.X.getValue());
@@ -89,8 +96,20 @@ public class OI {
 		JoystickButton driverBack = new JoystickButton(joystickDriver, XBoxButton.BACK.getValue());
 		JoystickButton driverStart = new JoystickButton(joystickDriver, XBoxButton.START.getValue());
 		JoystickButton driverLeftStick = new JoystickButton(joystickDriver, XBoxButton.LEFT_STICK.getValue());
-		JoystickButton driverRightStick = new JoystickButton(joystickDriver, XBoxButton.RIGHT_STICK.getValue());
+		JoystickButton driverRightStick = new JoystickButton(joystickDriver, XBoxButton.RIGHT_STICK.getValue());		
+		
+		// TODO Link button state to execute commands
+		// example : driverA.whenPressed(new RobotPickGear());
+		
+		driverX.whenPressed(new ShiftUp(driveTrain));
+		driverA.whenPressed(new ShiftDown(driveTrain));
+	
+	}
+	
+	private void initJoystickHelper(DriveTrain driveTrain, Gripper gripper, Pivot pivot, Platform platformLeft, Platform platformRight) {
+		joystickHelper = new Joystick(RobotMap.JOYSTICK_HELPER_PORT);
 
+		// Create all buttons in case we need them.
 		JoystickButton helperA = new JoystickButton(joystickHelper, XBoxButton.A.getValue());
 		JoystickButton helperB = new JoystickButton(joystickHelper, XBoxButton.B.getValue());
 		JoystickButton helperX = new JoystickButton(joystickHelper, XBoxButton.X.getValue());
@@ -101,19 +120,13 @@ public class OI {
 		JoystickButton helperStart = new JoystickButton(joystickHelper, XBoxButton.START.getValue());
 		JoystickButton helperLeftStick = new JoystickButton(joystickHelper, XBoxButton.LEFT_STICK.getValue());
 		JoystickButton helperRightStick = new JoystickButton(joystickHelper, XBoxButton.RIGHT_STICK.getValue());
-
-		// TODO Link button state to execute commands
-		// example : driverA.whenPressed(new RobotPickGear());
-		driverRB.whenPressed(new GripperPull(gripper));
-		driverLB.whenPressed(new GripperReject(gripper));
 		
-		driverA.whenPressed(new PivotToLowPosition(pivot));
-		driverB.whenPressed(new PivotToExchangePosition(pivot));
-		driverX.whenPressed(new PivotToSwitchPosition(pivot));
-		driverY.whenPressed(new PivotToHighPosition(pivot));
-
-		// TODO Add buttons to smart dashboard
-		// example :SmartDashboard.putData("RobotLift", new RobotLift());
+		helperA.whenPressed(new PivotToLowPosition(pivot));
+		helperB.whenPressed(new PivotToExchangePosition(pivot));
+		helperX.whenPressed(new PivotToSwitchPosition(pivot));
+		helperY.whenPressed(new PivotToHighPosition(pivot));
+		
+		helperBack.whenPressed(new ActivateEndGameProfile(platformLeft, platformRight));
 	}
 
 	public double getJoystickDriverAxis(XBoxAxis axis) {

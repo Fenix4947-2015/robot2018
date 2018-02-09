@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 
 import org.usfirst.frc.team4947.robot.RobotMap;
+import org.usfirst.frc.team4947.robot.commands.gripper.GripperDefault;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -55,6 +56,7 @@ public class Gripper extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
+		setDefaultCommand(new GripperDefault(this));
 	}
 	
 	public boolean isCubePresent() {
@@ -70,18 +72,20 @@ public class Gripper extends Subsystem {
 	}
 	
 	public void pull() {
-		leftMotor.set(ControlMode.PercentOutput, MOTOR_PULL_PERCENT_OUTPUT);
-		rightMotor.set(ControlMode.PercentOutput, MOTOR_PULL_PERCENT_OUTPUT);		
+		rotate(MOTOR_PULL_PERCENT_OUTPUT);
 	}
 	
 	public void reject() {
-		leftMotor.set(ControlMode.PercentOutput, MOTOR_REJECT_PERCENT_OUTPUT);
-		rightMotor.set(ControlMode.PercentOutput, MOTOR_REJECT_PERCENT_OUTPUT);		
+		rotate(MOTOR_REJECT_PERCENT_OUTPUT);
 	}
 	
 	public void shootToSwitch() {
-		leftMotor.set(ControlMode.PercentOutput, MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
-		rightMotor.set(ControlMode.PercentOutput, MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
+		rotate(MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
+	}
+	
+	public void rotate(double percentOutput) {
+		leftMotor.set(ControlMode.PercentOutput, percentOutput);
+		rightMotor.set(ControlMode.PercentOutput, percentOutput);
 	}
 
 	public void stop() {
