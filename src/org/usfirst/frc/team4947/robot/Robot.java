@@ -4,7 +4,6 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterFoward;
@@ -28,27 +27,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the TimedRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.properties file in the
- * project.
+ * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as 
+ * described in the TimedRobot documentation. If you change the name of this class or the package after creating this 
+ * project, you must also update the build.properties file in the project.
  */
 public class Robot extends TimedRobot {
 
 	public static OI oi;
-	Command m_autonomousCommand;
-	SendableChooser m_chooser = new SendableChooser();
-
+	
 	public static DriveTrain driveTrain;
 	public static Gripper gripper;
 	public static Pivot pivot;
 	public static Platform platformLeft;
-	public static Platform platformRight;
+	public static Platform platformRight;	
+	
+	Command m_autonomousCommand;
+	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
+	 * This function is run when the robot is first started up and should be used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
@@ -58,8 +55,7 @@ public class Robot extends TimedRobot {
 		platformLeft = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_LEFT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_LEFT);
 		platformRight = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_RIGHT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_RIGHT);
 
-
-		oi = new OI(driveTrain, gripper, pivot, platformLeft, platformRight);
+		oi = new OI();
 		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch( pivot, gripper));
 		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch( pivot, gripper));
 		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch( pivot, gripper));
@@ -72,9 +68,8 @@ public class Robot extends TimedRobot {
 	}
 
 	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
+	 * This function is called once each time the robot enters Disabled mode. You can use it to reset any subsystem 
+	 * information you want to clear when the robot is disabled.
 	 */
 	@Override
 	public void disabledInit() {
@@ -87,16 +82,13 @@ public class Robot extends TimedRobot {
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
+	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes using 
+	 * the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
+	 * remove all of the chooser code and uncomment the getString code to get the auto name from the text box below the 
+	 * Gyro
 	 *
-	 * <p>
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented 
+	 * example) or additional comparisons to the switch structure below with additional strings & commands.
 	 */
 	@Override
 	public void autonomousInit() {

@@ -1,16 +1,14 @@
 package org.usfirst.frc.team4947.robot.commands;
 
-import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4947.robot.Robot;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain.ShifterSpeed;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShiftDown extends Command {
 	
-	private DriveTrain driveTrain;
-
-	public ShiftDown(DriveTrain driveTrain) {
-		this.driveTrain = driveTrain;
+	public ShiftDown() {
+		requires(Robot.driveTrain);
 	}
 
 	// Called just before this Command runs the first time
@@ -19,7 +17,7 @@ public class ShiftDown extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		driveTrain.gearboxShift(ShifterSpeed.Slow);
+		Robot.driveTrain.gearboxShift(ShifterSpeed.Slow);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

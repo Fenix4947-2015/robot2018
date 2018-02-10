@@ -14,10 +14,6 @@ import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToSwitchPosition;
-import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team4947.robot.subsystems.Gripper;
-import org.usfirst.frc.team4947.robot.subsystems.Pivot;
-import org.usfirst.frc.team4947.robot.subsystems.Platform;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -75,15 +71,15 @@ public class OI {
 	private Joystick joystickDriver;
 	private Joystick joystickHelper;
 
-	public OI(DriveTrain driveTrain, Gripper gripper, Pivot pivot, Platform platformLeft, Platform platformRight) {
-		initJoystickDriver(driveTrain, gripper, pivot, platformLeft, platformRight);
-		initJoystickHelper(driveTrain, gripper, pivot, platformLeft, platformRight);
+	public OI() {
+		initJoystickDriver();
+		initJoystickHelper();
 
 		// TODO Add buttons to smart dashboard
 		// example :SmartDashboard.putData("RobotLift", new RobotLift());
 	}
 	
-	private void initJoystickDriver(DriveTrain driveTrain, Gripper gripper, Pivot pivot, Platform platformLeft, Platform platformRight) {
+	private void initJoystickDriver() {
 		joystickDriver = new Joystick(RobotMap.JOYSTICK_DRIVER_PORT);
 		
 		// Create all buttons in case we need them.
@@ -101,12 +97,12 @@ public class OI {
 		// TODO Link button state to execute commands
 		// example : driverA.whenPressed(new RobotPickGear());
 		
-		driverX.whenPressed(new ShiftUp(driveTrain));
-		driverA.whenPressed(new ShiftDown(driveTrain));
+		driverX.whenPressed(new ShiftUp());
+		driverA.whenPressed(new ShiftDown());
 	
 	}
 	
-	private void initJoystickHelper(DriveTrain driveTrain, Gripper gripper, Pivot pivot, Platform platformLeft, Platform platformRight) {
+	private void initJoystickHelper() {
 		joystickHelper = new Joystick(RobotMap.JOYSTICK_HELPER_PORT);
 
 		// Create all buttons in case we need them.
@@ -121,21 +117,13 @@ public class OI {
 		JoystickButton helperLeftStick = new JoystickButton(joystickHelper, XBoxButton.LEFT_STICK.getValue());
 		JoystickButton helperRightStick = new JoystickButton(joystickHelper, XBoxButton.RIGHT_STICK.getValue());
 		
-		helperA.whenPressed(new PivotToLowPosition(pivot));
-		helperB.whenPressed(new PivotToExchangePosition(pivot));
-		helperX.whenPressed(new PivotToSwitchPosition(pivot));
-		helperY.whenPressed(new PivotToHighPosition(pivot));
+		helperA.whenPressed(new PivotToLowPosition());
+		helperB.whenPressed(new PivotToExchangePosition());
+		helperX.whenPressed(new PivotToSwitchPosition());
+		helperY.whenPressed(new PivotToHighPosition());
 		
-		helperBack.whenPressed(
-				new ActivateEndGameHelperProfile(
-						gripper,
-						platformLeft,
-						XBoxButton.LB,
-						XBoxAxis.LEFT_TRIGGER,
-						platformRight,
-						XBoxButton.RB,
-						XBoxAxis.RIGHT_TRIGGER));
-	}
+		helperBack.whenPressed(new ActivateEndGameHelperProfile());
+		}
 
 	public double getJoystickDriverAxis(XBoxAxis axis) {
 		return joystickDriver.getRawAxis(axis.getValue());

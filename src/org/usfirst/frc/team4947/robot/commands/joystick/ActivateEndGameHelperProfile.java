@@ -2,53 +2,26 @@ package org.usfirst.frc.team4947.robot.commands.joystick;
 
 import org.usfirst.frc.team4947.robot.OI.XBoxAxis;
 import org.usfirst.frc.team4947.robot.OI.XBoxButton;
+import org.usfirst.frc.team4947.robot.Robot;
 import org.usfirst.frc.team4947.robot.commands.PlatformDefault;
-import org.usfirst.frc.team4947.robot.subsystems.Gripper;
-import org.usfirst.frc.team4947.robot.subsystems.Platform;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ActivateEndGameHelperProfile extends Command {
 	
-	// Members.
-	private Platform platformLeft;
-	private XBoxButton unlockButtonLeft;
-	private XBoxAxis liftSpeedAxisLeft;
-	
-	private Platform platformRight;
-	private XBoxButton unlockButtonRight;
-	private XBoxAxis liftSpeedAxisRight;
-	
-	private Gripper gripper;
-
-	public ActivateEndGameHelperProfile(
-			Gripper gripper,
-			Platform platformLeft, 
-			XBoxButton unlockButtonLeft, 
-			XBoxAxis liftSpeedAxisLeft,
-			Platform platformRight, 
-			XBoxButton unlockButtonRight, 
-			XBoxAxis liftSpeedAxisRight) {
-		requires(platformLeft);
-		requires(platformRight);
+	public ActivateEndGameHelperProfile() {
+		requires(Robot.gripper);
 		
-		this.gripper = gripper;
-
-		this.platformLeft = platformLeft;
-		this.unlockButtonLeft = unlockButtonLeft;
-		this.liftSpeedAxisLeft = liftSpeedAxisLeft;
-		
-		this.platformRight = platformRight;
-		this.unlockButtonRight = unlockButtonRight;
-		this.liftSpeedAxisRight = liftSpeedAxisRight;
+		requires(Robot.platformLeft);
+		requires(Robot.platformRight);
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		gripper.setDefaultCommand(null);
+		Robot.gripper.setDefaultCommand(null);
 
-		platformLeft.setDefaultCommand(new PlatformDefault(platformLeft, unlockButtonLeft, liftSpeedAxisLeft));
-		platformRight.setDefaultCommand(new PlatformDefault(platformRight, unlockButtonRight, liftSpeedAxisRight));		
+		Robot.platformLeft.setDefaultCommand(new PlatformDefault(Robot.platformLeft, XBoxButton.LB, XBoxAxis.LEFT_TRIGGER));
+		Robot.platformLeft.setDefaultCommand(new PlatformDefault(Robot.platformRight, XBoxButton.RB, XBoxAxis.RIGHT_TRIGGER));		
 	}
 
 	// Called repeatedly when the command is scheduled to run.
