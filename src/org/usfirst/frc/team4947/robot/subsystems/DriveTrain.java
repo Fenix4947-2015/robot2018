@@ -78,7 +78,7 @@ public class DriveTrain extends Subsystem {
 		leftMotor1.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
         
         /* choose the sensor and sensor direction */
-		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,kPIDLoopIdx, kTimeoutMs);
+		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,kPIDLoopIdx, kTimeoutMs);
 		leftMotor1.setSensorPhase(true);
         
         /* set the peak and nominal outputs, 12V means full */
@@ -101,7 +101,7 @@ public class DriveTrain extends Subsystem {
 	
     public void initDefaultCommand() 
     {
-        setDefaultCommand(new DriveArcade(new DriveTrain()));
+        setDefaultCommand(new DriveArcade());
     }
     
     public void driveToDistance(double distance_feet)

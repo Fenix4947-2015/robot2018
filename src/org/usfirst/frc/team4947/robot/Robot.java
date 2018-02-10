@@ -38,13 +38,13 @@ public class Robot extends TimedRobot {
 
 	public static OI oi;
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	SendableChooser m_chooser = new SendableChooser();
 
-	private DriveTrain driveTrain;
-	private Gripper gripper;
-	private Pivot pivot;
-	private Platform platformLeft;
-	private Platform platformRight;
+	public static DriveTrain driveTrain;
+	public static Gripper gripper;
+	public static Pivot pivot;
+	public static Platform platformLeft;
+	public static Platform platformRight;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -58,12 +58,13 @@ public class Robot extends TimedRobot {
 		platformLeft = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_LEFT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_LEFT);
 		platformRight = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_RIGHT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_RIGHT);
 
+
 		oi = new OI(driveTrain, gripper, pivot, platformLeft, platformRight);
-		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch(driveTrain, pivot, gripper));
-		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch(driveTrain, pivot, gripper));
-		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch(driveTrain, pivot, gripper));
-		m_chooser.addDefault("Robot a gauche ou droite - avance", new AutoLeftRightFoward(driveTrain));
-		m_chooser.addDefault("Robot au centre - avance", new AutoCenterFoward(driveTrain));
+		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch( pivot, gripper));
+		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch( pivot, gripper));
+		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch( pivot, gripper));
+		m_chooser.addDefault("Robot a gauche ou droite - avance", new AutoLeftRightFoward());
+		m_chooser.addDefault("Robot au centre - avance", new AutoCenterFoward());
 		SmartDashboard.putData("Auto mode", m_chooser);
 
 		// Camera sur le dashboard
@@ -99,7 +100,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
+		m_autonomousCommand = (Command)m_chooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -107,7 +108,6 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			String gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -126,6 +126,7 @@ public class Robot extends TimedRobot {
 		// commands
 		String commandName = m_autonomousCommand.getName();
 		switch (commandName) {
+			
 			case AutoLeftRightFoward.NAME:
 				AutoLeftRightFoward autoLeftFoward = ((AutoLeftRightFoward) m_autonomousCommand);
 				autoLeftFoward.start();

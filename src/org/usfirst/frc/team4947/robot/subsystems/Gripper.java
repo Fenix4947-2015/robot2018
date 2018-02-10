@@ -56,7 +56,7 @@ public class Gripper extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new GripperDefault(this));
+		//setDefaultCommand(new GripperDefault(this));
 	}
 	
 	public boolean isCubePresent() {

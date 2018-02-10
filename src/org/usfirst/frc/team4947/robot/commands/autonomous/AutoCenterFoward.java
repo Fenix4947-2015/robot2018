@@ -9,11 +9,11 @@ public class AutoCenterFoward extends CommandGroup {
 	// Constants.
 	public static final String NAME = "AutoCenterFoward";
 
-	public AutoCenterFoward(DriveTrain driveTrain) {
+	public AutoCenterFoward() {
 		super(NAME);
 
-		addSequential(new DriveDistance(driveTrain, 0.5));
-		addSequential(new DriveRotate(driveTrain, 35.0));
-		addSequential(new DriveDistance(driveTrain, 16.0)); // Drive to nothing ;-)
+		addSequential(new DriveDistance(0.5));
+		addSequential(new DriveRotate( 35.0));
+		addSequential(new DriveDistance( 16.0)); // Drive to nothing ;-)
 	}
 }

@@ -8,10 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveArcade extends Command {
 
-	private DriveTrain driveTrain;
 
-	public DriveArcade(DriveTrain driveTrain) {
-		this.driveTrain = driveTrain;
+	public DriveArcade() {
+		requires(Robot.driveTrain);
 	}
 
 	// Called just before this Command runs the first time
@@ -24,10 +23,10 @@ public class DriveArcade extends Command {
 		// motion forward is with left trigger, backwards with right trigger.
 		double moveValue = -Robot.oi.getJoystickDriverAxis(XBoxAxis.LEFT_TRIGGER) + Robot.oi.getJoystickDriverAxis(XBoxAxis.RIGHT_TRIGGER);
 
-		double rotationValueGain = 0.65; // for full rotation speed, use 1. Tune to have smoother rotation.
-		double rotateValue = -Robot.oi.getJoystickDriverAxis(XBoxAxis.LEFT_STICK_X, 0.1) * rotationValueGain;
+		double rotationValueGain = 1; // for full rotation speed, use 1. Tune to have smoother rotation.
+		double rotateValue = Robot.oi.getJoystickDriverAxis(XBoxAxis.LEFT_STICK_X, 0.1) * rotationValueGain;
 
-		driveTrain.driveArcadeMethod(moveValue, rotateValue);
+		Robot.driveTrain.driveArcadeMethod(moveValue, rotateValue);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -37,12 +36,12 @@ public class DriveArcade extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		driveTrain.driveStop();
+		Robot.driveTrain.driveStop();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		driveTrain.driveStop();
+		Robot.driveTrain.driveStop();
 	}
 }

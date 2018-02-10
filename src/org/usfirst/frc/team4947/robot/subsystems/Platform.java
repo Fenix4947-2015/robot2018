@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 
+import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameProfile;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -19,7 +21,7 @@ public class Platform extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		// setDefaultCommand(new MySpecialCommand());
+		//setDefaultCommand(new ActivateEndGameProfile(this, this));
 	}
 
 	public void liftSpeed(double speed) {

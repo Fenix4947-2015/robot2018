@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.usfirst.frc.team4947.robot.RobotMap;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -96,6 +97,7 @@ public class Pivot extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
+		//setDefaultCommand( new PivotToLowPosition(this));
 	}
 	
 	private Position getCurrentPosition() {
