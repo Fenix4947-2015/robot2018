@@ -9,7 +9,7 @@ package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.ShiftDown;
 import org.usfirst.frc.team4947.robot.commands.ShiftUp;
-import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameProfile;
+import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameHelperProfile;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
@@ -126,7 +126,15 @@ public class OI {
 		helperX.whenPressed(new PivotToSwitchPosition(pivot));
 		helperY.whenPressed(new PivotToHighPosition(pivot));
 		
-		helperBack.whenPressed(new ActivateEndGameProfile(platformLeft, platformRight));
+		helperBack.whenPressed(
+				new ActivateEndGameHelperProfile(
+						gripper,
+						platformLeft,
+						XBoxButton.LB,
+						XBoxAxis.LEFT_TRIGGER,
+						platformRight,
+						XBoxButton.RB,
+						XBoxAxis.RIGHT_TRIGGER));
 	}
 
 	public double getJoystickDriverAxis(XBoxAxis axis) {
