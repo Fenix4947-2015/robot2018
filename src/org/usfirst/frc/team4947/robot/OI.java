@@ -9,6 +9,7 @@ package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.ShiftDown;
 import org.usfirst.frc.team4947.robot.commands.ShiftUp;
+import org.usfirst.frc.team4947.robot.commands.autonomous.DriveDistance;
 import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameHelperProfile;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
@@ -117,11 +118,14 @@ public class OI {
 		JoystickButton helperLeftStick = new JoystickButton(joystickHelper, XBoxButton.LEFT_STICK.getValue());
 		JoystickButton helperRightStick = new JoystickButton(joystickHelper, XBoxButton.RIGHT_STICK.getValue());
 		
-		helperA.whenPressed(new PivotToLowPosition());
+		helperA.whenPressed(new ShiftDown());
 		helperB.whenPressed(new PivotToExchangePosition());
-		helperX.whenPressed(new PivotToSwitchPosition());
+		helperX.whenPressed(new ShiftUp());
 		helperY.whenPressed(new PivotToHighPosition());
 		
+		// debug only to test the closed loop
+		helperLB.whenPressed(new DriveDistance(2.0));
+		helperRB.whenPressed(new DriveDistance(-2.0));
 		helperBack.whenPressed(new ActivateEndGameHelperProfile());
 		}
 

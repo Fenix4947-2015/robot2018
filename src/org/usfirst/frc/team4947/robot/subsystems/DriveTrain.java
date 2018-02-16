@@ -15,34 +15,36 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends Subsystem {
 
+	// Constants.
+	private static final double WHEEL_DIAMETER_IN_INCHES = 6;
+	private static final double WHEEL_RADIUS_IN_INCHES = (WHEEL_DIAMETER_IN_INCHES / 2.0);
+	private static final double WHEEL_CIRCUMFERENCE_IN_INCHES = (2 * Math.PI * WHEEL_RADIUS_IN_INCHES);
+
+	private static final double PULSES_PER_FOOT = 292;
+	private static final double MAX_CLOSED_LOOP_MODE_PERCENT_OUTPUT = 0.6;
+
+	/** Not used. */
+	private static final double INCHES_PER_FOOT = 12.0;
+	private static final double ENCODER_PULSES_PER_REVOLUTION = 1440;
+	private static final double INCHES_PER_ENCODER_REVOLUTION = (3 * WHEEL_CIRCUMFERENCE_IN_INCHES);
+
+	// Members.
 	private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(RobotMap.LEFT_MOTOR1_ADDRESS); // encoder
 	private WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(RobotMap.LEFT_MOTOR2_ADDRESS);
-	private SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(leftMotor1, leftMotor2);
 	
 	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR1_ADDRESS); // encoder
 	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR2_ADDRESS);
+	
+	private SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(leftMotor1, leftMotor2);
 	private SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(rightMotor1, rightMotor2);
 	
-	double targetPositionRotations;
-	public static final int kSlotIdx = 0;
-	
-	/* Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops.  
-	 * For now we just want the primary one.
-	 */
-	public static final int kPIDLoopIdx = 0;
-
-	/*
-	 * set to zero to skip waiting for confirmation, set to nonzero to wait
-	 * and report to DS if action fails.
-	 */
-	public static final int kTimeoutMs = 10;
-	
+	private DifferentialDrive robotDrive = new DifferentialDrive(leftMotor1, rightMotor1);
+		
 	private Solenoid gearboxSpeedSolenoid = new Solenoid(RobotMap.GEARBOX_SPEEDSOLENOID_ADDRESS);
 	
 	private AnalogGyro gyro = new AnalogGyro(RobotMap.ANALOG_GYRO_ADDRESS);
 	private static final double kVoltsPerDegreePerSecond = 0.0128/2; // gyro sensitivity, estimated 2017, jp choiniere
-	
-	private DifferentialDrive robotDrive = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
+		
 	
 	// Define names for the shifter possibilities.
 	public enum ShifterSpeed
@@ -67,36 +69,18 @@ public class DriveTrain extends Subsystem {
 		
 		robotDrive.setSafetyEnabled(false);
 		
-		leftMotor1.setInverted(false);
-		leftMotor2.setInverted(false);
+		boolean kMotorLeftInvert = false;
+		initEncoder(leftMotor1,kMotorLeftInvert);
+		leftMotor2.setInverted(kMotorLeftInvert);
+		leftMotor2.follow(leftMotor1);
 				
-		rightMotor1.setInverted(false);
-		rightMotor2.setInverted(false);
-		/* lets grab the 360 degree position of the MagEncoder's absolute position */
-		int absolutePosition = leftMotor1.getSelectedSensorPosition(kTimeoutMs) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
-        /* use the low level API to set the quad encoder signal */
-		leftMotor1.setSelectedSensorPosition(absolutePosition, kPIDLoopIdx, kTimeoutMs);
-        
-        /* choose the sensor and sensor direction */
-		leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,kPIDLoopIdx, kTimeoutMs);
-		leftMotor1.setSensorPhase(true);
-        
-        /* set the peak and nominal outputs, 12V means full */
-		leftMotor1.configNominalOutputForward(0, kTimeoutMs);
-		leftMotor1.configNominalOutputReverse(0, kTimeoutMs);
-		leftMotor1.configPeakOutputForward(1, kTimeoutMs);
-		leftMotor1.configPeakOutputReverse(-1, kTimeoutMs);
-        /* set the allowable closed-loop error,
-         * Closed-Loop output will be neutral within this range.
-         * See Table in Section 17.2.1 for native units per rotation. 
-         */
-		leftMotor1.configAllowableClosedloopError(0, kPIDLoopIdx, kTimeoutMs); /* always servo */
-        /* set closed loop gains in slot0 */
-		leftMotor1.config_kF(kPIDLoopIdx, 0.0, kTimeoutMs);
-		leftMotor1.config_kP(kPIDLoopIdx, 0.8, kTimeoutMs); //0.1
-		leftMotor1.config_kI(kPIDLoopIdx, 0.003, kTimeoutMs);
-		leftMotor1.config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
-			
+		boolean kMotorRightInvert = false; // to validate. tested on test robot. // to make work for closed loop also.
+		initEncoder(rightMotor1,kMotorRightInvert);		
+		rightMotor2.setInverted(kMotorRightInvert);	
+		rightMotor2.follow(rightMotor1);
+		
+		
+		setAllMotorsAllowablePower(1.0);
 	}
 	
     public void initDefaultCommand() 
@@ -104,31 +88,106 @@ public class DriveTrain extends Subsystem {
         setDefaultCommand(new DriveArcade());
     }
     
-    public void driveToDistance(double distance_feet)
+    private void setMotorAllowablePower(WPI_TalonSRX motor, double peakPercentOutput)
     {
-    	
-		/* lets grab the 360 degree position of the MagEncoder's absolute position */
-		int absolutePosition = leftMotor1.getSelectedSensorPosition(kTimeoutMs) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
-        /* use the low level API to set the quad encoder signal */
-		leftMotor1.setSelectedSensorPosition(absolutePosition,kPIDLoopIdx,kTimeoutMs);
-		
-        double nombreToursMoteur = distance_feet / ((6*Math.PI)/12);
-    	targetPositionRotations =  nombreToursMoteur * 80; /* 100 Rotations * 80 u/rev in either direction (85.42 rot/second @ free shaft)(20 per phase, quad encod) */
-    	leftMotor1.set(ControlMode.Position, targetPositionRotations); /* 50 rotations in either direction */
-    	
-    	
+		// Set the peak and nominal outputs, 12V means full.
+    	motor.configNominalOutputForward(0, DriveTrainConstants.kTimeoutMs);
+    	motor.configNominalOutputReverse(0, DriveTrainConstants.kTimeoutMs);
+    	motor.configPeakOutputForward(peakPercentOutput, DriveTrainConstants.kTimeoutMs);
+    	motor.configPeakOutputReverse(-peakPercentOutput, DriveTrainConstants.kTimeoutMs);
     }
     
-    public double getEncoderDistanceError()
-    {
-    	// return error remaining on the closed loop, in meters. 
-    	return  leftMotor1.getClosedLoopError(kPIDLoopIdx);
+    public void setAllMotorsAllowablePower(double peakPercentOutput)
+    {    	
+    	setMotorAllowablePower(leftMotor1,peakPercentOutput);
+		setMotorAllowablePower(leftMotor2,peakPercentOutput);
+		setMotorAllowablePower(rightMotor1,peakPercentOutput);
+		setMotorAllowablePower(rightMotor2,peakPercentOutput);
     }
+    
+    public void driveToDistance(double distance_feet)
+    {    	
+    	setAllMotorsAllowablePower(MAX_CLOSED_LOOP_MODE_PERCENT_OUTPUT);
+		positionPIDForward(leftMotor1,distance_feet);
+		positionPIDForward(rightMotor1,distance_feet);
+    }
+    
+    private void positionPIDForward(WPI_TalonSRX motor, double feet) {
+				
+    	// reinitialize counts for relative motion
+		int absolutePosition = 0;
+		motor.setSelectedSensorPosition(
+				absolutePosition, 
+				DriveTrainConstants.kPIDLoopIdx,
+				DriveTrainConstants.kTimeoutMs);
+			
+		motor.set(ControlMode.Position, feetToEncoderCounts(feet));
+	}
+    
+    public double getEncoderDistanceErrorFeet()
+    {
+    	// return error remaining on the closed loop, in foot. 
+    	  int leftError = leftMotor1.getClosedLoopError(0);
+    	  int rightError = rightMotor1.getClosedLoopError(0);
+    	  int totalError = (leftError + rightError); // in counts
+    	  double totalErrorFeet = encoderCountsToFeet(totalError);
+    	  
+    	  double averageErrorFeet = totalErrorFeet/2.0;
+    	  
+    	  return averageErrorFeet;
+    }
+    
+    private double encoderCountsToFeet(int encoderCounts)
+    {    	
+    	return ((double)(encoderCounts) / PULSES_PER_FOOT);
+    }
+    
+    private double feetToEncoderCounts(double feet)
+    {    	
+		return (feet * PULSES_PER_FOOT);
+    }
+    
+	// GitHub: https://github.com/CrossTheRoadElec/Phoenix-Documentation
+	// Closed-loop: https://github.com/CrossTheRoadElec/Phoenix-Documentation#closed-loop-using-sensor-control
+	// Source: https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/tree/master/Java/PositionClosedLoop
+	private static void initEncoder(WPI_TalonSRX motor, boolean kMotorInvert) {
+		// Choose the sensor and sensor direction.
+		motor.configSelectedFeedbackSensor(
+				FeedbackDevice.QuadEncoder, 
+				DriveTrainConstants.kPIDLoopIdx,
+				DriveTrainConstants.kTimeoutMs);
 
-    public void driveArcadeMethod(double Speed, double Rotation) {
+		// Choose to ensure sensor is positive when output is positive.
+		motor.setSensorPhase(DriveTrainConstants.kSensorPhase);
+
+		// Choose based on what direction you want forward/positive to be.
+		// This does not affect sensor phase.
+		motor.setInverted(kMotorInvert);
+
+		// Set the allowable closed-loop error, Closed-Loop output will be neutral within this range.
+		// See Table in Section 17.2.1 for native units per rotation.
+		motor.configAllowableClosedloopError(0, DriveTrainConstants.kPIDLoopIdx, DriveTrainConstants.kTimeoutMs);
+
+		// Set closed loop gains in slot0, typically kF stays zero.
+		motor.config_kF(DriveTrainConstants.kPIDLoopIdx, 0.0, DriveTrainConstants.kTimeoutMs);
+		motor.config_kP(DriveTrainConstants.kPIDLoopIdx, 0.18, DriveTrainConstants.kTimeoutMs);
+		motor.config_kI(DriveTrainConstants.kPIDLoopIdx, 0.0, DriveTrainConstants.kTimeoutMs);
+		motor.config_kD(DriveTrainConstants.kPIDLoopIdx, 0.0, DriveTrainConstants.kTimeoutMs);
+
+		int absolutePosition = 0;
+		motor.setSelectedSensorPosition(
+				absolutePosition, 
+				DriveTrainConstants.kPIDLoopIdx,
+				DriveTrainConstants.kTimeoutMs);
+	}
+    
+     public void driveArcadeMethod(double Speed, double Rotation) {
     	//ptoSolenoid.set(true);
     	SmartDashboard.putNumber("ForwardSpeed", Speed);
     	SmartDashboard.putNumber("RotationSpeed", Rotation);
+    	
+    	double rotationValueGain = 0.70; // for full rotation speed, use 1. Tune to have smoother rotation.
+    	Rotation = Rotation * rotationValueGain;
     	
     	double GoStraightCompensation = 0;
     	if(Math.abs(Speed) > 0.1)
@@ -144,7 +203,8 @@ public class DriveTrain extends Subsystem {
     
     public void driveStop()
     {
-    	robotDrive.arcadeDrive(0,0);
+    	leftMotorGroup.stopMotor();
+    	rightMotorGroup.stopMotor();
     }
     
     
@@ -167,6 +227,15 @@ public class DriveTrain extends Subsystem {
     public void log()
     {
     	SmartDashboard.putNumber("GyroAngleAbsolute", gyro.getAngle());
+    	int leftPosition = leftMotor1.getSelectedSensorPosition(0);
+		int rightPosition = rightMotor1.getSelectedSensorPosition(0);
+
+		System.out.format("leftPosition=%d, rightPosition=%d%n", leftPosition, rightPosition);
+
+		SmartDashboard.putNumber("Left Sensor position", leftPosition);
+		SmartDashboard.putNumber("Right Sensor position", rightPosition);
+
+
     }
 }
 

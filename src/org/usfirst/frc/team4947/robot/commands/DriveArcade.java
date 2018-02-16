@@ -15,6 +15,7 @@ public class DriveArcade extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.driveTrain.setAllMotorsAllowablePower(1.0); // reset motors at 100%
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -23,8 +24,7 @@ public class DriveArcade extends Command {
 		// motion forward is with left trigger, backwards with right trigger.
 		double moveValue = -Robot.oi.getJoystickDriverAxis(XBoxAxis.LEFT_TRIGGER) + Robot.oi.getJoystickDriverAxis(XBoxAxis.RIGHT_TRIGGER);
 
-		double rotationValueGain = 1; // for full rotation speed, use 1. Tune to have smoother rotation.
-		double rotateValue = Robot.oi.getJoystickDriverAxis(XBoxAxis.LEFT_STICK_X, 0.1) * rotationValueGain;
+		double rotateValue = Robot.oi.getJoystickDriverAxis(XBoxAxis.LEFT_STICK_X, 0.1);
 
 		Robot.driveTrain.driveArcadeMethod(moveValue, rotateValue);
 	}
@@ -42,6 +42,6 @@ public class DriveArcade extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.driveTrain.driveStop();
+		end();
 	}
 }

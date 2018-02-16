@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveDistance extends Command {
 
 	// Constants.
-	private static final double DISTANCE_THRESHOLD = 0.003;
-	
+	private static final double DISTANCE_THRESHOLD_FEET = 0.25; // three inches
+	private static final int TIMEOUT_VALUE = 6; //sec
 	// Members.
 	private double distanceFeet;
 	
@@ -20,7 +20,7 @@ public class DriveDistance extends Command {
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		setTimeout(10);
+		setTimeout(TIMEOUT_VALUE);
 		Robot.driveTrain.driveToDistance(distanceFeet);
 	}
 	
@@ -35,7 +35,7 @@ public class DriveDistance extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		boolean reachedPosition = (Robot.driveTrain.getEncoderDistanceError()<DISTANCE_THRESHOLD);
+		boolean reachedPosition = (Robot.driveTrain.getEncoderDistanceErrorFeet()<DISTANCE_THRESHOLD_FEET);
         return (reachedPosition|| isTimedOut());
 	}
 

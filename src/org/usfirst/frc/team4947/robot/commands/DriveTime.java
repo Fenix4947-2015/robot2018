@@ -13,26 +13,27 @@ public class DriveTime extends Command {
     public DriveTime(double seconds) {
         // Use requires() here to declare subsystem dependencies
        requires(Robot.driveTrain);
-   		Timer.delay(seconds);
+       setTimeout(seconds);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.driveArcadeMethod(1, 0);
+    	Robot.driveTrain.setAllMotorsAllowablePower(0.5); // reset motors at 100%
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.driveTrain.driveArcadeMethod(1, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isFinished();
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.driveArcadeMethod(0, 0);
+    	Robot.driveTrain.driveStop();
     }
 
     // Called when another command which requires one or more of the same

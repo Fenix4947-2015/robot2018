@@ -35,7 +35,7 @@ public class RobotMap {
 	public static final int RIGHT_MOTOR1_ADDRESS = 7; // encoder right
 	public static final int RIGHT_MOTOR2_ADDRESS = 6;
 
-	public static final int GEARBOX_SPEEDSOLENOID_ADDRESS = 4;
+	public static final int GEARBOX_SPEEDSOLENOID_ADDRESS = 0;
 	public static final int ANALOG_GYRO_ADDRESS = 0;
 
 	public static final int UNLOCKER_SOLENOID_ADDRESS_LEFT = 1; // to validate

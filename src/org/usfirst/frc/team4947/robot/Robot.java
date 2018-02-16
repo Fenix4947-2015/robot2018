@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		driveTrain.driveStop();
 	}
 
 	@Override
@@ -190,9 +190,8 @@ public class Robot extends TimedRobot {
 		log();
 	}
 
-	private void log() {
-		/*
-		 * driveTrain.log(); intake.log(); gripper.log(); visionSystem.log();
-		 */
+	private void log() 
+	{		
+	  driveTrain.log(); 
 	}
 }
