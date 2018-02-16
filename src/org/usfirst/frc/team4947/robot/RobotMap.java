@@ -29,32 +29,32 @@ public class RobotMap {
 	public static final int JOYSTICK_HELPER_PORT = 1;
 
 	// Branchements du driveTrain
-	public static final int LEFT_MOTOR1_ADDRESS = 1;
-	public static final int LEFT_MOTOR2_ADDRESS = 4;
+	public static final int LEFT_MOTOR1_ADDRESS = 1; //encoder left
+	public static final int LEFT_MOTOR2_ADDRESS = 2;
 
-	public static final int RIGHT_MOTOR1_ADDRESS = 2;
-	public static final int RIGHT_MOTOR2_ADDRESS = 0;
+	public static final int RIGHT_MOTOR1_ADDRESS = 7; // encoder right
+	public static final int RIGHT_MOTOR2_ADDRESS = 6;
 
-	public static final int GEARBOX_SPEEDSOLENOID_ADDRESS = 1;
+	public static final int GEARBOX_SPEEDSOLENOID_ADDRESS = 4;
 	public static final int ANALOG_GYRO_ADDRESS = 0;
 
-	public static final int UNLOCKER_SOLENOID_ADDRESS_LEFT = 2;
-	public static final int LIFT_MOTOR_ADDRESS_LEFT = 3;
+	public static final int UNLOCKER_SOLENOID_ADDRESS_LEFT = 1; // to validate
+	public static final int LIFT_MOTOR_ADDRESS_LEFT = 5;
 
-	public static final int UNLOCKER_SOLENOID_ADDRESS_RIGHT = 4;
-	public static final int LIFT_MOTOR_ADDRESS_RIGHT = 4;
+	public static final int UNLOCKER_SOLENOID_ADDRESS_RIGHT = 2; // to validate
+	public static final int LIFT_MOTOR_ADDRESS_RIGHT = 3;
 
 	// Gripper subsystem.
-	public static final int GRIPPER_LEFT_MOTOR_DEVICE_NUMBER = 7;
-	public static final int GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER = 6;
-	public static final int GRIPPER_OPENER_SOLENOID_CHANNEL = 5;
-	public static final int GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL = 1;
+	public static final int GRIPPER_LEFT_MOTOR_DEVICE_NUMBER = 8;
+	public static final int GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER = 9;
+	public static final int GRIPPER_OPENER_SOLENOID_CHANNEL = 3; 
+	public static final int GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL = 1; // to validate
 
 	// Pivot subsystem.
 	public static final int PIVOT_MOTOR_DEVICE_NUMBER = 5;
-	public static final int PIVOT_LOW_POSITION_DIGITAL_INPUT_CHANNEL = 5;
-	public static final int PIVOT_HIGH_POSITION_DIGITAL_INPUT_CHANNEL = 2;
-	public static final int PIVOT_EXCHANGE_POSITION_DIGITAL_INPUT_CHANNEL = 3;
-	public static final int PIVOT_SWITCH_POSITION_DIGITAL_INPUT_CHANNEL = 4;
+	public static final int PIVOT_LOW_POSITION_DIGITAL_INPUT_CHANNEL = 5; // to validate
+	public static final int PIVOT_HIGH_POSITION_DIGITAL_INPUT_CHANNEL = 2; // to validate
+	public static final int PIVOT_EXCHANGE_POSITION_DIGITAL_INPUT_CHANNEL = 3; // to validate
+	public static final int PIVOT_SWITCH_POSITION_DIGITAL_INPUT_CHANNEL = 4; // to validate
 
 }

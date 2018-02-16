@@ -122,7 +122,7 @@ public class DriveTrain extends Subsystem {
     public double getEncoderDistanceError()
     {
     	// return error remaining on the closed loop, in meters. 
-    	return  leftMotor1.getClosedLoopTarget(kPIDLoopIdx);
+    	return  leftMotor1.getClosedLoopError(kPIDLoopIdx);
     }
 
     public void driveArcadeMethod(double Speed, double Rotation) {
