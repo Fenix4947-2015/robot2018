@@ -55,6 +55,4 @@ public class RobotMap {
 	public static final int PIVOT_LOW_POSITION_DIGITAL_INPUT_CHANNEL = 5; // to validate
 	public static final int PIVOT_HIGH_POSITION_DIGITAL_INPUT_CHANNEL = 2; // to validate
 	public static final int PIVOT_EXCHANGE_POSITION_DIGITAL_INPUT_CHANNEL = 3; // to validate
-	public static final int PIVOT_SWITCH_POSITION_DIGITAL_INPUT_CHANNEL = 4; // to validate
-
 }
