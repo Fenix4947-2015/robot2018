@@ -21,7 +21,7 @@ public class DriveDistance extends Command {
 	// Called just before the command runs the first time.
 	protected void initialize() {
 		setTimeout(TIMEOUT_VALUE);
-		Robot.driveTrain.driveToDistance(distanceFeet);
+		Robot.driveTrain.driveToDistance(distanceFeet);		
 	}
 	
 	// Called repeatedly when the command is scheduled to run.
@@ -36,7 +36,7 @@ public class DriveDistance extends Command {
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
 		boolean reachedPosition = (Robot.driveTrain.getEncoderDistanceErrorFeet()<DISTANCE_THRESHOLD_FEET);
-        return (reachedPosition|| isTimedOut());
+        return false; //(reachedPosition|| isTimedOut() || Robot.driveTrain.isRobotMoving());
 	}
 
 	// Called once after isFinished returns TRUE.

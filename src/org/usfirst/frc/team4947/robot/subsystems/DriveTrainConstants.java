@@ -14,7 +14,7 @@ public class DriveTrainConstants {
 	public static final int kTimeoutMs = 10;
 
 	// Choose so that Talon does not report sensor out of phase.
-	public static boolean kSensorPhase = true;
+	public static boolean kSensorPhase = false;
 
 	// Cchoose based on what direction you want to be positive, this does not affect motor invert.
 	//public static boolean kMotorInvert = false;

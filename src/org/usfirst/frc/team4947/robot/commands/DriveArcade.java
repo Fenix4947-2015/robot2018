@@ -14,8 +14,7 @@ public class DriveArcade extends Command {
 	}
 
 	// Called just before this Command runs the first time
-	protected void initialize() {
-		Robot.driveTrain.setAllMotorsAllowablePower(1.0); // reset motors at 100%
+	protected void initialize() {		
 	}
 
 	// Called repeatedly when this Command is scheduled to run

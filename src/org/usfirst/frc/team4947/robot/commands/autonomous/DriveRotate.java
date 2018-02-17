@@ -32,12 +32,14 @@ public class DriveRotate extends Command {
 
 	// Called repeatedly when the command is scheduled to run.
 	protected void execute() {
-		if (degrees < Robot.driveTrain.getGyroAngle()) {
-			// Robot.driveTrain.robotDrive.tankDrive(-speed*convertspd2degpsec, speed*convertspd2degpsec);
-			Robot.driveTrain.driveArcadeMethod(0, speed);
-		} else if (Robot.driveTrain.getGyroAngle() < degrees) {
-			// Robot.driveTrain.robotDrive.tankDrive(speed*convertspd2degpsec, -speed*convertspd2degpsec);
-			Robot.driveTrain.driveArcadeMethod(0, -speed);
+		System.out.format("Gyro angle : %f ",Robot.driveTrain.getGyroAngle());
+		if (degrees < Robot.driveTrain.getGyroAngle()) 
+		{			
+			Robot.driveTrain.rawDrive(-speed, speed);
+		} 
+		else if (Robot.driveTrain.getGyroAngle() < degrees) 
+		{			
+			Robot.driveTrain.rawDrive(speed, -speed);
 		}
 	}
 
@@ -48,7 +50,7 @@ public class DriveRotate extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return Math.abs((Robot.driveTrain.getGyroAngle() - degrees)) < Tolerance;// <>
+		return false;//Math.abs((Robot.driveTrain.getGyroAngle() - degrees)) < Tolerance;// <>
 	}
 
 	// Called once after isFinished returns TRUE.

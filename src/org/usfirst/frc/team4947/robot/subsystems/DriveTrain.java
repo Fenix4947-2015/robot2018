@@ -1,12 +1,15 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 import org.usfirst.frc.team4947.robot.RobotMap;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
+import org.usfirst.frc.team4947.robot.subsystems.NavX.PortType;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,13 +24,24 @@ public class DriveTrain extends Subsystem {
 	private static final double WHEEL_CIRCUMFERENCE_IN_INCHES = (2 * Math.PI * WHEEL_RADIUS_IN_INCHES);
 
 	private static final double PULSES_PER_FOOT = 292;
+	
+	// Tuning parameters
+	private static final double GO_STRAIGHT_COMPENSATION_STATIC = 0.08;
+	private static final double GO_STRAIGHT_COMPENSATION_DYNAMIC = 0.1;
+	private static final double MAX_SPEED_FOR_SHIFT_DOWN_FT_PER_SEC = 3.5;
+	// Position PID
 	private static final double MAX_CLOSED_LOOP_MODE_PERCENT_OUTPUT = 0.6;
-
+	private static final double POSITION_PID_P = 0.4;
+	private static final double POSITION_PID_I = 0.0;
+	private static final double POSITION_PID_D = 0.0;
+	private static final double POSITION_PID_F = 0.0;
+	
+	
 	/** Not used. */
 	private static final double INCHES_PER_FOOT = 12.0;
 	private static final double ENCODER_PULSES_PER_REVOLUTION = 1440;
 	private static final double INCHES_PER_ENCODER_REVOLUTION = (3 * WHEEL_CIRCUMFERENCE_IN_INCHES);
-
+	
 	// Members.
 	private WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(RobotMap.LEFT_MOTOR1_ADDRESS); // encoder
 	private WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(RobotMap.LEFT_MOTOR2_ADDRESS);
@@ -35,22 +49,23 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR1_ADDRESS); // encoder
 	private WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR2_ADDRESS);
 	
-	private SpeedControllerGroup leftMotorGroup = new SpeedControllerGroup(leftMotor1, leftMotor2);
-	private SpeedControllerGroup rightMotorGroup = new SpeedControllerGroup(rightMotor1, rightMotor2);
-	
 	private DifferentialDrive robotDrive = new DifferentialDrive(leftMotor1, rightMotor1);
 		
 	private Solenoid gearboxSpeedSolenoid = new Solenoid(RobotMap.GEARBOX_SPEEDSOLENOID_ADDRESS);
 	
-	private AnalogGyro gyro = new AnalogGyro(RobotMap.ANALOG_GYRO_ADDRESS);
-	private static final double kVoltsPerDegreePerSecond = 0.0128/2; // gyro sensitivity, estimated 2017, jp choiniere
-		
+	public boolean autonomousmode = false;
+	
+	// using the navx gyroscope requires to reference the navx_frc lib
+	// https://www.pdocs.kauailabs.com/navx-mxp/software/roborio-libraries/java/
+	//private AHRS gyro = new AHRS(SPI.Port.kMXP);
+	
+	private NavX navx = new NavX(PortType.SPI);
 	
 	// Define names for the shifter possibilities.
 	public enum ShifterSpeed
 	{
-		Fast(true),
-		Slow(false);
+		Fast(false),
+		Slow(true);
 		
 		private boolean value;
 		ShifterSpeed(boolean value){
@@ -64,29 +79,49 @@ public class DriveTrain extends Subsystem {
 	
 	
 	public DriveTrain()
-	{
-		gyro.setSensitivity(kVoltsPerDegreePerSecond);
-		
+	{			
 		robotDrive.setSafetyEnabled(false);
+		initAutonomous();
+	}
+	
+	public void initTeleop()
+	{
+		autonomousmode = false;
 		
 		boolean kMotorLeftInvert = false;
 		initEncoder(leftMotor1,kMotorLeftInvert);
 		leftMotor2.setInverted(kMotorLeftInvert);
-		leftMotor2.follow(leftMotor1);
+		leftMotor2.set(ControlMode.Follower, leftMotor1.getDeviceID());
 				
 		boolean kMotorRightInvert = false; // to validate. tested on test robot. // to make work for closed loop also.
 		initEncoder(rightMotor1,kMotorRightInvert);		
 		rightMotor2.setInverted(kMotorRightInvert);	
-		rightMotor2.follow(rightMotor1);
-		
+		rightMotor2.set(ControlMode.Follower, rightMotor1.getDeviceID());		
 		
 		setAllMotorsAllowablePower(1.0);
+		setDefaultCommand(new DriveArcade());
 	}
 	
-    public void initDefaultCommand() 
-    {
-        setDefaultCommand(new DriveArcade());
-    }
+	public void initAutonomous()
+	{
+		autonomousmode = true;
+		gearboxShift(ShifterSpeed.Slow);
+		
+		boolean kMotorLeftInvert = true;
+		initEncoder(leftMotor1,kMotorLeftInvert);
+		leftMotor2.setInverted(kMotorLeftInvert);
+		leftMotor2.set(ControlMode.Follower, leftMotor1.getDeviceID());
+				
+		boolean kMotorRightInvert = false;
+		initEncoder(rightMotor1,kMotorRightInvert);		
+		rightMotor2.setInverted(kMotorRightInvert);	
+		rightMotor2.set(ControlMode.Follower, rightMotor1.getDeviceID());			
+		
+		setAllMotorsAllowablePower(MAX_CLOSED_LOOP_MODE_PERCENT_OUTPUT);
+		setDefaultCommand(null);
+	}
+	
+    public void initDefaultCommand() {}
     
     private void setMotorAllowablePower(WPI_TalonSRX motor, double peakPercentOutput)
     {
@@ -106,14 +141,15 @@ public class DriveTrain extends Subsystem {
     }
     
     public void driveToDistance(double distance_feet)
-    {    	
-    	setAllMotorsAllowablePower(MAX_CLOSED_LOOP_MODE_PERCENT_OUTPUT);
+    {	
+		System.out.format("moving to %f feet, %f counts%n ", distance_feet, feetToEncoderCounts(distance_feet));
+
 		positionPIDForward(leftMotor1,distance_feet);
 		positionPIDForward(rightMotor1,distance_feet);
     }
     
-    private void positionPIDForward(WPI_TalonSRX motor, double feet) {
-				
+    private void positionPIDForward(WPI_TalonSRX motor, double feet) 
+    {	
     	// reinitialize counts for relative motion
 		int absolutePosition = 0;
 		motor.setSelectedSensorPosition(
@@ -127,14 +163,27 @@ public class DriveTrain extends Subsystem {
     public double getEncoderDistanceErrorFeet()
     {
     	// return error remaining on the closed loop, in foot. 
-    	  int leftError = leftMotor1.getClosedLoopError(0);
-    	  int rightError = rightMotor1.getClosedLoopError(0);
+    	  int leftError = leftMotor1.getClosedLoopError(DriveTrainConstants.kPIDLoopIdx);
+    	  int rightError = rightMotor1.getClosedLoopError(DriveTrainConstants.kPIDLoopIdx);
     	  int totalError = (leftError + rightError); // in counts
     	  double totalErrorFeet = encoderCountsToFeet(totalError);
     	  
     	  double averageErrorFeet = totalErrorFeet/2.0;
     	  
     	  return averageErrorFeet;
+    }
+    
+    public double getAverageRobotSpeed_ft_s()
+    {
+    	//https://github.com/CrossTheRoadElec/Phoenix-Documentation/blob/master/README.md#what-are-the-units-of-my-sensor
+    	int leftMotorSpd_UnitsPer100ms = leftMotor1.getSelectedSensorVelocity(DriveTrainConstants.kPIDLoopIdx);
+    	int rightMotorSpd_UnitsPer100ms = rightMotor1.getSelectedSensorVelocity(DriveTrainConstants.kPIDLoopIdx);
+    	
+    	int sumspd = leftMotorSpd_UnitsPer100ms + rightMotorSpd_UnitsPer100ms;
+    	double totalspd_ft_per_100ms = encoderCountsToFeet(sumspd);
+    	double spd_ft_per_sec = totalspd_ft_per_100ms *10.0 ;
+    	
+    	return spd_ft_per_sec;
     }
     
     private double encoderCountsToFeet(int encoderCounts)
@@ -166,13 +215,13 @@ public class DriveTrain extends Subsystem {
 
 		// Set the allowable closed-loop error, Closed-Loop output will be neutral within this range.
 		// See Table in Section 17.2.1 for native units per rotation.
-		motor.configAllowableClosedloopError(0, DriveTrainConstants.kPIDLoopIdx, DriveTrainConstants.kTimeoutMs);
+		motor.configAllowableClosedloopError(DriveTrainConstants.kPIDLoopIdx, DriveTrainConstants.kPIDLoopIdx, DriveTrainConstants.kTimeoutMs);
 
 		// Set closed loop gains in slot0, typically kF stays zero.
-		motor.config_kF(DriveTrainConstants.kPIDLoopIdx, 0.0, DriveTrainConstants.kTimeoutMs);
-		motor.config_kP(DriveTrainConstants.kPIDLoopIdx, 0.18, DriveTrainConstants.kTimeoutMs);
-		motor.config_kI(DriveTrainConstants.kPIDLoopIdx, 0.0, DriveTrainConstants.kTimeoutMs);
-		motor.config_kD(DriveTrainConstants.kPIDLoopIdx, 0.0, DriveTrainConstants.kTimeoutMs);
+		motor.config_kF(DriveTrainConstants.kPIDLoopIdx, POSITION_PID_F, DriveTrainConstants.kTimeoutMs);
+		motor.config_kP(DriveTrainConstants.kPIDLoopIdx, POSITION_PID_P, DriveTrainConstants.kTimeoutMs);
+		motor.config_kI(DriveTrainConstants.kPIDLoopIdx, POSITION_PID_I, DriveTrainConstants.kTimeoutMs);
+		motor.config_kD(DriveTrainConstants.kPIDLoopIdx, POSITION_PID_D, DriveTrainConstants.kTimeoutMs);
 
 		int absolutePosition = 0;
 		motor.setSelectedSensorPosition(
@@ -192,7 +241,7 @@ public class DriveTrain extends Subsystem {
     	double GoStraightCompensation = 0;
     	if(Math.abs(Speed) > 0.1)
     	{
-    		GoStraightCompensation = Speed * 0.01 + 0.08 * Math.signum(Speed)  ; 
+    		GoStraightCompensation = Speed * GO_STRAIGHT_COMPENSATION_DYNAMIC + GO_STRAIGHT_COMPENSATION_STATIC * Math.signum(Speed)  ; 
     		// TODO Tune this value. Has a speed proportional component (friction in mechanism()  and a fixed component
     	}
     	SmartDashboard.putNumber("Go Straight Compensation", GoStraightCompensation);
@@ -200,38 +249,61 @@ public class DriveTrain extends Subsystem {
     	robotDrive.arcadeDrive(Speed, Rotation + GoStraightCompensation);   	
     	
     }
+     
+     public void rawDrive(double leftMot, double rightMot)
+     {
+    	 leftMotor1.set(ControlMode.PercentOutput, leftMot);
+    	 rightMotor1.set(ControlMode.PercentOutput, rightMot);
+     }
     
     public void driveStop()
     {
-    	leftMotorGroup.stopMotor();
-    	rightMotorGroup.stopMotor();
+    	leftMotor1.stopMotor();
+    	rightMotor1.stopMotor();
+    	// motor 2 in follower mode.
     }
     
     
-    public void gearboxShift(ShifterSpeed speed)
+    public void gearboxShift(ShifterSpeed desiredSpeed)
     {
-    	gearboxSpeedSolenoid.set(speed.getValue());  
-    	
+    	if(gearboxSpeedSolenoid.get() == ShifterSpeed.Fast.value)
+    	{
+    		// When moving fast on fast gear, shifting down creates a loss of control
+    		if(Math.abs(getAverageRobotSpeed_ft_s()) < MAX_SPEED_FOR_SHIFT_DOWN_FT_PER_SEC)
+    		{
+    			gearboxSpeedSolenoid.set(desiredSpeed.getValue());  
+    		}
+    	}
+    	else
+    	{
+    		gearboxSpeedSolenoid.set(desiredSpeed.getValue());   
+    	} 	
     }
     
     public double getGyroAngle()
     {
-    	return gyro.getAngle();
+    	return navx.getYaw();
     }
     
     public void resetGyroAngle()
     {
-    	gyro.reset();
+    	navx.resetYaw();
+    }
+    
+    public boolean isRobotMoving()
+    {
+    	boolean isMoving = navx.isMoving() || navx.isRotating();
+    	return isMoving;
     }
     
     public void log()
     {
-    	SmartDashboard.putNumber("GyroAngleAbsolute", gyro.getAngle());
+    	SmartDashboard.putNumber("GyroAngleAbsolute", navx.getYaw());
     	int leftPosition = leftMotor1.getSelectedSensorPosition(0);
 		int rightPosition = rightMotor1.getSelectedSensorPosition(0);
 
 		System.out.format("leftPosition=%d, rightPosition=%d%n", leftPosition, rightPosition);
-
+		
 		SmartDashboard.putNumber("Left Sensor position", leftPosition);
 		SmartDashboard.putNumber("Right Sensor position", rightPosition);
 

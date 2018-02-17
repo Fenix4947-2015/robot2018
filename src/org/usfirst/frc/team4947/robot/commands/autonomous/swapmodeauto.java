@@ -1,43 +1,49 @@
-package org.usfirst.frc.team4947.robot.commands;
+package org.usfirst.frc.team4947.robot.commands.autonomous;
 
 import org.usfirst.frc.team4947.robot.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveTime extends Command {
+public class swapmodeauto extends Command {
 
-    public DriveTime(double seconds) {
+    public swapmodeauto() {
         // Use requires() here to declare subsystem dependencies
-       requires(Robot.driveTrain);
-       setTimeout(seconds);
+        // eg. requires(chassis);
+    	requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {    	
+    protected void initialize() {
+    	if(Robot.driveTrain.autonomousmode)
+    	{
+    		Robot.driveTrain.initTeleop();
+    	}
+    	else
+    	{
+    		Robot.driveTrain.initAutonomous();
+    	}
+    	
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveArcadeMethod(1, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.driveStop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
