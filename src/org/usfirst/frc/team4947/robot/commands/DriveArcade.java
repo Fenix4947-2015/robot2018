@@ -21,7 +21,7 @@ public class DriveArcade extends Command {
 	protected void execute() {
 
 		// motion forward is with left trigger, backwards with right trigger.
-		double moveValue = -Robot.oi.getJoystickDriverAxis(XBoxAxis.LEFT_TRIGGER) + Robot.oi.getJoystickDriverAxis(XBoxAxis.RIGHT_TRIGGER);
+		double moveValue = Robot.oi.getJoystickDriverAxis(XBoxAxis.LEFT_TRIGGER) + -Robot.oi.getJoystickDriverAxis(XBoxAxis.RIGHT_TRIGGER);
 
 		double rotateValue = Robot.oi.getJoystickDriverAxis(XBoxAxis.LEFT_STICK_X, 0.1);
 
