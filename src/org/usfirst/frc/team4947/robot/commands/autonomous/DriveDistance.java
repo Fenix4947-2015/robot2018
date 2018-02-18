@@ -11,17 +11,17 @@ public class DriveDistance extends Command {
 	private static final double DISTANCE_THRESHOLD_FEET = 0.25; // three inches
 	private static final int TIMEOUT_VALUE = 6; //sec
 	// Members.
-	private double distanceFeet;
+	private double distanceInches;
 	
-	public DriveDistance(double distanceFeet) {
+	public DriveDistance(double distanceInches) {
 		requires(Robot.driveTrain);
-		this.distanceFeet = distanceFeet;
+		this.distanceInches = distanceInches;
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
 		setTimeout(TIMEOUT_VALUE);
-		Robot.driveTrain.driveToDistance(distanceFeet);		
+		Robot.driveTrain.driveToDistance(distanceInches/12);		
 	}
 	
 	// Called repeatedly when the command is scheduled to run.

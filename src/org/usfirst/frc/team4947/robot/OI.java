@@ -13,6 +13,8 @@ import org.usfirst.frc.team4947.robot.commands.ShiftUp;
 import org.usfirst.frc.team4947.robot.commands.autonomous.DriveDistance;
 import org.usfirst.frc.team4947.robot.commands.autonomous.DriveRotate;
 import org.usfirst.frc.team4947.robot.commands.autonomous.swapmodeauto;
+import org.usfirst.frc.team4947.robot.commands.gripper.GripperClose;
+import org.usfirst.frc.team4947.robot.commands.gripper.GripperOpen;
 import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameHelperProfile;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotCustomMotion;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
@@ -21,6 +23,7 @@ import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface to the commands and command groups 
@@ -79,7 +82,8 @@ public class OI {
 		initJoystickHelper();
 
 		// TODO Add buttons to smart dashboard
-		// example :SmartDashboard.putData("RobotLift", new RobotLift());
+		SmartDashboard.putData("gripperClose", new GripperClose(Robot.gripper));
+		SmartDashboard.putData("gripperOpen", new GripperOpen(Robot.gripper));
 	}
 	
 	private void initJoystickDriver() {

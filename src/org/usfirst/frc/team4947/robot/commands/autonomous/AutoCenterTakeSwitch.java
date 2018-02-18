@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4947.robot.commands.autonomous;
 
 import org.usfirst.frc.team4947.robot.Side;
+import org.usfirst.frc.team4947.robot.commands.gripper.GripperShootToSwitch;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 
@@ -24,22 +26,25 @@ public class AutoCenterTakeSwitch extends CommandGroup {
 	
 	public void setSide(Side side) {
 		if (side == Side.LEFT) {
-			//TODO: voir s'il a peut-etre un chemin plus simple
-			addSequential(new DriveDistance( 1.0));	// Drive to turn.
-			addSequential(new DriveRotate(-25.0));   // Turn to the switch.
-			addSequential(new DriveDistance( 10.0)); // Drive to the switch.
-			addSequential(new DriveRotate(25.0));	// Turn to the switch for real.
-//			addSequential(new PivotToSwitchPosition(pivot));	// Set pivot output to height of switch.
-	//		addSequential(new GripperShootToSwitch(gripper));	// Throw cube.
-			addSequential(new DriveDistance( -1.5));	// Get out of there to let other teams do their thing using the switch.
+			addSequential(new DriveDistance(DistanceAuto.DEXCHANGE));	
+			addSequential(new DriveRotate(-90.0));
+			addSequential(new DriveDistance((DistanceAuto.DPORTALTOPORTAL/2)+DistanceAuto.OFFSET)); // Turn right.
+			addSequential(new DriveRotate(90.0)); 
+			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH-DistanceAuto.DEXCHANGE));
+			addSequential(new DriveRotate(90.0)); 
+			addSequential(new DriveDistance(DistanceAuto.DTOSWITCH));
+			addSequential(new PivotToHighPosition());
+			addSequential(new GripperShootToSwitch(gripper));
 		} else if (side == Side.RIGHT) {
-			addSequential(new DriveDistance( 1.0));	// Drive to turn.
-			addSequential(new DriveRotate(25.0));    // Turn to the switch.
-			addSequential(new DriveDistance( 10.0)); // Drive to the switch.
-			addSequential(new DriveRotate(-25.0));	// Turn to the switch for real.
-	//		addSequential(new PivotToSwitchPosition(pivot));	// Set pivot output to height of switch.
-	//		addSequential(new GripperShootToSwitch(gripper));	// Throw cube.
-			addSequential(new DriveDistance( -1.5));	// Get out of there to let other teams do their thing using the switch.
+			addSequential(new DriveDistance(DistanceAuto.DEXCHANGE));
+			addSequential(new DriveRotate(90.0));	
+			addSequential(new DriveDistance((DistanceAuto.DPORTALTOPORTAL/2)-DistanceAuto.OFFSET));
+			addSequential(new DriveRotate(-90.0));
+			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH-DistanceAuto.DEXCHANGE));
+			addSequential(new DriveRotate(-90.0));
+			addSequential(new DriveDistance(DistanceAuto.DTOSWITCH));
+			addSequential(new PivotToHighPosition());
+			addSequential(new GripperShootToSwitch(gripper));
 		} else {
 			addSequential(new AutoCenterFoward());
 		}
