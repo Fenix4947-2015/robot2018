@@ -106,7 +106,7 @@ public class OI {
 		driverLB.whenPressed(new DriveDistance(2.0));
 		driverRB.whenPressed(new DriveDistance(-2.0));
 		
-		driverStart.whenPressed(new DriveRotate(90.0,0.75));
+		driverStart.whenPressed(new DriveRotate(-90.0));
 		driverBack.whenPressed(new swapmodeauto());
 	}
 	

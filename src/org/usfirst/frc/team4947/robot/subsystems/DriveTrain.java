@@ -1,15 +1,11 @@
 package org.usfirst.frc.team4947.robot.subsystems;
+import org.usfirst.frc.team4947.robot.Robot;
 import org.usfirst.frc.team4947.robot.RobotMap;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
-import org.usfirst.frc.team4947.robot.subsystems.NavX.PortType;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -36,6 +32,8 @@ public class DriveTrain extends Subsystem {
 	private static final double POSITION_PID_D = 0.0;
 	private static final double POSITION_PID_F = 0.0;
 	
+	private static final double IS_MOVING_THRESHOLD_GYRORATE = 1.0 ; // deg/sec
+	private static final double IS_MOVING_THRESHOLD_WHEELS = 0.1 ; // ft/sec
 	
 	/** Not used. */
 	private static final double INCHES_PER_FOOT = 12.0;
@@ -54,18 +52,16 @@ public class DriveTrain extends Subsystem {
 	private Solenoid gearboxSpeedSolenoid = new Solenoid(RobotMap.GEARBOX_SPEEDSOLENOID_ADDRESS);
 	
 	public boolean autonomousmode = false;
-	
-	// using the navx gyroscope requires to reference the navx_frc lib
-	// https://www.pdocs.kauailabs.com/navx-mxp/software/roborio-libraries/java/
-	//private AHRS gyro = new AHRS(SPI.Port.kMXP);
-	
-	private NavX navx = new NavX(PortType.SPI);
+
+	//http://first.wpi.edu/FRC/roborio/release/docs/java/
+	//https://ez.analog.com/blogs/engineeringmind/authors/ColmPrendergast
+	ADXRS450_Gyro gyro;	
 	
 	// Define names for the shifter possibilities.
 	public enum ShifterSpeed
 	{
-		Fast(false),
-		Slow(true);
+		Fast(true),
+		Slow(false);
 		
 		private boolean value;
 		ShifterSpeed(boolean value){
@@ -80,8 +76,11 @@ public class DriveTrain extends Subsystem {
 	
 	public DriveTrain()
 	{			
-		robotDrive.setSafetyEnabled(false);
-		initAutonomous();
+		robotDrive.setSafetyEnabled(false);		
+		initAutonomous();		
+		 
+		 gyro = new ADXRS450_Gyro();
+		 resetGyroAngle();		 
 	}
 	
 	public void initTeleop()
@@ -122,6 +121,11 @@ public class DriveTrain extends Subsystem {
 	}
 	
     public void initDefaultCommand() {}
+    
+    public void calibrateGyro()
+    {
+    	gyro.calibrate();
+    }
     
     private void setMotorAllowablePower(WPI_TalonSRX motor, double peakPercentOutput)
     {
@@ -246,8 +250,7 @@ public class DriveTrain extends Subsystem {
     	}
     	SmartDashboard.putNumber("Go Straight Compensation", GoStraightCompensation);
     	
-    	robotDrive.arcadeDrive(Speed, Rotation + GoStraightCompensation);   	
-    	
+    	robotDrive.arcadeDrive(Speed, Rotation + GoStraightCompensation);       	
     }
      
      public void rawDrive(double leftMot, double rightMot)
@@ -258,9 +261,8 @@ public class DriveTrain extends Subsystem {
     
     public void driveStop()
     {
-    	leftMotor1.stopMotor();
-    	rightMotor1.stopMotor();
-    	// motor 2 in follower mode.
+    	leftMotor1.stopMotor(); // motor 2 in follower mode.
+    	rightMotor1.stopMotor(); // motor 2 in follower mode.    	
     }
     
     
@@ -282,26 +284,30 @@ public class DriveTrain extends Subsystem {
     
     public double getGyroAngle()
     {
-    	return navx.getYaw();
+    	// positive angles are clockwise direction. 
+    	return gyro.getAngle();
     }
     
     public void resetGyroAngle()
     {
-    	navx.resetYaw();
+    	gyro.reset();
     }
     
     public boolean isRobotMoving()
     {
-    	boolean isMoving = navx.isMoving() || navx.isRotating();
+    	boolean isRotating = gyro.getRate()<IS_MOVING_THRESHOLD_GYRORATE;
+    	boolean wheelsRolling = getAverageRobotSpeed_ft_s() < IS_MOVING_THRESHOLD_WHEELS;
+    	boolean isMoving = isRotating && wheelsRolling;
     	return isMoving;
     }
     
     public void log()
     {
-    	SmartDashboard.putNumber("GyroAngleAbsolute", navx.getYaw());
+    	SmartDashboard.putNumber("GyroAngleAbsolute", getGyroAngle());
     	int leftPosition = leftMotor1.getSelectedSensorPosition(0);
 		int rightPosition = rightMotor1.getSelectedSensorPosition(0);
 
+		System.out.format("Gyro angle : %f ",Robot.driveTrain.getGyroAngle());		
 		System.out.format("leftPosition=%d, rightPosition=%d%n", leftPosition, rightPosition);
 		
 		SmartDashboard.putNumber("Left Sensor position", leftPosition);

@@ -24,9 +24,7 @@ public class swapmodeauto extends Command {
     	else
     	{
     		Robot.driveTrain.initAutonomous();
-    	}
-    	
-    	
+    	}  	
     }
 
     // Called repeatedly when this Command is scheduled to run
