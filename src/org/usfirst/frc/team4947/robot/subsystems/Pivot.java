@@ -1,13 +1,10 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.usfirst.frc.team4947.robot.RobotMap;
-import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Counter;
@@ -16,139 +13,81 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Pivot extends Subsystem {
 	
-	public static enum Position {
-		LOW,
-		EXCHANGE,
-		SWITCH,
-		HIGH,
-		UNKNOWN,
-	}
-	
 	// Constants.
-	private static final double MOTOR_PERCENT_OUTPUT = 0.5;
-	private static final boolean STATE_POSITION_REACHED = true;
+	private static final double PERCENT_OUTPUT_MOTOR_TO_LOW = -0.5;
+	private static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = 0.5;
+	private static final double PERCENT_OUTPUT_MOTOR_TO_EXCHANGE = 0.5;
+	
+	private static final int TIMEOUT_MS = 10;
 	
 	// Members.
-	private TalonSRX motor;
+	private final TalonSRX motor;
 	
-	private DigitalInput lowPosDigitalInput;
-	private Counter lowPosCounter;
-	
-	private DigitalInput exchangePosDigitalInput;
-	private Counter exchangePosCounter;
-	
-	private DigitalInput switchPosDigitalInput;
-	private Counter switchPosCounter;
-	
-	private DigitalInput highPosDigitalInput;
-	private Counter highPosCounter;
-	
-	private Map<Position, DigitalInput> digitalInputs;
-	private Map<Position, Counter> counters;
+	private DigitalInput exchangeLimitSwitch;
+	private Counter exchangeCounter;
 	
 	public Pivot() {
 		motor = createMotor();
-
-		initLowPosition();
-		initExchangePosition();
-		initSwitchPosition();
-		initHighPosition();
-
-		initMappings();
+		
+		initExchangeLimitSwitch();
 	}
 	
 	private static TalonSRX createMotor() {
 		TalonSRX motor = new TalonSRX(RobotMap.PIVOT_MOTOR_DEVICE_NUMBER);
+		
+		// Configure nominal and peak outputs.
+		motor.configNominalOutputForward(0, TIMEOUT_MS);
+		motor.configNominalOutputReverse(0, TIMEOUT_MS);
+		motor.configPeakOutputForward(1.0, TIMEOUT_MS);
+		motor.configPeakOutputReverse(-1.0, TIMEOUT_MS);
+		
+		// Configure limit switches.
+		motor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+		motor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+		motor.overrideLimitSwitchesEnable(true);
+			
 		return motor;
 	}
 	
-	private void initLowPosition() {
-		lowPosDigitalInput = new DigitalInput(RobotMap.PIVOT_LOW_POSITION_DIGITAL_INPUT_CHANNEL);
-		lowPosCounter = new Counter(lowPosDigitalInput);
-	}
-	
-	private void initExchangePosition() {
-		exchangePosDigitalInput = new DigitalInput(RobotMap.PIVOT_EXCHANGE_POSITION_DIGITAL_INPUT_CHANNEL);
-		exchangePosCounter = new Counter(exchangePosDigitalInput);
-	}
-	
-	private void initSwitchPosition() {
-		switchPosDigitalInput = new DigitalInput(RobotMap.PIVOT_SWITCH_POSITION_DIGITAL_INPUT_CHANNEL);
-		switchPosCounter = new Counter(switchPosDigitalInput);
-	}
-
-	private void initHighPosition() {
-		highPosDigitalInput = new DigitalInput(RobotMap.PIVOT_HIGH_POSITION_DIGITAL_INPUT_CHANNEL);
-		highPosCounter = new Counter(highPosDigitalInput);
-	}
-	
-	private void initMappings() {
-		digitalInputs = new EnumMap<>(Position.class);
-		digitalInputs.put(Position.LOW, lowPosDigitalInput);
-		digitalInputs.put(Position.HIGH, highPosDigitalInput);
-		digitalInputs.put(Position.EXCHANGE, exchangePosDigitalInput);
-		digitalInputs.put(Position.SWITCH, switchPosDigitalInput);		
-		
-		counters = new EnumMap<>(Position.class);
-		counters.put(Position.LOW, lowPosCounter);
-		counters.put(Position.HIGH, highPosCounter);
-		counters.put(Position.EXCHANGE, exchangePosCounter);
-		counters.put(Position.SWITCH, switchPosCounter);
+	private void initExchangeLimitSwitch() {
+		exchangeLimitSwitch = new DigitalInput(RobotMap.PIVOT_EXCHANGE_POSITION_DIGITAL_INPUT_CHANNEL);
+		exchangeCounter = new Counter(exchangeLimitSwitch);
 	}
 
 	public void initDefaultCommand() {
-		//setDefaultCommand( new PivotToLowPosition(this));
 	}
 	
-	private Position getCurrentPosition() {
-		for (Entry<Position, DigitalInput> entry : digitalInputs.entrySet()) {
-			Position pos = entry.getKey();
-			DigitalInput digitalInput = entry.getValue();
-
-			boolean isSet = (digitalInput.get() == STATE_POSITION_REACHED);
-			if (isSet) {
-				return pos;
-			}
+	public boolean isAtLowPos() {
+		return motor.getSensorCollection().isRevLimitSwitchClosed();
+	}
+	
+	public boolean isAtHighPos() {
+		return motor.getSensorCollection().isFwdLimitSwitchClosed();
+	}
+	
+	public boolean isAtExchangePos() {
+		return (exchangeCounter.get() > 0);
+	}
+	
+	public void moveToLowPos() {
+		exchangeCounter.reset();
+		motor.set(ControlMode.PercentOutput, PERCENT_OUTPUT_MOTOR_TO_LOW);
+	}
+	
+	public void moveToHighPos() {
+		exchangeCounter.reset();
+		motor.set(ControlMode.PercentOutput, PERCENT_OUTPUT_MOTOR_TO_HIGH);
+	}
+	
+	public void moveToExchangePos() {
+		exchangeCounter.reset();
+		
+		double direction = 1.0;
+		if (isAtHighPos()) {
+			direction *= -1.0;
 		}
 		
-		return Position.UNKNOWN;
-	}
-	
-	public void moveTo(Position pos) {
-		resetCounter(pos);
-
-		if (pos == Position.LOW) {
-			motor.set(ControlMode.PercentOutput, -MOTOR_PERCENT_OUTPUT);
-			return;
-		} else if (pos == Position.HIGH) {
-			motor.set(ControlMode.PercentOutput, MOTOR_PERCENT_OUTPUT);
-			return;
-		}
-
-		Position currentPos = getCurrentPosition();
-		if (pos == currentPos) {
-			return;
-		}
-
-		double direction = getDirection(currentPos, pos);
-		motor.set(ControlMode.PercentOutput, (direction * MOTOR_PERCENT_OUTPUT));
-	}
-	
-	private void resetCounter(Position pos) {
-		Counter counter = counters.get(pos);
-		counter.reset();
-	}
-	
-	// Returns -1 if new position is lower then current position.
-	// Return 0 if boths positions are the same.
-	// Returns 1 if new position is higher then current position.
-	private double getDirection(Position from, Position to) {
-		return Math.signum(Integer.compare(to.ordinal(), from.ordinal()));
-	}
-	
-	public boolean isReached(Position pos) {
-		Counter counter = counters.get(pos);
-		return (counter.get() > 0);
+		motor.set(ControlMode.PercentOutput, direction * PERCENT_OUTPUT_MOTOR_TO_EXCHANGE);
 	}
 	
 	public void stop() {

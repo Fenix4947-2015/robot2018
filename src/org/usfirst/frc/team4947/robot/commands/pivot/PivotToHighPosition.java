@@ -1,15 +1,11 @@
 package org.usfirst.frc.team4947.robot.commands.pivot;
 
 import org.usfirst.frc.team4947.robot.Robot;
-import org.usfirst.frc.team4947.robot.subsystems.Pivot.Position;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PivotToHighPosition extends Command {
 
-	// Constants.
-	private static final Position POSITION = Position.HIGH;
-	
 	public PivotToHighPosition() {
 		requires(Robot.pivot);
 		
@@ -18,7 +14,7 @@ public class PivotToHighPosition extends Command {
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		Robot.pivot.moveTo(POSITION);
+		Robot.pivot.moveToHighPos();
 	}
 
 	// Called repeatedly when the command is scheduled to run.
@@ -32,7 +28,7 @@ public class PivotToHighPosition extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return Robot.pivot.isReached(POSITION);
+		return Robot.pivot.isAtHighPos();
 	}
 
 	// Called once after isFinished returns TRUE.

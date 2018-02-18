@@ -1,9 +1,6 @@
 package org.usfirst.frc.team4947.robot.commands.autonomous;
 
 import org.usfirst.frc.team4947.robot.Side;
-import org.usfirst.frc.team4947.robot.commands.gripper.GripperShootToSwitch;
-import org.usfirst.frc.team4947.robot.commands.pivot.PivotToSwitchPosition;
-import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 

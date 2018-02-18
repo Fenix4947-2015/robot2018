@@ -16,8 +16,6 @@ import org.usfirst.frc.team4947.robot.commands.autonomous.swapmodeauto;
 import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameHelperProfile;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
-import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
-import org.usfirst.frc.team4947.robot.commands.pivot.PivotToSwitchPosition;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;

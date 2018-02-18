@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 
+import java.util.concurrent.TimeUnit;
+
 import org.usfirst.frc.team4947.robot.RobotMap;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperDefault;
 
@@ -13,26 +15,33 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Gripper extends Subsystem {
 	
 	// Constants.
-	private static final double MOTOR_PULL_PERCENT_OUTPUT = 0.5;
-	private static final double MOTOR_REJECT_PERCENT_OUTPUT = -0.5;
-	private static final double MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT = 0.5;
+	private static final double MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT = 0.1;
 	
 	private static final boolean OPENER_SOLENOID_CLOSE_STATE = false;
 	private static final boolean OPENER_SOLENOID_OPEN_STATE = !OPENER_SOLENOID_CLOSE_STATE;
 	
 	private static final boolean STATE_CUBE_PRESENT = true;
 
+	private static final long FLIP_FREQUENCY_MILLIS = TimeUnit.SECONDS.toMillis(1L);
+	private static final double SPEED_RATIO = 0.9;
+
 	// Members.
 	private TalonSRX leftMotor;
 	private TalonSRX rightMotor;
 	private Solenoid openerSolenoid;
 	private DigitalInput cubePresenceDigitalInput;
-
+	
+	private boolean _ratioToggle;
+	private long _lastFlipMillis;
+	
 	public Gripper() {
 		leftMotor = createLeftMotor();
 		rightMotor = createRightMotor();
 		openerSolenoid = createOpenerSolenoid();
 		cubePresenceDigitalInput = createCubePresenceDigitalInput();
+		
+		_ratioToggle = false;
+		_lastFlipMillis = System.currentTimeMillis();
 	}
 	
 	private static TalonSRX createLeftMotor() {
@@ -56,7 +65,7 @@ public class Gripper extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		//setDefaultCommand(new GripperDefault(this));
+		setDefaultCommand(new GripperDefault());
 	}
 	
 	public boolean isCubePresent() {
@@ -71,21 +80,32 @@ public class Gripper extends Subsystem {
 		openerSolenoid.set(OPENER_SOLENOID_OPEN_STATE);
 	}
 	
-	public void pull() {
-		rotate(MOTOR_PULL_PERCENT_OUTPUT);
-	}
-	
-	public void reject() {
-		rotate(MOTOR_REJECT_PERCENT_OUTPUT);
-	}
-	
 	public void shootToSwitch() {
-		rotate(MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
+		leftMotor.set(ControlMode.PercentOutput, MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
+		rightMotor.set(ControlMode.PercentOutput, MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
 	}
 	
-	public void rotate(double percentOutput) {
-		leftMotor.set(ControlMode.PercentOutput, percentOutput);
-		rightMotor.set(ControlMode.PercentOutput, percentOutput);
+	public void rotateFlip(double percentOutput) {
+		flipIfRequired();
+		
+		if (_ratioToggle) {
+			leftMotor.set(ControlMode.PercentOutput, -percentOutput * SPEED_RATIO);
+			rightMotor.set(ControlMode.PercentOutput, percentOutput);
+		} else {
+			leftMotor.set(ControlMode.PercentOutput, -percentOutput);
+			rightMotor.set(ControlMode.PercentOutput, percentOutput * SPEED_RATIO);
+		}
+	}
+
+	private void flipIfRequired() {
+		long nowMillis = System.currentTimeMillis();
+		
+		long sinceLastFlipMillis = (nowMillis - _lastFlipMillis);
+		if (sinceLastFlipMillis >= FLIP_FREQUENCY_MILLIS) {
+			_ratioToggle = !_ratioToggle;
+
+			_lastFlipMillis = nowMillis;
+		}
 	}
 
 	public void stop() {
