@@ -112,4 +112,9 @@ public class Gripper extends Subsystem {
 		leftMotor.set(ControlMode.PercentOutput, 0.0);
 		rightMotor.set(ControlMode.PercentOutput, 0.0);
 	}
+	
+	public void log()
+	{
+		
+	}
 }

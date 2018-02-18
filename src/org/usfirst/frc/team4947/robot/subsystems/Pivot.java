@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 
+import org.usfirst.frc.team4947.robot.Robot;
 import org.usfirst.frc.team4947.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -14,9 +15,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Pivot extends Subsystem {
 	
 	// Constants.
-	private static final double PERCENT_OUTPUT_MOTOR_TO_LOW = -0.5;
-	private static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = 0.5;
-	private static final double PERCENT_OUTPUT_MOTOR_TO_EXCHANGE = 0.5;
+	private static final double PERCENT_OUTPUT_MOTOR_TO_LOW = -0.1;
+	private static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = 0.25;
+	private static final double PERCENT_OUTPUT_MOTOR_TO_EXCHANGE = 0.1;
+	
+	private static final double LIMIT_OUTPUT_MAX_VALUE_PERCENT = 0.5;
 	
 	private static final int TIMEOUT_MS = 10;
 	
@@ -33,13 +36,14 @@ public class Pivot extends Subsystem {
 	}
 	
 	private static TalonSRX createMotor() {
-		TalonSRX motor = new TalonSRX(RobotMap.PIVOT_MOTOR_DEVICE_NUMBER);
+		TalonSRX motor = new TalonSRX(RobotMap.PIVOT_MOTOR_DEVICE_NUMBER);		
+		motor.setInverted(true);
 		
 		// Configure nominal and peak outputs.
 		motor.configNominalOutputForward(0, TIMEOUT_MS);
 		motor.configNominalOutputReverse(0, TIMEOUT_MS);
-		motor.configPeakOutputForward(1.0, TIMEOUT_MS);
-		motor.configPeakOutputReverse(-1.0, TIMEOUT_MS);
+		motor.configPeakOutputForward(LIMIT_OUTPUT_MAX_VALUE_PERCENT, TIMEOUT_MS);
+		motor.configPeakOutputReverse(-LIMIT_OUTPUT_MAX_VALUE_PERCENT, TIMEOUT_MS);
 		
 		// Configure limit switches.
 		motor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
@@ -90,7 +94,19 @@ public class Pivot extends Subsystem {
 		motor.set(ControlMode.PercentOutput, direction * PERCENT_OUTPUT_MOTOR_TO_EXCHANGE);
 	}
 	
+	public void moveCustomSpeed(double percent)
+	{
+		motor.set(ControlMode.PercentOutput, percent);
+		System.out.format("pivot moving at : %f %n ",percent);
+	}
+	
 	public void stop() {
 		motor.set(ControlMode.PercentOutput, 0.0);
 	}
+	
+	public void log()
+    {
+		System.out.format("UpLimit : %b  ... DownLimit : %b ",isAtHighPos(),isAtLowPos());
+    
+    }
 }

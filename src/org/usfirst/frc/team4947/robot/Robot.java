@@ -193,5 +193,6 @@ public class Robot extends TimedRobot {
 	private void log() 
 	{		
 	  driveTrain.log(); 
+	  pivot.log();
 	}
 }

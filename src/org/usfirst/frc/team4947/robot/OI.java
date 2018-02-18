@@ -14,6 +14,7 @@ import org.usfirst.frc.team4947.robot.commands.autonomous.DriveDistance;
 import org.usfirst.frc.team4947.robot.commands.autonomous.DriveRotate;
 import org.usfirst.frc.team4947.robot.commands.autonomous.swapmodeauto;
 import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameHelperProfile;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotCustomMotion;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
 
@@ -130,6 +131,7 @@ public class OI {
 		helperY.whenPressed(new PivotToHighPosition());
 		
 		helperBack.whenPressed(new ActivateEndGameHelperProfile());
+		helperStart.whenPressed(new PivotCustomMotion());
 		}
 
 	public double getJoystickDriverAxis(XBoxAxis axis) {
