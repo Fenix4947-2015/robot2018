@@ -7,17 +7,30 @@
 
 package org.usfirst.frc.team4947.robot;
 
+import org.usfirst.frc.team4947.robot.OI.XBoxAxis;
+import org.usfirst.frc.team4947.robot.OI.XBoxButton;
+import org.usfirst.frc.team4947.robot.commands.DriveArcade;
+import org.usfirst.frc.team4947.robot.commands.DriveTime;
+import org.usfirst.frc.team4947.robot.commands.PlatformDefault;
+import org.usfirst.frc.team4947.robot.commands.PlatformPull;
+import org.usfirst.frc.team4947.robot.commands.PlatformRelease;
 import org.usfirst.frc.team4947.robot.commands.ShiftDown;
 import org.usfirst.frc.team4947.robot.commands.ShiftUp;
 import org.usfirst.frc.team4947.robot.commands.autonomous.DriveDistance;
 import org.usfirst.frc.team4947.robot.commands.autonomous.DriveRotate;
 import org.usfirst.frc.team4947.robot.commands.autonomous.swapmodeauto;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperClose;
+import org.usfirst.frc.team4947.robot.commands.gripper.GripperDefault;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperOpen;
+import org.usfirst.frc.team4947.robot.commands.gripper.GripperShootToSwitch;
 import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameHelperProfile;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotCustomMotion;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotToVerticalFromHighPosition;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotToVerticalFromLowPosition;
+import org.usfirst.frc.team4947.robot.commands.pivot.WaitForHighLimitSwitch;
+import org.usfirst.frc.team4947.robot.commands.pivot.WaitForLowLimitSwitch;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -79,10 +92,44 @@ public class OI {
 	public OI() {
 		initJoystickDriver();
 		initJoystickHelper();
-
-		// TODO Add buttons to smart dashboard
+		
+		SmartDashboard.putString("-------Gripper--------","");
 		SmartDashboard.putData("gripperClose", new GripperClose(Robot.gripper));
 		SmartDashboard.putData("gripperOpen", new GripperOpen(Robot.gripper));
+		SmartDashboard.putData("GripperShootToSwitch", new GripperShootToSwitch(Robot.gripper));
+		SmartDashboard.putData("Manual Gripper", new GripperDefault());
+		
+		SmartDashboard.putString("-------Pivot--------","");
+		SmartDashboard.putData("Manual pivot", new PivotCustomMotion());
+		SmartDashboard.putData("PivotToHighPosition", new PivotToHighPosition());
+		SmartDashboard.putData("PivotToLowPosition", new PivotToLowPosition());
+		SmartDashboard.putData("PivotToVerticalFromHighPosition", new PivotToVerticalFromHighPosition());
+		SmartDashboard.putData("PivotToVerticalFromLowPosition", new PivotToVerticalFromLowPosition());
+		SmartDashboard.putData("WaitForHighLimitSwitch", new WaitForHighLimitSwitch());
+		SmartDashboard.putData("WaitForLowLimitSwitch", new WaitForLowLimitSwitch());
+		
+		SmartDashboard.putString("-------DriveTrain--------","");
+		SmartDashboard.putData("DriveArcade", new DriveArcade());
+		SmartDashboard.putNumber("Temps",1);
+		double time =SmartDashboard.getNumber("Temps",1);
+		SmartDashboard.putData("DriveTime", new DriveTime(time));
+		SmartDashboard.putNumber("DriveDistanceInches", 12);
+		double distanceInches= SmartDashboard.getNumber("DriveDistanceInches", 12);
+		SmartDashboard.putData("DriveDistance", new DriveDistance(distanceInches));
+		SmartDashboard.putNumber("rotateAngle", 90);
+		double rotateAngle= SmartDashboard.getNumber("rotateAngle", 90);
+		SmartDashboard.putData("DriveRotate", new DriveRotate(rotateAngle));
+		SmartDashboard.putData("swapmodeauto", new swapmodeauto());
+		SmartDashboard.putData("ShiftDown", new ShiftDown());
+		SmartDashboard.putData("ShiftUp", new ShiftUp());
+		
+		SmartDashboard.putString("-------Platform--------","");
+		SmartDashboard.putData("Manual left platform", new PlatformDefault(Robot.platformLeft,XBoxButton.LB, XBoxAxis.LEFT_TRIGGER));
+		SmartDashboard.putData("Manual right platform", new PlatformDefault(Robot.platformRight,XBoxButton.RB, XBoxAxis.RIGHT_TRIGGER));
+		SmartDashboard.putData("PlatformPullLeft", new PlatformPull(Robot.platformLeft,XBoxAxis.LEFT_TRIGGER));
+		SmartDashboard.putData("PlatformPullRight", new PlatformPull(Robot.platformRight, XBoxAxis.RIGHT_TRIGGER));
+		SmartDashboard.putData("PlatformReleaseLeft", new PlatformRelease(Robot.platformLeft));
+		SmartDashboard.putData("PlatformReleaseRight", new PlatformRelease(Robot.platformRight));
 	}
 	
 	private void initJoystickDriver() {
