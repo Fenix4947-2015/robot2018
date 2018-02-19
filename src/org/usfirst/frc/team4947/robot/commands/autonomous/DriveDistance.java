@@ -36,7 +36,7 @@ public class DriveDistance extends Command {
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
 		boolean reachedPosition = (Robot.driveTrain.getEncoderDistanceErrorFeet()<DISTANCE_THRESHOLD_FEET);
-        return false; //(reachedPosition|| isTimedOut() || Robot.driveTrain.isRobotMoving());
+        return reachedPosition; //(reachedPosition|| isTimedOut() || Robot.driveTrain.isRobotMoving());
 	}
 
 	// Called once after isFinished returns TRUE.

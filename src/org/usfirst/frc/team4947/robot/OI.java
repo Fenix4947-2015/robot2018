@@ -17,6 +17,7 @@ import org.usfirst.frc.team4947.robot.commands.PlatformRelease;
 import org.usfirst.frc.team4947.robot.commands.ShiftDown;
 import org.usfirst.frc.team4947.robot.commands.ShiftUp;
 import org.usfirst.frc.team4947.robot.commands.autonomous.DriveDistance;
+import org.usfirst.frc.team4947.robot.commands.autonomous.DriveFinalApproach;
 import org.usfirst.frc.team4947.robot.commands.autonomous.DriveRotate;
 import org.usfirst.frc.team4947.robot.commands.autonomous.swapmodeauto;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperClose;
@@ -157,7 +158,7 @@ public class OI {
 		driverLB.whenPressed(new DriveDistance(2.0));
 		driverRB.whenPressed(new DriveDistance(-2.0));
 		
-		driverStart.whenPressed(new DriveRotate(-90.0));
+		driverStart.whenPressed(new DriveFinalApproach(3.0));
 		driverBack.whenPressed(new swapmodeauto());
 	}
 	

@@ -6,7 +6,7 @@ import org.usfirst.frc.team4947.robot.RobotMap;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperDefault;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -20,14 +20,14 @@ public class Gripper extends Subsystem {
 	private static final boolean OPENER_SOLENOID_CLOSE_STATE = false;
 	private static final boolean OPENER_SOLENOID_OPEN_STATE = !OPENER_SOLENOID_CLOSE_STATE;
 	
-	private static final boolean STATE_CUBE_PRESENT = true;
+	private static final boolean STATE_CUBE_PRESENT = false;
 
 	private static final long FLIP_FREQUENCY_MILLIS = TimeUnit.SECONDS.toMillis(1L);
 	private static final double SPEED_RATIO = 0.9;
 
 	// Members.
-	private TalonSRX leftMotor;
-	private TalonSRX rightMotor;
+	private WPI_TalonSRX leftMotor;
+	private WPI_TalonSRX rightMotor;
 	private Solenoid openerSolenoid;
 	private DigitalInput cubePresenceDigitalInput;
 	
@@ -44,13 +44,13 @@ public class Gripper extends Subsystem {
 		_lastFlipMillis = System.currentTimeMillis();
 	}
 	
-	private static TalonSRX createLeftMotor() {
-		TalonSRX motor = new TalonSRX(RobotMap.GRIPPER_LEFT_MOTOR_DEVICE_NUMBER);
+	private static WPI_TalonSRX createLeftMotor() {
+		WPI_TalonSRX motor = new WPI_TalonSRX(RobotMap.GRIPPER_LEFT_MOTOR_DEVICE_NUMBER);
 		return motor;
 	}
 	
-	private static TalonSRX createRightMotor() {
-		TalonSRX motor = new TalonSRX(RobotMap.GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER);
+	private static WPI_TalonSRX createRightMotor() {
+		WPI_TalonSRX motor = new WPI_TalonSRX(RobotMap.GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER);
 		return motor;
 	}
 	
@@ -69,6 +69,7 @@ public class Gripper extends Subsystem {
 	}
 	
 	public boolean isCubePresent() {
+		
 		return (cubePresenceDigitalInput.get() == STATE_CUBE_PRESENT);
 	}
 	
@@ -109,11 +110,18 @@ public class Gripper extends Subsystem {
 	}
 
 	public void stop() {
-		leftMotor.set(ControlMode.PercentOutput, 0.0);
-		rightMotor.set(ControlMode.PercentOutput, 0.0);
+		leftMotor.stopMotor();
+		rightMotor.stopMotor();
 	}
 	
+<<<<<<< Upstream, based on origin/master
 	public void log() {
 		System.out.println("gripper: " + isCubePresent());
+=======
+	public void log()
+	{
+		System.out.format("Cube presence : %b  %n ",isCubePresent());
+	    
+>>>>>>> 805ef3e Tuned final approach method and driving for autonomous
 	}
 }

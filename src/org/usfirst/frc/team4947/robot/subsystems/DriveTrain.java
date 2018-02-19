@@ -22,12 +22,12 @@ public class DriveTrain extends Subsystem {
 	private static final double PULSES_PER_FOOT = 292;
 	
 	// Tuning parameters
-	private static final double GO_STRAIGHT_COMPENSATION_STATIC = 0.08;
-	private static final double GO_STRAIGHT_COMPENSATION_DYNAMIC = 0.1;
+	private static final double GO_STRAIGHT_COMPENSATION_STATIC = -0.08;
+	private static final double GO_STRAIGHT_COMPENSATION_DYNAMIC = -0.03;
 	private static final double MAX_SPEED_FOR_SHIFT_DOWN_FT_PER_SEC = 3.5;
 	// Position PID
-	private static final double MAX_CLOSED_LOOP_MODE_PERCENT_OUTPUT = 0.6;
-	private static final double POSITION_PID_P = 0.4;
+	private static final double MAX_CLOSED_LOOP_MODE_PERCENT_OUTPUT = 0.7;
+	private static final double POSITION_PID_P = 0.75;
 	private static final double POSITION_PID_I = 0.0;
 	private static final double POSITION_PID_D = 0.0;
 	private static final double POSITION_PID_F = 0.0;
@@ -146,7 +146,7 @@ public class DriveTrain extends Subsystem {
     
     public void driveToDistance(double distance_feet)
     {	
-		System.out.format("moving to %f feet, %f counts%n ", distance_feet, feetToEncoderCounts(distance_feet));
+		System.out.println("moving to "+distance_feet + " feet   " + feetToEncoderCounts(distance_feet) + " counts");
 
 		positionPIDForward(leftMotor1,distance_feet);
 		positionPIDForward(rightMotor1,distance_feet);
