@@ -16,6 +16,7 @@ import org.usfirst.frc.team4947.robot.subsystems.DriveTrain.ShifterSpeed;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 import org.usfirst.frc.team4947.robot.subsystems.Platform;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -190,9 +191,9 @@ public class Robot extends TimedRobot {
 		log();
 	}
 
-	private void log() 
-	{		
-	  driveTrain.log(); 
-	  pivot.log();
+	private void log() {
+		driveTrain.log();
+		pivot.log();
+		gripper.log();
 	}
 }

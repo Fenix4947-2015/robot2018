@@ -1,38 +1,13 @@
 package org.usfirst.frc.team4947.robot.commands.pivot;
 
-import org.usfirst.frc.team4947.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-public class PivotToLowPosition extends Command {
+public class PivotToLowPosition extends CommandGroup {
 
 	public PivotToLowPosition() {
-		requires(Robot.pivot);
+		addSequential(new PivotToVerticalFromHighPosition());
+		addSequential(new WaitForLowLimitSwitch());
 		
 		setInterruptible(false);
-	}
-
-	// Called just before the command runs the first time.
-	protected void initialize() {
-		Robot.pivot.moveToLowPos();
-	}
-
-	// Called repeatedly when the command is scheduled to run.
-	protected void execute() {
-	}
-
-	// Called when another command which requires one or more of the same subsystems is scheduled to run.
-	protected void interrupted() {
-		end();
-	}
-
-	// Make this return TRUE when the command no longer needs to run execute().
-	protected boolean isFinished() {
-		return Robot.pivot.isAtLowPos();
-	}
-
-	// Called once after isFinished returns TRUE.
-	protected void end() {
-		Robot.pivot.stop();
 	}
 }

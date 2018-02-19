@@ -113,8 +113,7 @@ public class Gripper extends Subsystem {
 		rightMotor.set(ControlMode.PercentOutput, 0.0);
 	}
 	
-	public void log()
-	{
-		
+	public void log() {
+		System.out.println("gripper: " + isCubePresent());
 	}
 }

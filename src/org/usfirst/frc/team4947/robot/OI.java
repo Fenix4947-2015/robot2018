@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team4947.robot;
 
-import org.usfirst.frc.team4947.robot.commands.DriveArcade;
 import org.usfirst.frc.team4947.robot.commands.ShiftDown;
 import org.usfirst.frc.team4947.robot.commands.ShiftUp;
 import org.usfirst.frc.team4947.robot.commands.autonomous.DriveDistance;
@@ -17,8 +16,8 @@ import org.usfirst.frc.team4947.robot.commands.gripper.GripperClose;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperOpen;
 import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameHelperProfile;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotCustomMotion;
-import org.usfirst.frc.team4947.robot.commands.pivot.PivotToExchangePosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
+import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
@@ -130,13 +129,12 @@ public class OI {
 		JoystickButton helperLeftStick = new JoystickButton(joystickHelper, XBoxButton.LEFT_STICK.getValue());
 		JoystickButton helperRightStick = new JoystickButton(joystickHelper, XBoxButton.RIGHT_STICK.getValue());
 		
-		
-		helperB.whenPressed(new PivotToExchangePosition());		
-		helperY.whenPressed(new PivotToHighPosition());
+		helperX.whenPressed(new PivotToHighPosition());
+		helperA.whenPressed(new PivotToLowPosition());
 		
 		helperBack.whenPressed(new ActivateEndGameHelperProfile());
 		helperStart.whenPressed(new PivotCustomMotion());
-		}
+	}
 
 	public double getJoystickDriverAxis(XBoxAxis axis) {
 		return joystickDriver.getRawAxis(axis.getValue());

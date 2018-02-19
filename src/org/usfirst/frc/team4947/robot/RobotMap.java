@@ -48,9 +48,9 @@ public class RobotMap {
 	public static final int GRIPPER_LEFT_MOTOR_DEVICE_NUMBER = 8;
 	public static final int GRIPPER_RIGHT_MOTOR_DEVICE_NUMBER = 9;
 	public static final int GRIPPER_OPENER_SOLENOID_CHANNEL = 6;
-	public static final int GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL = 1; // to validate
+	public static final int GRIPPER_CUBE_PRESENCE_DIGITAL_INPUT_CHANNEL = 1;
 
 	// Pivot subsystem.
 	public static final int PIVOT_MOTOR_DEVICE_NUMBER = 4;
-	public static final int PIVOT_EXCHANGE_POSITION_DIGITAL_INPUT_CHANNEL = 3; // to validate
+	public static final int PIVOT_VERTICAL_LIMIT_SWITCH = 0;
 }
