@@ -19,7 +19,7 @@ public class PivotCustomMotion extends Command {
 	protected void execute() {
 		Robot.pivot.log();
 		
-		double rotateValue = Robot.oi.getJoystickHelperAxis(XBoxAxis.RIGHT_STICK_X, 0.1);
+		double rotateValue = Robot.oi.getJoystickHelperAxis(XBoxAxis.RIGHT_STICK_Y, 0.1);
 		Robot.pivot.moveCustomSpeed(rotateValue);
 	}
 
