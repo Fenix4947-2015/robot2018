@@ -7,7 +7,6 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -19,19 +18,19 @@ public class Pivot extends Subsystem {
 	// Constants.
 	private static final double PERCENT_OUTPUT_MOTOR_TO_LOW = 0.5;
 	private static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = -0.5;
+	private static final double ACTIVE_BRAKE_WHEN_GOING_HIGH = 0.1;
+	private static final double ACTIVE_BRAKE_WHEN_GOING_LOW = -0.1;
 	
 	// Members.
 	private final WPI_TalonSRX motor;
 	
 	private DigitalInput verticalLimitSwitch;
-	private Counter verticalCounter;
 	
 	private int count = 0;
 	
 	public Pivot() {
 		motor = createMotor();
-		
-		initVerticalLimitSwitch();
+		verticalLimitSwitch = createVerticalLimitSwitch();
 	}
 	
 	private static WPI_TalonSRX	createMotor() {
@@ -45,9 +44,8 @@ public class Pivot extends Subsystem {
 		return motor;
 	}
 	
-	private void initVerticalLimitSwitch() {
-		verticalLimitSwitch = new DigitalInput(RobotMap.PIVOT_VERTICAL_LIMIT_SWITCH);
-		verticalCounter = new Counter(verticalLimitSwitch);
+	private DigitalInput createVerticalLimitSwitch() {
+		return new DigitalInput(RobotMap.PIVOT_VERTICAL_LIMIT_SWITCH);
 	}
 
 	public void initDefaultCommand() {
@@ -61,25 +59,23 @@ public class Pivot extends Subsystem {
 		return motor.getSensorCollection().isRevLimitSwitchClosed();
 	}
 	
-	public boolean hasPassedVertical() {
-		return (verticalCounter.get() > 0);
+	public boolean isAtVerticalPos() {
+		return verticalLimitSwitch.get();
 	}
 	
 	public void activeBrakeWhenGoingHigh() {
-		motor.set(ControlMode.PercentOutput, 0.1);
+		motor.set(ControlMode.PercentOutput, ACTIVE_BRAKE_WHEN_GOING_HIGH);
 	}
 	
 	public void activeBrakeWhenGoingLow() {
-		motor.set(ControlMode.PercentOutput, -0.1);
+		motor.set(ControlMode.PercentOutput, ACTIVE_BRAKE_WHEN_GOING_LOW);
 	}	
 	
 	public void moveToLowPos() {
-		verticalCounter.reset();
 		motor.set(ControlMode.PercentOutput, PERCENT_OUTPUT_MOTOR_TO_LOW);
 	}
 	
 	public void moveToHighPos() {
-		verticalCounter.reset();
 		motor.set(ControlMode.PercentOutput, PERCENT_OUTPUT_MOTOR_TO_HIGH);
 	}
 	

@@ -6,8 +6,13 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class PivotToVerticalFromHighPosition extends Command {
 
+	private boolean lastVerticalPosRead;
+	private boolean verticalPosReached;
+	
 	public PivotToVerticalFromHighPosition() {
 		requires(Robot.pivot);
+		
+		verticalPosReached = false;
 	}
 
 	// Called just before the command runs the first time.
@@ -17,6 +22,8 @@ public class PivotToVerticalFromHighPosition extends Command {
 
 	// Called repeatedly when the command is scheduled to run.
 	protected void execute() {
+		lastVerticalPosRead = Robot.pivot.isAtVerticalPos();
+		verticalPosReached |= lastVerticalPosRead;
 	}
 
 	// Called when another command which requires one or more of the same subsystems is scheduled to run.
@@ -26,7 +33,7 @@ public class PivotToVerticalFromHighPosition extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return (Robot.pivot.hasPassedVertical() || Robot.pivot.isAtLowPos());
+		return (verticalPosReached && !lastVerticalPosRead);
 	}
 
 	// Called once after isFinished returns TRUE.
