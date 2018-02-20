@@ -24,9 +24,9 @@ public class GripperDefault extends Command {
 	private void updateOpening() {
 		double leftStickAxisY = Robot.oi.getJoystickHelperAxis(XBoxAxis.LEFT_STICK_Y, 0.1);
 		if (leftStickAxisY > 0.5) {
-			Robot.gripper.close();
-		} else if (leftStickAxisY < -0.5) {
 			Robot.gripper.open();
+		} else if (leftStickAxisY < -0.5) {
+			Robot.gripper.close();
 		}
 	}
 	

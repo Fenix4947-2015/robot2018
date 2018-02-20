@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Gripper extends Subsystem {
 	
 	// Constants.
-	private static final double MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT = 0.1;
+	private static final double MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT = 1.0;
 	
-	private static final boolean OPENER_SOLENOID_CLOSE_STATE = false;
+	private static final boolean OPENER_SOLENOID_CLOSE_STATE = true;
 	private static final boolean OPENER_SOLENOID_OPEN_STATE = !OPENER_SOLENOID_CLOSE_STATE;
 	
-	private static final boolean STATE_CUBE_PRESENT = false;
+	private static final boolean STATE_CUBE_PRESENT = true;
 
 	private static final long FLIP_FREQUENCY_MILLIS = TimeUnit.SECONDS.toMillis(1L);
 	private static final double SPEED_RATIO = 0.9;
@@ -69,7 +69,6 @@ public class Gripper extends Subsystem {
 	}
 	
 	public boolean isCubePresent() {
-		
 		return (cubePresenceDigitalInput.get() == STATE_CUBE_PRESENT);
 	}
 	
@@ -81,10 +80,10 @@ public class Gripper extends Subsystem {
 		openerSolenoid.set(OPENER_SOLENOID_OPEN_STATE);
 	}
 	
-	public void shootToSwitch() {
-		leftMotor.set(ControlMode.PercentOutput, MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
+	public void fullSpeed() {
+		leftMotor.set(ControlMode.PercentOutput, -MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
 		rightMotor.set(ControlMode.PercentOutput, MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT);
-	}
+	}	
 	
 	public void rotateFlip(double percentOutput) {
 		flipIfRequired();
@@ -97,7 +96,7 @@ public class Gripper extends Subsystem {
 			rightMotor.set(ControlMode.PercentOutput, percentOutput * SPEED_RATIO);
 		}
 	}
-
+	
 	private void flipIfRequired() {
 		long nowMillis = System.currentTimeMillis();
 		
@@ -110,11 +109,10 @@ public class Gripper extends Subsystem {
 	}
 
 	public void stop() {
-		leftMotor.stopMotor();
-		rightMotor.stopMotor();
+		leftMotor.set(ControlMode.PercentOutput, 0.0);
+		rightMotor.set(ControlMode.PercentOutput, 0.0);
 	}
 	
 	public void log() {
-		
 	}
 }

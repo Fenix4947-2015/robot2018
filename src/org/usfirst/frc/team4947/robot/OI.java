@@ -7,8 +7,6 @@
 
 package org.usfirst.frc.team4947.robot;
 
-import org.usfirst.frc.team4947.robot.OI.XBoxAxis;
-import org.usfirst.frc.team4947.robot.OI.XBoxButton;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
 import org.usfirst.frc.team4947.robot.commands.DriveTime;
 import org.usfirst.frc.team4947.robot.commands.PlatformDefault;
@@ -24,7 +22,6 @@ import org.usfirst.frc.team4947.robot.commands.gripper.GripperClose;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperDefault;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperOpen;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperShootToSwitch;
-import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameHelperProfile;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotCustomMotion;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
 import org.usfirst.frc.team4947.robot.commands.pivot.PivotToLowPosition;
@@ -95,8 +92,8 @@ public class OI {
 		initJoystickHelper();
 		
 		SmartDashboard.putString("-------Gripper--------","");
-		SmartDashboard.putData("gripperClose", new GripperClose(Robot.gripper));
-		SmartDashboard.putData("gripperOpen", new GripperOpen(Robot.gripper));
+		SmartDashboard.putData("gripperClose", new GripperClose());
+		SmartDashboard.putData("gripperOpen", new GripperOpen());
 		SmartDashboard.putData("GripperShootToSwitch", new GripperShootToSwitch());
 		SmartDashboard.putData("Manual Gripper", new GripperDefault());
 		
@@ -180,7 +177,6 @@ public class OI {
 		helperX.whenPressed(new PivotToHighPosition());
 		helperA.whenPressed(new PivotToLowPosition());
 		
-		helperBack.whenPressed(new ActivateEndGameHelperProfile());
 		helperStart.whenPressed(new PivotCustomMotion());
 	}
 

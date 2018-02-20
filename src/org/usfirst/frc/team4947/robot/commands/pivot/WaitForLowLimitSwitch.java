@@ -8,12 +8,11 @@ public class WaitForLowLimitSwitch extends Command {
 
 	public WaitForLowLimitSwitch() {
 		requires(Robot.pivot);
-		
-		setInterruptible(false);
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
+		Robot.pivot.activeBrakeWhenGoingLow();
 	}
 
 	// Called repeatedly when the command is scheduled to run.

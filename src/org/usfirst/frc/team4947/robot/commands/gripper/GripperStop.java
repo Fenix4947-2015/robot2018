@@ -1,27 +1,18 @@
-package org.usfirst.frc.team4947.robot.commands.joystick;
+package org.usfirst.frc.team4947.robot.commands.gripper;
 
-import org.usfirst.frc.team4947.robot.OI.XBoxAxis;
-import org.usfirst.frc.team4947.robot.OI.XBoxButton;
 import org.usfirst.frc.team4947.robot.Robot;
-import org.usfirst.frc.team4947.robot.commands.PlatformDefault;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ActivateEndGameHelperProfile extends Command {
+public class GripperStop extends Command {
 	
-	public ActivateEndGameHelperProfile() {
+	public GripperStop() {
 		requires(Robot.gripper);
-		
-		requires(Robot.platformLeft);
-		requires(Robot.platformRight);
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		Robot.gripper.setDefaultCommand(null);
-
-		Robot.platformLeft.setDefaultCommand(new PlatformDefault(Robot.platformLeft, XBoxButton.LB, XBoxAxis.LEFT_TRIGGER));
-		Robot.platformLeft.setDefaultCommand(new PlatformDefault(Robot.platformRight, XBoxButton.RB, XBoxAxis.RIGHT_TRIGGER));		
+		Robot.gripper.stop();
 	}
 
 	// Called repeatedly when the command is scheduled to run.

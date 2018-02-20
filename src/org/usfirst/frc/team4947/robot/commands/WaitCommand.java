@@ -1,18 +1,19 @@
-package org.usfirst.frc.team4947.robot.commands.pivot;
-
-import org.usfirst.frc.team4947.robot.Robot;
+package org.usfirst.frc.team4947.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class WaitForHighLimitSwitch extends Command {
+public class WaitCommand extends Command {
+	
+	// Members.
+	private double seconds;
 
-	public WaitForHighLimitSwitch() {
-		requires(Robot.pivot);
+	public WaitCommand(double seconds) {
+		this.seconds = seconds;
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		Robot.pivot.activeBrakeWhenGoingHigh();
+		setTimeout(seconds);
 	}
 
 	// Called repeatedly when the command is scheduled to run.
@@ -26,11 +27,10 @@ public class WaitForHighLimitSwitch extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return Robot.pivot.isAtHighPos();
+		return isTimedOut();
 	}
 
 	// Called once after isFinished returns TRUE.
 	protected void end() {
-		Robot.pivot.stop();
 	}
 }

@@ -1,23 +1,19 @@
 package org.usfirst.frc.team4947.robot.commands.gripper;
 
-import org.usfirst.frc.team4947.robot.subsystems.Gripper;
+import org.usfirst.frc.team4947.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GripperOpen extends Command {
 	
-	// Members.
-	private Gripper gripper;
-
-	public GripperOpen(Gripper gripper) {
-		requires(gripper);
-		
-		this.gripper = gripper;
+	public GripperOpen() {
+		requires(Robot.gripper);
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		gripper.open();
+		Robot.gripper.open();
+		setTimeout(0.1);
 	}
 
 	// Called repeatedly when the command is scheduled to run.
@@ -31,7 +27,7 @@ public class GripperOpen extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return false;
+		return isTimedOut();
 	}
 
 	// Called once after isFinished returns TRUE.

@@ -1,22 +1,19 @@
-package org.usfirst.frc.team4947.robot.commands.joystick;
+package org.usfirst.frc.team4947.robot.commands.gripper;
 
-import org.usfirst.frc.team4947.robot.subsystems.Platform;
+import org.usfirst.frc.team4947.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ActivateEndGameProfile extends Command {
+public class GripperAtFullSpeed extends Command {
 	
-	public ActivateEndGameProfile(Platform platformLeft, Platform platformRight) {
-		requires(platformLeft);
-		requires(platformRight);
-
-		// TODO: Set default command for both platform for end game.
-		//platformLeft.setDefaultCommand(null);
-		//platformRight.setDefaultCommand(null);
+	public GripperAtFullSpeed() {
+		requires(Robot.gripper);
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
+		Robot.gripper.fullSpeed();
+		setTimeout(1.0);
 	}
 
 	// Called repeatedly when the command is scheduled to run.
@@ -30,7 +27,7 @@ public class ActivateEndGameProfile extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return true;
+		return isTimedOut();
 	}
 
 	// Called once after isFinished returns TRUE.

@@ -1,7 +1,5 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 
-import org.usfirst.frc.team4947.robot.commands.joystick.ActivateEndGameProfile;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 

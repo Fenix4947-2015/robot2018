@@ -8,8 +8,6 @@ public class PivotToVerticalFromHighPosition extends Command {
 
 	public PivotToVerticalFromHighPosition() {
 		requires(Robot.pivot);
-		
-		setInterruptible(false);
 	}
 
 	// Called just before the command runs the first time.
