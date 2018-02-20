@@ -14,9 +14,7 @@ public class DriveFinalApproach extends Command {
 	private static final double FT_PER_SEC_AT_NOMINAL_SPEED = 3.0 ; // to validate
 			
 	public DriveFinalApproach(double distanceDesired) 
-	{
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	{        
     	requires(Robot.driveTrain);
     	requires(Robot.gripper);
     	distance = distanceDesired; 

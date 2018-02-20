@@ -24,18 +24,18 @@ public class AutoCenterFoward extends CommandGroup {
 	}
 	public void setSide(Side side) {
 		if (side == Side.LEFT) {
-			addSequential(new DriveDistance(DistanceAuto.DEXCHANGE));
+			addSequential(new DriveDistance(DistanceAuto.DIST_CLEAR_EXCHANGE_Y));
 			addSequential(new DriveRotate(90.0));	
-			addSequential(new DriveDistance((DistanceAuto.DPORTALTOPORTAL/2)-DistanceAuto.OFFSET));
+			addSequential(new DriveDistance((DistanceAuto.DPORTALTOPORTAL_X/2.0)-DistanceAuto.OFFSET_FROM_CENTER_X));
 			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH-DistanceAuto.DEXCHANGE)); 
+			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH_Y-DistanceAuto.DIST_CLEAR_EXCHANGE_Y)); 
 			
 		} else if (side == Side.RIGHT) {
-			addSequential(new DriveDistance(DistanceAuto.DEXCHANGE));	
+			addSequential(new DriveDistance(DistanceAuto.DIST_CLEAR_EXCHANGE_Y));	
 			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveDistance((DistanceAuto.DPORTALTOPORTAL/2)+DistanceAuto.OFFSET)); // Turn right.
+			addSequential(new DriveDistance((DistanceAuto.DPORTALTOPORTAL_X/2.0)+DistanceAuto.OFFSET_FROM_CENTER_X)); // Turn right.
 			addSequential(new DriveRotate(90.0)); 
-			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH-DistanceAuto.DEXCHANGE));
+			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH_Y-DistanceAuto.DIST_CLEAR_EXCHANGE_Y));
 		}
 	}
 }

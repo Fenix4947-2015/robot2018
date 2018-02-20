@@ -97,7 +97,7 @@ public class OI {
 		SmartDashboard.putString("-------Gripper--------","");
 		SmartDashboard.putData("gripperClose", new GripperClose(Robot.gripper));
 		SmartDashboard.putData("gripperOpen", new GripperOpen(Robot.gripper));
-		SmartDashboard.putData("GripperShootToSwitch", new GripperShootToSwitch(Robot.gripper));
+		SmartDashboard.putData("GripperShootToSwitch", new GripperShootToSwitch());
 		SmartDashboard.putData("Manual Gripper", new GripperDefault());
 		
 		SmartDashboard.putString("-------Pivot--------","");

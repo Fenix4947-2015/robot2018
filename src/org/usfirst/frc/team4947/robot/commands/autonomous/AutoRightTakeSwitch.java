@@ -13,34 +13,25 @@ public class AutoRightTakeSwitch extends CommandGroup {
 	// Constants.
 	public static final String NAME = "AutoRightTakeSwitch";
 
-	// Members.
-	private Pivot pivot;
-	private Gripper gripper;
-	
-	public AutoRightTakeSwitch(Pivot pivot, Gripper gripper) {
+	public AutoRightTakeSwitch() {
 		super(NAME);
-
-		this.pivot = pivot;
-		this.gripper = gripper;
 	}
 	
 	public void setSide(Side side) {
 		if (side == Side.LEFT) {
-			addSequential(new DriveDistance(DistanceAuto.DEXCHANGE));
+			addSequential(new DriveDistance(DistanceAuto.DIST_CLEAR_EXCHANGE_Y));
 			addSequential(new DriveRotate(-90.0));	
-			addSequential(new DriveDistance(DistanceAuto.DPORTALTOPORTAL));
+			addSequential(new DriveDistance(DistanceAuto.DPORTALTOPORTAL_X));
 			addSequential(new DriveRotate(90.0));
-			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH-DistanceAuto.DEXCHANGE));
+			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH_Y-DistanceAuto.DIST_CLEAR_EXCHANGE_Y));
 			addSequential(new DriveRotate(90.0));
-			addSequential(new DriveDistance(DistanceAuto.DTOSWITCH));
-			addSequential(new PivotToHighPosition());
-			addSequential(new GripperShootToSwitch(gripper));
+			addSequential(new DriveFinalApproach(DistanceAuto.D_EXCHANGE_TO_SWITCH_X));			
+			addSequential(new GripperShootToSwitch());
 		} else if (side == Side.RIGHT) {
-			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH));
+			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH_Y));
 			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveDistance(DistanceAuto.DTOSWITCH));
-			addSequential(new PivotToHighPosition());
-			addSequential(new GripperShootToSwitch(gripper));
+			addSequential(new DriveFinalApproach(DistanceAuto.D_EXCHANGE_TO_SWITCH_X));
+			addSequential(new GripperShootToSwitch());
 		} else {
 			addSequential(new AutoLeftRightFoward());	// Drive to switch.
 		}

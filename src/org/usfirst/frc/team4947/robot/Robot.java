@@ -55,9 +55,9 @@ public class Robot extends TimedRobot {
 		platformRight = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_RIGHT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_RIGHT);
 
 		oi = new OI();
-		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch( pivot, gripper));
-		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch( pivot, gripper));
-		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch( pivot, gripper));
+		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch());
+		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch());
+		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch());
 		m_chooser.addDefault("Robot a gauche ou droite - avance", new AutoLeftRightFoward());
 		m_chooser.addDefault("Robot au centre - avance", new AutoCenterFoward());
 		SmartDashboard.putData("Auto mode", m_chooser);

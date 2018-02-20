@@ -86,6 +86,7 @@ public class DriveTrain extends Subsystem {
 	public void initTeleop()
 	{
 		autonomousmode = false;
+		gearboxShift(ShifterSpeed.Slow);
 		
 		boolean kMotorLeftInvert = false;
 		initEncoder(leftMotor1,kMotorLeftInvert);
