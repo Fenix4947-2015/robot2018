@@ -6,6 +6,7 @@ public class PivotToLowPosition extends CommandGroup {
 
 	public PivotToLowPosition() {
 		addSequential(new PivotToVerticalFromHighPosition());
+		addSequential(new BreakFromHighPosition());
 		addSequential(new WaitForLowLimitSwitch());
 	}
 }

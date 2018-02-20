@@ -1,18 +1,19 @@
-package org.usfirst.frc.team4947.robot.commands.gripper;
+package org.usfirst.frc.team4947.robot.commands.pivot;
 
 import org.usfirst.frc.team4947.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GripperStop extends Command {
-	
-	public GripperStop() {
-		requires(Robot.gripper);
+public class BreakFromHighPosition extends Command {
+
+	public BreakFromHighPosition() {
+		requires(Robot.pivot);
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		setTimeout(0.25);
+		Robot.pivot.activeBrakeWhenGoingLow();
+		setTimeout(0.5);
 	}
 
 	// Called repeatedly when the command is scheduled to run.
@@ -26,11 +27,10 @@ public class GripperStop extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return isTimedOut();
+		return (isTimedOut() || Robot.pivot.isAtLowPos());
 	}
 
 	// Called once after isFinished returns TRUE.
 	protected void end() {
-		Robot.gripper.stop();
 	}
 }

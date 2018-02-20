@@ -9,5 +9,6 @@ public class GripperShootToSwitch extends CommandGroup {
 		addSequential(new GripperAtFullSpeed());
 		addSequential(new GripperClose());
 		addSequential(new GripperStop());
+		addSequential(new GripperOpen());
 	}
 }

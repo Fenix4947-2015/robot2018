@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4947.robot.commands.pivot;
 
 import org.usfirst.frc.team4947.robot.Robot;
+import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,13 +12,13 @@ public class PivotToVerticalFromHighPosition extends Command {
 	
 	public PivotToVerticalFromHighPosition() {
 		requires(Robot.pivot);
-		
-		verticalPosReached = false;
 	}
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		Robot.pivot.moveToLowPos();
+		verticalPosReached = false;
+		
+		Robot.pivot.moveToLowPos(Pivot.PERCENT_OUTPUT_MOTOR_TO_LOW);
 	}
 
 	// Called repeatedly when the command is scheduled to run.
@@ -33,7 +34,11 @@ public class PivotToVerticalFromHighPosition extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
-		return (verticalPosReached && !lastVerticalPosRead);
+		boolean isFinished = (verticalPosReached && !lastVerticalPosRead);
+		if (isFinished) {
+			System.out.println("finished");
+		}
+		return isFinished;
 	}
 
 	// Called once after isFinished returns TRUE.

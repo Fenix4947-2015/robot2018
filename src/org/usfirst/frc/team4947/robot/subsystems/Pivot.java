@@ -16,10 +16,12 @@ public class Pivot extends Subsystem {
 	// Pos descend
 	
 	// Constants.
-	private static final double PERCENT_OUTPUT_MOTOR_TO_LOW = 0.70;
-	private static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = -0.85;
+	public static final double PERCENT_OUTPUT_MOTOR_TO_LOW = 0.70;
+	public static final double PERCENT_OUTPUT_MOTOR_TO_LOW_2 = 0.25;
+	public static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = -0.85;
+	public static final double PERCENT_OUTPUT_MOTOR_TO_HIGH_2 = -0.00;
 	private static final double ACTIVE_BRAKE_WHEN_GOING_HIGH = 0.01;
-	private static final double ACTIVE_BRAKE_WHEN_GOING_LOW = -0.02;
+	private static final double ACTIVE_BRAKE_WHEN_GOING_LOW = -0.005;
 	
 	// Members.
 	private final WPI_TalonSRX motor;
@@ -71,11 +73,11 @@ public class Pivot extends Subsystem {
 		motor.set(ControlMode.PercentOutput, ACTIVE_BRAKE_WHEN_GOING_LOW);
 	}	
 	
-	public void moveToLowPos() {
-		motor.set(ControlMode.PercentOutput, PERCENT_OUTPUT_MOTOR_TO_LOW);
+	public void moveToLowPos(double percentOutput) {
+		motor.set(ControlMode.PercentOutput, percentOutput);
 	}
 	
-	public void moveToHighPos() {
+	public void moveToHighPos(double percent) {
 		motor.set(ControlMode.PercentOutput, PERCENT_OUTPUT_MOTOR_TO_HIGH);
 	}
 	

@@ -13,7 +13,7 @@ public class GripperAtFullSpeed extends Command {
 	// Called just before the command runs the first time.
 	protected void initialize() {
 		Robot.gripper.fullSpeed();
-		setTimeout(1.0);
+		setTimeout(0.5);
 	}
 
 	// Called repeatedly when the command is scheduled to run.

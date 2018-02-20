@@ -13,7 +13,7 @@ public class GripperOpen extends Command {
 	// Called just before the command runs the first time.
 	protected void initialize() {
 		Robot.gripper.open();
-		setTimeout(0.1);
+		setTimeout(0.25);
 	}
 
 	// Called repeatedly when the command is scheduled to run.

@@ -177,6 +177,15 @@ public class OI {
 		helperX.whenPressed(new PivotToHighPosition());
 		helperA.whenPressed(new PivotToLowPosition());
 		
+//		helperX.whenPressed(new GripperOpen());
+//		helperA.whenPressed(new GripperClose());	
+		
+		helperLB.whenPressed(new GripperShootToSwitch());
+		helperRB.whenPressed(new GripperShootToSwitch());
+		
+//		helperY.whenPressed(new GripperOpen());
+//		helperA.whenPressed(new GripperClose());
+		
 		helperStart.whenPressed(new PivotCustomMotion());
 	}
 

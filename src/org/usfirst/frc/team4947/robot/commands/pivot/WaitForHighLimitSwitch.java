@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4947.robot.commands.pivot;
 
 import org.usfirst.frc.team4947.robot.Robot;
+import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,7 +13,7 @@ public class WaitForHighLimitSwitch extends Command {
 
 	// Called just before the command runs the first time.
 	protected void initialize() {
-		Robot.pivot.activeBrakeWhenGoingHigh();
+//		Robot.pivot.moveToHighPos(Pivot.PERCENT_OUTPUT_MOTOR_TO_HIGH_2);
 	}
 
 	// Called repeatedly when the command is scheduled to run.
