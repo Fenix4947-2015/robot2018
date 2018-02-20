@@ -114,14 +114,7 @@ public class Gripper extends Subsystem {
 		rightMotor.stopMotor();
 	}
 	
-<<<<<<< Upstream, based on origin/master
 	public void log() {
-		System.out.println("gripper: " + isCubePresent());
-=======
-	public void log()
-	{
-		System.out.format("Cube presence : %b  %n ",isCubePresent());
-	    
->>>>>>> 805ef3e Tuned final approach method and driving for autonomous
+		
 	}
 }
