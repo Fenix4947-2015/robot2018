@@ -76,11 +76,9 @@ public class DriveTrain extends Subsystem {
 	
 	public DriveTrain()
 	{			
-		robotDrive.setSafetyEnabled(false);		
-		initAutonomous();		
-		 
-		 gyro = new ADXRS450_Gyro();
-		 resetGyroAngle();		 
+		robotDrive.setSafetyEnabled(false);			 
+		gyro = new ADXRS450_Gyro();
+		resetGyroAngle();		 
 	}
 	
 	public void initTeleop()
@@ -147,8 +145,6 @@ public class DriveTrain extends Subsystem {
     
     public void driveToDistance(double distance_feet)
     {	
-		System.out.println("moving to "+distance_feet + " feet   " + feetToEncoderCounts(distance_feet) + " counts");
-
 		positionPIDForward(leftMotor1,distance_feet);
 		positionPIDForward(rightMotor1,distance_feet);
     }
@@ -308,9 +304,6 @@ public class DriveTrain extends Subsystem {
     	int leftPosition = leftMotor1.getSelectedSensorPosition(0);
 		int rightPosition = rightMotor1.getSelectedSensorPosition(0);
 
-		System.out.format("Gyro angle : %f ",Robot.driveTrain.getGyroAngle());		
-		System.out.format("leftPosition=%d, rightPosition=%d%n", leftPosition, rightPosition);
-		
 		SmartDashboard.putNumber("Left Sensor position", leftPosition);
 		SmartDashboard.putNumber("Right Sensor position", rightPosition);
 

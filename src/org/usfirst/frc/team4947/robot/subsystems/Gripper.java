@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Gripper extends Subsystem {
 	
@@ -20,7 +21,7 @@ public class Gripper extends Subsystem {
 	private static final boolean OPENER_SOLENOID_CLOSE_STATE = true;
 	private static final boolean OPENER_SOLENOID_OPEN_STATE = !OPENER_SOLENOID_CLOSE_STATE;
 	
-	private static final boolean STATE_CUBE_PRESENT = true;
+	private static final boolean STATE_CUBE_PRESENT = false;
 
 	private static final long FLIP_FREQUENCY_MILLIS = TimeUnit.SECONDS.toMillis(1L);
 	private static final double SPEED_RATIO = 0.9;
@@ -114,5 +115,6 @@ public class Gripper extends Subsystem {
 	}
 	
 	public void log() {
+		SmartDashboard.putBoolean("Cube Presence", isCubePresent());
 	}
 }

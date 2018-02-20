@@ -24,18 +24,18 @@ public class AutoCenterFoward extends CommandGroup {
 	}
 	public void setSide(Side side) {
 		if (side == Side.LEFT) {
-			addSequential(new DriveDistance(DistanceAuto.DIST_CLEAR_EXCHANGE_Y));
+			addSequential(new DriveDistance(DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y));
 			addSequential(new DriveRotate(90.0));	
-			addSequential(new DriveDistance((DistanceAuto.DPORTALTOPORTAL_X/2.0)-DistanceAuto.OFFSET_FROM_CENTER_X));
+			addSequential(new DriveDistance((DistanceAutoConstants.DPORTALTOPORTAL_X/2.0)-DistanceAutoConstants.OFFSET_FROM_CENTER_X));
 			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH_Y-DistanceAuto.DIST_CLEAR_EXCHANGE_Y)); 
+			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y-DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y)); 
 			
 		} else if (side == Side.RIGHT) {
-			addSequential(new DriveDistance(DistanceAuto.DIST_CLEAR_EXCHANGE_Y));	
+			addSequential(new DriveDistance(DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y));	
 			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveDistance((DistanceAuto.DPORTALTOPORTAL_X/2.0)+DistanceAuto.OFFSET_FROM_CENTER_X)); // Turn right.
+			addSequential(new DriveDistance((DistanceAutoConstants.DPORTALTOPORTAL_X/2.0)+DistanceAutoConstants.OFFSET_FROM_CENTER_X)); // Turn right.
 			addSequential(new DriveRotate(90.0)); 
-			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH_Y-DistanceAuto.DIST_CLEAR_EXCHANGE_Y));
+			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y-DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y));
 		}
 	}
 }

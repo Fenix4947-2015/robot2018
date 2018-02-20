@@ -16,10 +16,10 @@ public class Pivot extends Subsystem {
 	// Pos descend
 	
 	// Constants.
-	private static final double PERCENT_OUTPUT_MOTOR_TO_LOW = 0.5;
-	private static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = -0.5;
-	private static final double ACTIVE_BRAKE_WHEN_GOING_HIGH = 0.1;
-	private static final double ACTIVE_BRAKE_WHEN_GOING_LOW = -0.1;
+	private static final double PERCENT_OUTPUT_MOTOR_TO_LOW = 0.70;
+	private static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = -0.85;
+	private static final double ACTIVE_BRAKE_WHEN_GOING_HIGH = 0.01;
+	private static final double ACTIVE_BRAKE_WHEN_GOING_LOW = -0.02;
 	
 	// Members.
 	private final WPI_TalonSRX motor;

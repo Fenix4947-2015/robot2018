@@ -13,24 +13,22 @@ public class AutoRightTakeSwitch extends CommandGroup {
 	// Constants.
 	public static final String NAME = "AutoRightTakeSwitch";
 
-	public AutoRightTakeSwitch() {
+	public AutoRightTakeSwitch(Side side) {
 		super(NAME);
-	}
-	
-	public void setSide(Side side) {
+		
 		if (side == Side.LEFT) {
-			addSequential(new DriveDistance(DistanceAuto.DIST_CLEAR_EXCHANGE_Y));
+			addSequential(new DriveDistance(DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y));
 			addSequential(new DriveRotate(-90.0));	
-			addSequential(new DriveDistance(DistanceAuto.DPORTALTOPORTAL_X));
+			addSequential(new DriveDistance(DistanceAutoConstants.DPORTALTOPORTAL_X));
 			addSequential(new DriveRotate(90.0));
-			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH_Y-DistanceAuto.DIST_CLEAR_EXCHANGE_Y));
+			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y-DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
 			addSequential(new DriveRotate(90.0));
-			addSequential(new DriveFinalApproach(DistanceAuto.D_EXCHANGE_TO_SWITCH_X));			
+			addSequential(new DriveFinalApproach(DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));			
 			addSequential(new GripperShootToSwitch());
 		} else if (side == Side.RIGHT) {
-			addSequential(new DriveDistance(DistanceAuto.DWALLTOSWITCH_Y));
+			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
 			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveFinalApproach(DistanceAuto.D_EXCHANGE_TO_SWITCH_X));
+			addSequential(new DriveFinalApproach(DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));
 			addSequential(new GripperShootToSwitch());
 		} else {
 			addSequential(new AutoLeftRightFoward());	// Drive to switch.

@@ -40,8 +40,9 @@ public class Robot extends TimedRobot {
 	public static Platform platformLeft;
 	public static Platform platformRight;	
 	
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	String m_autonomousCommand;
+	SendableChooser<String> m_chooser = new SendableChooser<>();
+	Command m_currentCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be used for any initialization code.
@@ -55,11 +56,11 @@ public class Robot extends TimedRobot {
 		platformRight = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_RIGHT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_RIGHT);
 
 		oi = new OI();
-		m_chooser.addDefault("Robot a gauche - switch", new AutoLeftTakeSwitch());
-		m_chooser.addDefault("Robot au centre - switch", new AutoCenterTakeSwitch());
-		m_chooser.addDefault("Robot a droite - switch", new AutoRightTakeSwitch());
-		m_chooser.addDefault("Robot a gauche ou droite - avance", new AutoLeftRightFoward());
-		m_chooser.addDefault("Robot au centre - avance", new AutoCenterFoward());
+		m_chooser.addDefault("Robot a gauche - switch", AutoLeftTakeSwitch.NAME);
+		m_chooser.addDefault("Robot au centre - switch", AutoCenterTakeSwitch.NAME);
+		m_chooser.addDefault("Robot a droite - switch", AutoRightTakeSwitch.NAME);
+		m_chooser.addDefault("Robot a gauche ou droite - avance", AutoLeftRightFoward.NAME);
+		m_chooser.addDefault("Robot au centre - avance", AutoCenterFoward.NAME);
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		// Camera sur le dashboard
@@ -90,64 +91,58 @@ public class Robot extends TimedRobot {
 	 * example) or additional comparisons to the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {
-		m_autonomousCommand = (Command)m_chooser.getSelected();
+	public void autonomousInit() 
+	{
+		driveTrain.initAutonomous();
+		
+		m_autonomousCommand = (String)m_chooser.getSelected();
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
-			String gameData = DriverStation.getInstance().getGameSpecificMessage();
+			String gameData = DriverStation.getInstance().getGameSpecificMessage();		
+			SmartDashboard.putString("Switch Random Configuration", gameData);
 			if (gameData != null) {
 				planAutonomous(gameData);
 			}
-		}
+		}		
 	}
 
 	private void planAutonomous(String gameData) {
 		Side sideOfSwitch = Side.ofSwitch(gameData);
 
-		driveTrain.gearboxShift(ShifterSpeed.Slow);
-
 		// TODO: do a delay with the smartDashBoard for all the autonomus
 		// commands
-		String commandName = m_autonomousCommand.getName();
+		String commandName = m_autonomousCommand;
 		switch (commandName) {
 			
 			case AutoLeftRightFoward.NAME:
-				AutoLeftRightFoward autoLeftFoward = ((AutoLeftRightFoward) m_autonomousCommand);
-				autoLeftFoward.start();
+				m_currentCommand = new AutoLeftRightFoward();
+				m_currentCommand.start();
 				break;
 	
 			case AutoCenterFoward.NAME:
-				AutoCenterFoward autoCenterFoward = ((AutoCenterFoward) m_autonomousCommand);
-				autoCenterFoward.start();
+				m_currentCommand = new AutoCenterFoward();
+				m_currentCommand.start();
 				break;
 	
 			case AutoLeftTakeSwitch.NAME:
-				AutoLeftTakeSwitch autoLeftTakeSwitch = ((AutoLeftTakeSwitch) m_autonomousCommand);
-				autoLeftTakeSwitch.setSide(sideOfSwitch);
-				autoLeftTakeSwitch.start();
+				m_currentCommand = new AutoLeftTakeSwitch(sideOfSwitch);
+				m_currentCommand.start();
 				break;
 	
 			case AutoCenterTakeSwitch.NAME:
-				AutoCenterTakeSwitch autoCenterTakeSwitch = ((AutoCenterTakeSwitch) m_autonomousCommand);
-				autoCenterTakeSwitch.setSide(sideOfSwitch);
-				autoCenterTakeSwitch.start();
+				m_currentCommand =  new AutoCenterTakeSwitch(sideOfSwitch);
+				m_currentCommand.start();
 				break;
 	
 			case AutoRightTakeSwitch.NAME:
-				AutoRightTakeSwitch autoRightTakeSwitch = ((AutoRightTakeSwitch) m_autonomousCommand);
-				autoRightTakeSwitch.setSide(sideOfSwitch);
-				autoRightTakeSwitch.start();
+				m_currentCommand = new AutoRightTakeSwitch(sideOfSwitch);
+				m_currentCommand.start();
 				break;
 	
 			default:
-				System.out.format("Command not supported (command=%s).%n", commandName);
+				//System.out.println("Command not supported : command="+ commandName);
 				break;
 		}
 	}
@@ -166,8 +161,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (m_currentCommand != null) {
+			m_currentCommand.cancel();
 		}
 		driveTrain.initTeleop();
 	}

@@ -4,12 +4,13 @@ import org.usfirst.frc.team4947.robot.Robot;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveDistance extends Command {
 
 	// Constants.
 	private static final double DISTANCE_THRESHOLD_FEET = 0.25; // three inches
-	private static final int TIMEOUT_VALUE = 6; //sec
+	private static final double TIMEOUT_VALUE = 6.0; //sec
 	// Members.
 	private double distanceFeet;
 	
@@ -35,6 +36,7 @@ public class DriveDistance extends Command {
 
 	// Make this return TRUE when the command no longer needs to run execute().
 	protected boolean isFinished() {
+		SmartDashboard.putNumber("PID ERROR", Robot.driveTrain.getEncoderDistanceErrorFeet());
 		boolean reachedPosition = (Robot.driveTrain.getEncoderDistanceErrorFeet()<DISTANCE_THRESHOLD_FEET);
         return reachedPosition; //(reachedPosition|| isTimedOut() || Robot.driveTrain.isRobotMoving());
 	}
