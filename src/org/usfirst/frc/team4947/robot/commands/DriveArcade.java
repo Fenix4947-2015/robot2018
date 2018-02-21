@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4947.robot.commands;
 
 import org.usfirst.frc.team4947.robot.OI.XBoxAxis;
-import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;

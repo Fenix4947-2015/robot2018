@@ -3,9 +3,7 @@ package org.usfirst.frc.team4947.robot.commands.autonomous;
 import org.usfirst.frc.team4947.robot.Side;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperClose;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperShootToSwitch;
-import org.usfirst.frc.team4947.robot.commands.pivot.PivotToHighPosition;
-import org.usfirst.frc.team4947.robot.subsystems.Gripper;
-import org.usfirst.frc.team4947.robot.subsystems.Pivot;
+
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

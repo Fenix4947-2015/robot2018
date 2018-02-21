@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Gripper extends Subsystem {
 	
 	// Constants.
-	private static final double MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT = 1.0;
+	private static final double MOTOR_SHOOT_TO_SWITCH_PERCENT_OUTPUT = 0.93;
 	
 	private static final boolean OPENER_SOLENOID_CLOSE_STATE = true;
 	private static final boolean OPENER_SOLENOID_OPEN_STATE = !OPENER_SOLENOID_CLOSE_STATE;

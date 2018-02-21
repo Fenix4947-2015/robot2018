@@ -18,7 +18,7 @@ public class Pivot extends Subsystem {
 	// Constants.
 	public static final double PERCENT_OUTPUT_MOTOR_TO_LOW = 0.70;
 	public static final double PERCENT_OUTPUT_MOTOR_TO_LOW_2 = 0.25;
-	public static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = -0.85;
+	public static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = -0.90;
 	public static final double PERCENT_OUTPUT_MOTOR_TO_HIGH_2 = -0.00;
 	private static final double ACTIVE_BRAKE_WHEN_GOING_HIGH = 0.01;
 	private static final double ACTIVE_BRAKE_WHEN_GOING_LOW = -0.005;
@@ -27,8 +27,6 @@ public class Pivot extends Subsystem {
 	private final WPI_TalonSRX motor;
 	
 	private DigitalInput verticalLimitSwitch;
-	
-	private int count = 0;
 	
 	public Pivot() {
 		motor = createMotor();
@@ -90,16 +88,6 @@ public class Pivot extends Subsystem {
 	}
 	
 	public void log() {
-		++count;
 		
-		if ((count % 10) == 0) {
-//			boolean reverseLimitSwitch = motor.getSensorCollection().isRevLimitSwitchClosed();
-//			boolean forwardLimitSwitch = motor.getSensorCollection().isFwdLimitSwitchClosed();
-//			boolean verticalLimitSwitchValue = verticalLimitSwitch.get();
-//			
-//			System.out.println("reverseLimitSwitch=" + reverseLimitSwitch 
-//					+ ", forwardLimitSwitch=" + forwardLimitSwitch
-//					+ ", verticalLimitSwitchValue=" + verticalLimitSwitchValue);
-		}
 	}
 }

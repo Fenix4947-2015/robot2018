@@ -10,9 +10,9 @@ import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterTakeSwitch;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftRightFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftTakeSwitch;
+import org.usfirst.frc.team4947.robot.commands.autonomous.AutoNothing;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoRightTakeSwitch;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team4947.robot.subsystems.DriveTrain.ShifterSpeed;
 import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 import org.usfirst.frc.team4947.robot.subsystems.Platform;
@@ -37,8 +37,7 @@ public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain;
 	public static Gripper gripper;
 	public static Pivot pivot;
-	public static Platform platformLeft;
-	public static Platform platformRight;	
+	public static Platform platform;
 	
 	String m_autonomousCommand;
 	SendableChooser<String> m_chooser = new SendableChooser<>();
@@ -52,10 +51,11 @@ public class Robot extends TimedRobot {
 		driveTrain = new DriveTrain();
 		gripper = new Gripper();
 		pivot = new Pivot();
-		platformLeft = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_LEFT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_LEFT);
-		platformRight = new Platform(RobotMap.LIFT_MOTOR_ADDRESS_RIGHT, RobotMap.UNLOCKER_SOLENOID_ADDRESS_RIGHT);
-
+		platform = new Platform();
+		
 		oi = new OI();
+		SmartDashboard.putString("-------AUTONOMOUS--------","");
+		m_chooser.addDefault("DO NOTHING", AutoNothing.NAME);
 		m_chooser.addDefault("Robot a gauche - switch", AutoLeftTakeSwitch.NAME);
 		m_chooser.addDefault("Robot au centre - switch", AutoCenterTakeSwitch.NAME);
 		m_chooser.addDefault("Robot a droite - switch", AutoRightTakeSwitch.NAME);
@@ -116,6 +116,10 @@ public class Robot extends TimedRobot {
 		String commandName = m_autonomousCommand;
 		switch (commandName) {
 			
+			case AutoNothing.NAME:
+				m_currentCommand = new AutoNothing();
+				m_currentCommand.start();
+				
 			case AutoLeftRightFoward.NAME:
 				m_currentCommand = new AutoLeftRightFoward();
 				m_currentCommand.start();
@@ -142,7 +146,8 @@ public class Robot extends TimedRobot {
 				break;
 	
 			default:
-				//System.out.println("Command not supported : command="+ commandName);
+				m_currentCommand = new AutoNothing();
+				m_currentCommand.start();
 				break;
 		}
 	}

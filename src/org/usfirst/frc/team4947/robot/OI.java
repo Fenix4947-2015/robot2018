@@ -7,8 +7,8 @@
 
 package org.usfirst.frc.team4947.robot;
 
+import org.usfirst.frc.team4947.robot.commands.AbortAll;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
-import org.usfirst.frc.team4947.robot.commands.DriveTime;
 import org.usfirst.frc.team4947.robot.commands.PlatformDefault;
 import org.usfirst.frc.team4947.robot.commands.PlatformPull;
 import org.usfirst.frc.team4947.robot.commands.PlatformRelease;
@@ -108,12 +108,10 @@ public class OI {
 		
 		SmartDashboard.putString("-------DriveTrain--------","");
 		SmartDashboard.putData("DriveArcade", new DriveArcade());
-		SmartDashboard.putNumber("Temps",1);
-		double time =SmartDashboard.getNumber("Temps",1);
-		SmartDashboard.putData("DriveTime", new DriveTime(time));
 		SmartDashboard.putNumber("DriveDistanceInches", 12);
 		double distanceInches= SmartDashboard.getNumber("DriveDistanceInches", 12);
 		SmartDashboard.putData("DriveDistance", new DriveDistance(distanceInches));
+		SmartDashboard.putData("DriveFinalApproach_Distance", new DriveFinalApproach(distanceInches));
 		SmartDashboard.putNumber("rotateAngle", 90);
 		double rotateAngle= SmartDashboard.getNumber("rotateAngle", 90);
 		SmartDashboard.putData("DriveRotate", new DriveRotate(rotateAngle));
@@ -122,12 +120,10 @@ public class OI {
 		SmartDashboard.putData("ShiftUp", new ShiftUp());
 		
 		SmartDashboard.putString("-------Platform--------","");
-		SmartDashboard.putData("Manual left platform", new PlatformDefault(Robot.platformLeft,XBoxButton.LB, XBoxAxis.LEFT_TRIGGER));
-		SmartDashboard.putData("Manual right platform", new PlatformDefault(Robot.platformRight,XBoxButton.RB, XBoxAxis.RIGHT_TRIGGER));
-		SmartDashboard.putData("PlatformPullLeft", new PlatformPull(Robot.platformLeft));
-		SmartDashboard.putData("PlatformPullRight", new PlatformPull(Robot.platformRight));
-		SmartDashboard.putData("PlatformReleaseLeft", new PlatformRelease(Robot.platformLeft));
-		SmartDashboard.putData("PlatformReleaseRight", new PlatformRelease(Robot.platformRight));
+		SmartDashboard.putData("Manual platform", new PlatformDefault());		
+		SmartDashboard.putData("PlatformPull", new PlatformPull());		
+		SmartDashboard.putData("PlatformRelease", new PlatformRelease());
+		
 	}
 	
 	private void initJoystickDriver() {
@@ -149,8 +145,10 @@ public class OI {
 		driverX.whenPressed(new ShiftUp());
 		driverA.whenPressed(new ShiftDown());
 		
-		driverStart.whenPressed(new PlatformRelease(Robot.platformLeft));
-		driverBack.whenPressed(new PlatformPull(Robot.platformLeft));
+		driverStart.whenPressed(new PlatformRelease());
+		driverY.whenPressed(new PlatformPull());
+		
+		driverBack.whenPressed(new AbortAll());
 
 	}
 	

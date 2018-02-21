@@ -1,8 +1,6 @@
 package org.usfirst.frc.team4947.robot.commands.autonomous;
 
 import org.usfirst.frc.team4947.robot.Robot;
-import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveRotate extends Command {
