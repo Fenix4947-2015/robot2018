@@ -3,9 +3,9 @@ package org.usfirst.frc.team4947.robot.commands;
 import org.usfirst.frc.team4947.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class PlatformRelease extends Command {
+public class PlatformLock extends Command {
 	
-	public PlatformRelease() {
+	public PlatformLock() {
 		requires(Robot.platform);
 		
 	}
@@ -16,7 +16,7 @@ public class PlatformRelease extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {		
-		Robot.platform.unlockPlatform(true);
+		Robot.platform.unlockPlatform(false);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

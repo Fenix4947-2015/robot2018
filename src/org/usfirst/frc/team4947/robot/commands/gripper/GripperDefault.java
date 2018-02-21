@@ -3,9 +3,12 @@ package org.usfirst.frc.team4947.robot.commands.gripper;
 import org.usfirst.frc.team4947.robot.OI.XBoxAxis;
 import org.usfirst.frc.team4947.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GripperDefault extends Command {
+	
+	public static final float CUBE_OK_RUMBLE_INTENSITY = 0.78f; // between 0 and 1
 	
 	public GripperDefault() {
 		requires(Robot.gripper);
@@ -19,6 +22,7 @@ public class GripperDefault extends Command {
 	protected void execute() {
 		updateOpening();
 		updateSpeed();
+		updatePresence();
 	}
 	
 	private void updateOpening() {
@@ -40,8 +44,21 @@ public class GripperDefault extends Command {
 		Robot.gripper.rotateFlip(direction * percentOutput);
 	}
 	
+	private void updatePresence()
+	{
+		if(Robot.gripper.isCubePresent())
+		{
+			Robot.oi.setJoystickHelperRumble(RumbleType.kLeftRumble, CUBE_OK_RUMBLE_INTENSITY);
+		}
+		else
+		{
+			Robot.oi.stopJoystickHelperRumble();
+		}
+	}
+	
 	// Called when another command which requires one or more of the same subsystems is scheduled to run.
 	protected void interrupted() {
+		Robot.oi.stopJoystickHelperRumble();
 	}
 
 	// Make this return TRUE when the command no longer needs to run execute().
@@ -51,5 +68,6 @@ public class GripperDefault extends Command {
 
 	// Called once after isFinished returns TRUE.
 	protected void end() {
+		Robot.oi.stopJoystickHelperRumble();
 	}
 }

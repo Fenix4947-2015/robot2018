@@ -37,8 +37,10 @@ public class RobotMap {
 
 	public static final int GEARBOX_SPEEDSOLENOID_ADDRESS = 7;	
 
-	public static final int UNLOCKER_SOLENOID_ADDRESS = 1; // to validate
-	public static final int LIFT_MOTOR_ADDRESS = 5;
+	// Platform Subsystem
+	public static final int UNLOCKER_SOLENOID_ADDRESS = 5; // to validate
+	public static final int LIFT_MOTOR_ADDRESS = 3;
+	public static final int LIFT_LIMIT_SWITCH_DIO_ADDRESS = 2; // in roborio
 
 	// Gripper subsystem.
 	public static final int GRIPPER_LEFT_MOTOR_DEVICE_NUMBER = 8;

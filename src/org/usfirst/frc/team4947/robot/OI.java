@@ -9,7 +9,7 @@ package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.AbortAll;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
-import org.usfirst.frc.team4947.robot.commands.PlatformDefault;
+import org.usfirst.frc.team4947.robot.commands.PlatformLock;
 import org.usfirst.frc.team4947.robot.commands.PlatformPull;
 import org.usfirst.frc.team4947.robot.commands.PlatformRelease;
 import org.usfirst.frc.team4947.robot.commands.ShiftDown;
@@ -119,10 +119,10 @@ public class OI {
 		SmartDashboard.putData("ShiftDown", new ShiftDown());
 		SmartDashboard.putData("ShiftUp", new ShiftUp());
 		
-		SmartDashboard.putString("-------Platform--------","");
-		SmartDashboard.putData("Manual platform", new PlatformDefault());		
+		SmartDashboard.putString("-------Platform--------","");			
 		SmartDashboard.putData("PlatformPull", new PlatformPull());		
 		SmartDashboard.putData("PlatformRelease", new PlatformRelease());
+		SmartDashboard.putData("PlatformLock", new PlatformLock());
 		
 	}
 	
@@ -201,18 +201,34 @@ public class OI {
 
 	public boolean getJoystickHelperButton(XBoxButton button) {
 		return joystickHelper.getRawButton(button.getValue());
-	}
+	}	
 
-	public void setJoystickDriverRumble(RumbleType rumbleType, float value) {
-		joystickDriver.setRumble(rumbleType, value);
-	}
-	
 	private static double getAxisWithDeadBand(Joystick joystick, XBoxAxis axis, double deadBand) {
 		double axisValue = joystick.getRawAxis(axis.getValue());
-		if (Math.abs(axisValue) <= deadBand) {
-			axisValue = 0;
+		if (Math.abs(axisValue) <= deadBand) 
+		{
+			axisValue = 0.0;
 		}
-
 		return axisValue;
 	}
+
+	// RUMBLE Methods
+	public void setJoystickDriverRumble(RumbleType rumbleType, float value) {
+		joystickDriver.setRumble(rumbleType, value);
+	}		
+
+	public void stopJoystickDriverRumble() {
+		joystickDriver.setRumble(RumbleType.kLeftRumble, 0.0f);
+		joystickDriver.setRumble(RumbleType.kRightRumble, 0.0f);
+	}
+
+	public void setJoystickHelperRumble(RumbleType rumbleType, float value) {
+		joystickHelper.setRumble(rumbleType, value);
+	}	
+
+	public void stopJoystickHelperRumble() {
+		joystickHelper.setRumble(RumbleType.kLeftRumble, 0.0f);
+		joystickHelper.setRumble(RumbleType.kRightRumble, 0.0f);
+	}
+	
 }

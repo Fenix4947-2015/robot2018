@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class PlatformPull extends Command {
 
+	private static final double DEAD_BAND = 0.1;
+	
 	public PlatformPull() 
 	{
 		requires(Robot.platform);
@@ -17,8 +19,8 @@ public class PlatformPull extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double desiredSpeed = -Robot.oi.getJoystickDriverAxis(XBoxAxis.RIGHT_STICK_Y); // joystick up to lift
-		Robot.platform.liftSpeed(desiredSpeed);
+		double desiredSpeed = -Robot.oi.getJoystickDriverAxis(XBoxAxis.RIGHT_STICK_Y, DEAD_BAND); // joystick up to lift
+		Robot.platform.liftSpeedSafe(desiredSpeed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
