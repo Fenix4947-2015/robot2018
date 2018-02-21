@@ -116,7 +116,7 @@ public class DriveTrain extends Subsystem {
 		rightMotor2.set(ControlMode.Follower, rightMotor1.getDeviceID());			
 		
 		setAllMotorsAllowablePower(MAX_CLOSED_LOOP_MODE_PERCENT_OUTPUT);
-		setDefaultCommand(null);
+		setDefaultCommand(null);		
 	}
 	
     public void initDefaultCommand() {}

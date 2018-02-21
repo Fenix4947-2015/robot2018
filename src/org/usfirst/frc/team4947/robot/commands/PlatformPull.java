@@ -11,7 +11,7 @@ public class PlatformPull extends Command {
 	private Platform platformSubsystem;
 	private XBoxAxis xboxAxis;
 
-	public PlatformPull(Platform platformSubsystem, XBoxAxis xboxAxis) {
+	public PlatformPull(Platform platformSubsystem) {
 		requires(platformSubsystem);
 
 		this.platformSubsystem = platformSubsystem;
@@ -24,7 +24,7 @@ public class PlatformPull extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double desiredSpeed = Robot.oi.getJoystickHelperAxis(xboxAxis);
+		double desiredSpeed = Robot.oi.getJoystickDriverAxis(XBoxAxis.RIGHT_STICK_Y);
 		platformSubsystem.liftSpeed(desiredSpeed);
 	}
 

@@ -10,7 +10,7 @@ public class DriveRotate extends Command {
 	// Constants.
 	private static final double DEFAULT_SPEED = 0.4;
 	private static final double Tolerance = 5.0; // degree
-	private static final double ACCURACY_ADJUSTMENT_FACTOR_FOR_END = 10.0;// factor to remove from input to compensate for stopping time
+	private static final double ACCURACY_ADJUSTMENT_FACTOR_FOR_END = 8.0;// factor to remove from input to compensate for stopping time
 
 	// Members.
 	private double degrees;

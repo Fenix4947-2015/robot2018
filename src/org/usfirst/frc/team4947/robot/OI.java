@@ -124,8 +124,8 @@ public class OI {
 		SmartDashboard.putString("-------Platform--------","");
 		SmartDashboard.putData("Manual left platform", new PlatformDefault(Robot.platformLeft,XBoxButton.LB, XBoxAxis.LEFT_TRIGGER));
 		SmartDashboard.putData("Manual right platform", new PlatformDefault(Robot.platformRight,XBoxButton.RB, XBoxAxis.RIGHT_TRIGGER));
-		SmartDashboard.putData("PlatformPullLeft", new PlatformPull(Robot.platformLeft,XBoxAxis.LEFT_TRIGGER));
-		SmartDashboard.putData("PlatformPullRight", new PlatformPull(Robot.platformRight, XBoxAxis.RIGHT_TRIGGER));
+		SmartDashboard.putData("PlatformPullLeft", new PlatformPull(Robot.platformLeft));
+		SmartDashboard.putData("PlatformPullRight", new PlatformPull(Robot.platformRight));
 		SmartDashboard.putData("PlatformReleaseLeft", new PlatformRelease(Robot.platformLeft));
 		SmartDashboard.putData("PlatformReleaseRight", new PlatformRelease(Robot.platformRight));
 	}
@@ -145,18 +145,13 @@ public class OI {
 		JoystickButton driverLeftStick = new JoystickButton(joystickDriver, XBoxButton.LEFT_STICK.getValue());
 		JoystickButton driverRightStick = new JoystickButton(joystickDriver, XBoxButton.RIGHT_STICK.getValue());		
 		
-		// TODO Link button state to execute commands
-		// example : driverA.whenPressed(new RobotPickGear());
 		
 		driverX.whenPressed(new ShiftUp());
 		driverA.whenPressed(new ShiftDown());
 		
-		// debug only to test the closed loop
-		driverLB.whenPressed(new DriveDistance(2.0));
-		driverRB.whenPressed(new DriveDistance(-2.0));
-		
-		driverStart.whenPressed(new DriveFinalApproach(3.0));
-		driverBack.whenPressed(new swapmodeauto());
+		driverStart.whenPressed(new PlatformRelease(Robot.platformLeft));
+		driverBack.whenPressed(new PlatformPull(Robot.platformLeft));
+
 	}
 	
 	private void initJoystickHelper() {
@@ -176,10 +171,7 @@ public class OI {
 		
 		helperX.whenPressed(new PivotToHighPosition());
 		helperA.whenPressed(new PivotToLowPosition());
-		
-//		helperX.whenPressed(new GripperOpen());
-//		helperA.whenPressed(new GripperClose());	
-		
+				
 		helperLB.whenPressed(new GripperShootToSwitch());
 		helperRB.whenPressed(new GripperShootToSwitch());
 		
