@@ -31,6 +31,9 @@ public class Gripper extends Subsystem {
 	private WPI_TalonSRX rightMotor;
 	private Solenoid openerSolenoid;
 	private DigitalInput cubePresenceDigitalInput;
+	// sonar maxbotix 
+	//https://www.chiefdelphi.com/forums/showthread.php?t=134143
+	//http://team358.org/files/programming/ControlSystem2009-/MB1010_Datasheet.pdf
 	
 	private boolean _ratioToggle;
 	private long _lastFlipMillis;
