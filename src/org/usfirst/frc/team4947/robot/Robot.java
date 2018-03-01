@@ -17,6 +17,7 @@ import org.usfirst.frc.team4947.robot.subsystems.Gripper;
 import org.usfirst.frc.team4947.robot.subsystems.Pivot;
 import org.usfirst.frc.team4947.robot.subsystems.Platform;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -63,11 +64,11 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Robot a droite - switch", AutoRightTakeSwitch.NAME);
 		m_chooser.addDefault("Robot a gauche ou droite - avance", AutoLeftRightFoward.NAME);
 		m_chooser.addDefault("Robot au centre - avance", AutoCenterFoward.NAME);		
-		double waitBeforeAutonomous= SmartDashboard.getNumber("Wait Delay Before Start (s)", 0.0);
+		waitBeforeAutonomous= SmartDashboard.getNumber("Wait Delay Before Start (s)", 0.0);
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		// Camera sur le dashboard
-		CameraServer.getInstance().startAutomaticCapture();
+		CameraServer.getInstance().startAutomaticCapture();		
 	}
 
 	/**
