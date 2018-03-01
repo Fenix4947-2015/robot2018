@@ -6,16 +6,19 @@ import org.usfirst.frc.team4947.robot.commands.gripper.GripperShootToSwitch;
 
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class AutoRightTakeSwitch extends CommandGroup {
 	
 	// Constants.
 	public static final String NAME = "AutoRightTakeSwitch";
 
-	public AutoRightTakeSwitch(Side side) {
+	public AutoRightTakeSwitch(Side side, double waitBeforeAutonomous) {
 		super(NAME);
+		addSequential(new WaitCommand(waitBeforeAutonomous));
 		
 		if (side == Side.LEFT) {
+			
 			addParallel(new GripperClose());
 			addSequential(new DriveDistance(DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y));
 			addSequential(new DriveRotate(-90.0));	

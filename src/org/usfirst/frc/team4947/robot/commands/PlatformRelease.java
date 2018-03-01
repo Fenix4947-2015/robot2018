@@ -6,8 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PlatformRelease extends Command {
 	
 	public PlatformRelease() {
-		requires(Robot.platform);
-		
+		requires(Robot.platform);		
 	}
 
 	// Called just before this Command runs the first time
@@ -21,14 +20,16 @@ public class PlatformRelease extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.platform.unlockPlatform(false);
 	}
 
 	// Called when another command which requires one or more of the same subsystems is scheduled to run
 	protected void interrupted() {
+		Robot.platform.unlockPlatform(false);
 	}
 }

@@ -145,7 +145,7 @@ public class OI {
 		driverX.whenPressed(new ShiftUp());
 		driverA.whenPressed(new ShiftDown());
 		
-		driverStart.whenPressed(new PlatformRelease());
+		driverStart.whileHeld(new PlatformRelease());
 		driverY.whenPressed(new PlatformPull());
 		
 		driverBack.whenPressed(new AbortAll());

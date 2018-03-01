@@ -16,6 +16,7 @@ public class Platform extends Subsystem {
 	private DigitalInput lifter_Limit_Switch;
 	
 	private static final boolean STATE_UNLOCKED = true;
+	private static final boolean STATE_LOCKED = !STATE_UNLOCKED;
 	private static final boolean STATE_LIFT_LIMIT_REACHED = true;
 
 	
@@ -27,8 +28,7 @@ public class Platform extends Subsystem {
 	}
 	
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		//setDefaultCommand(new ActivateEndGameProfile(this, this));		
+		
 	}
 
 	public void liftSpeedSafe(double speedLift) {
@@ -52,7 +52,7 @@ public class Platform extends Subsystem {
 		}
 		else
 		{
-			unlockerSolenoid.set(!STATE_UNLOCKED);
+			unlockerSolenoid.set(STATE_LOCKED);
 		}		
 	}
 	

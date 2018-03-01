@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
 	public static Pivot pivot;
 	public static Platform platform;
 	
+	public double waitBeforeAutonomous = 0.0; // seconds
+	
 	String m_autonomousCommand;
 	SendableChooser<String> m_chooser = new SendableChooser<>();
 	Command m_currentCommand;
@@ -60,7 +62,8 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Robot au centre - switch", AutoCenterTakeSwitch.NAME);
 		m_chooser.addDefault("Robot a droite - switch", AutoRightTakeSwitch.NAME);
 		m_chooser.addDefault("Robot a gauche ou droite - avance", AutoLeftRightFoward.NAME);
-		m_chooser.addDefault("Robot au centre - avance", AutoCenterFoward.NAME);
+		m_chooser.addDefault("Robot au centre - avance", AutoCenterFoward.NAME);		
+		double waitBeforeAutonomous= SmartDashboard.getNumber("Wait Delay Before Start (s)", 0.0);
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		// Camera sur le dashboard
@@ -131,17 +134,17 @@ public class Robot extends TimedRobot {
 				break;
 	
 			case AutoLeftTakeSwitch.NAME:
-				m_currentCommand = new AutoLeftTakeSwitch(sideOfSwitch);
+				m_currentCommand = new AutoLeftTakeSwitch(sideOfSwitch,waitBeforeAutonomous);
 				m_currentCommand.start();
 				break;
 	
 			case AutoCenterTakeSwitch.NAME:
-				m_currentCommand =  new AutoCenterTakeSwitch(sideOfSwitch);
+				m_currentCommand =  new AutoCenterTakeSwitch(sideOfSwitch,waitBeforeAutonomous);
 				m_currentCommand.start();
 				break;
 	
 			case AutoRightTakeSwitch.NAME:
-				m_currentCommand = new AutoRightTakeSwitch(sideOfSwitch);
+				m_currentCommand = new AutoRightTakeSwitch(sideOfSwitch,waitBeforeAutonomous);
 				m_currentCommand.start();
 				break;
 	

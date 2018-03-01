@@ -5,14 +5,16 @@ import org.usfirst.frc.team4947.robot.commands.gripper.GripperClose;
 import org.usfirst.frc.team4947.robot.commands.gripper.GripperShootToSwitch;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class AutoLeftTakeSwitch extends CommandGroup {
 	
 	// Constants.
 	public static final String NAME = "AutoLeftTakeSwitch";
 	
-	public AutoLeftTakeSwitch(Side side) {
+	public AutoLeftTakeSwitch(Side side, double waitBeforeAutonomous) {
 		super(NAME);		
+		addSequential(new WaitCommand(waitBeforeAutonomous));
 		
 		if (side == Side.LEFT) {
 			addParallel(new GripperClose());
