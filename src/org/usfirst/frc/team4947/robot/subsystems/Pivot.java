@@ -18,7 +18,7 @@ public class Pivot extends Subsystem {
 	// Constants.
 	public static final double PERCENT_OUTPUT_MOTOR_TO_LOW = 0.70;
 	public static final double PERCENT_OUTPUT_MOTOR_TO_LOW_2 = 0.25;
-	public static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = -0.90;
+	public static final double PERCENT_OUTPUT_MOTOR_TO_HIGH = -1.0;
 	public static final double PERCENT_OUTPUT_MOTOR_TO_HIGH_2 = -0.00;
 	private static final double ACTIVE_BRAKE_WHEN_GOING_HIGH = 0.01;
 	private static final double ACTIVE_BRAKE_WHEN_GOING_LOW = -0.005;

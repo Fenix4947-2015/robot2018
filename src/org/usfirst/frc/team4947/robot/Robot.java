@@ -137,7 +137,12 @@ public class Robot extends TimedRobot {
 				m_currentCommand = new AutoCenterFoward();
 				m_currentCommand.start();
 				break;
-	
+				
+			case AutoCenterTakeSwitchClosePosition.NAME:
+				m_currentCommand = new AutoCenterTakeSwitchClosePosition(sideOfSwitch, waitBeforeAutonomous);
+				m_currentCommand.start();
+				break;
+				
 			case AutoLeftTakeSwitch.NAME:
 				m_currentCommand = new AutoLeftTakeSwitch(sideOfSwitch,waitBeforeAutonomous);
 				m_currentCommand.start();
