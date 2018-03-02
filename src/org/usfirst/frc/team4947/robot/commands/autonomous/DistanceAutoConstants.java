@@ -8,7 +8,7 @@ public class DistanceAutoConstants {
 	// -90 is counterclockwise ( left turn) 
 	
 	// Manual offsets
-	public static final double FINAL_MOTION_BOOST = 3.2; // ft
+	public static final double FINAL_MOTION_BOOST = 1.25; // ft
 	public static final double OFF_PORTAL_PORTAL_X = 0.5 ; // ft
 	
 	// Physical field dimensions
