@@ -23,9 +23,13 @@ public class DistanceAutoConstants {
 	public static final double ROBOT_LENGTH_LATERAL_DIRECTION = (28 + 2.0* BUMPER_WIDTH_INCH) / 12.0 ; // total robot length (frame + bumper) -> to feet
 	public static final double D_SWITCH_THICKNESS_Y = 52.0/12.0; // epaisseur de la switch
 	
+	// constants for balance side crossover
+	//public static final double 
+	public static final double D_SWITCH_PLATEAU_X = 3.0 ; // ft largeur en X du plateau de la switch
+	
 	// constants for second cube. 
 	public static final double CLEAR_PINCE_X = 1.3 ; //ft
-	public static final double CLEAR_SWITCH_Y = 5.5 ; // ft // todo calculate
+	public static final double CLEAR_SWITCH_Y = 4.5 ; // ft // todo calculate
 	public static final double GET_SECOND_CUBE_Y = 2.5 ; // ft // todo calculate
 	public static final double CUBE_LENGTH = 1.0; // ft
 }
