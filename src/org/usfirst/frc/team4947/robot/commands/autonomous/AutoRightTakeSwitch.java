@@ -18,30 +18,33 @@ public class AutoRightTakeSwitch extends CommandGroup {
 		addSequential(new WaitCommand(waitBeforeAutonomous));
 		
 		if (side == Side.LEFT) {
-			// mecanique de crossover de la switch côté pilote
-			/*
+			// code de crossover de la switch on side  pilote
+			
 			addParallel(new GripperClose());
 			addSequential(new DriveDistance(DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y));
 			addSequential(new DriveRotate(-90.0));	
 			addSequential(new DriveDistance(DistanceAutoConstants.DPORTALTOPORTAL_X - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION));
 			addSequential(new DriveRotate(90.0));
-			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y+ DistanceAutoConstants.D_SWITCH_THICKNESS_Y/2.0 - DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
+			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y - DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
 			addSequential(new DriveRotate(90.0));
 			addSequential(new DriveFinalApproach(DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));			
-			addSequential(new GripperShootToSwitch());*/
-			
-			// mécanique de crossover de la switch côté balance
-			addParallel(new GripperClose());
-			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y + DistanceAutoConstants.DIST_CLEAR_SWITCH_Y));
-			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveDistance(DistanceAutoConstants.DPORTALTOPORTAL_X - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION - DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X - DistanceAutoConstants.D_SWITCH_PLATEAU_X));
-			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveFinalApproach(DistanceAutoConstants.DIST_CLEAR_SWITCH_Y - DistanceAutoConstants.D_SWITCH_THICKNESS_Y/2.0)); // todo calculate this value
 			addSequential(new GripperShootToSwitch());
+			
+			/*
+			// code de crossover de la switch on side balance
+			addParallel(new GripperClose());
+			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y + DistanceAutoConstants.D_SWITCH_THICKNESS_Y/2.0 + DistanceAutoConstants.CUBE_LENGTH + DistanceAutoConstants.DIST_CLEAR_SWITCH_Y));
+			addSequential(new DriveRotate(-90.0));
+			addSequential(new DriveDistance(DistanceAutoConstants.DPORTALTOPORTAL_X - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION - DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X - DistanceAutoConstants.D_SWITCH_PLATEAU_X/2.0));
+			addSequential(new DriveRotate(-90.0));
+			addSequential(new DriveFinalApproach(DistanceAutoConstants.DIST_CLEAR_SWITCH_Y ));
+			addSequential(new GripperShootToSwitch());
+			*/
+			
 			
 		} else if (side == Side.RIGHT) {
 			addParallel(new GripperClose());
-			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y + DistanceAutoConstants.D_SWITCH_THICKNESS_Y/2.0 - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
+			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
 			addSequential(new DriveRotate(-90.0));
 			addSequential(new DriveFinalApproach(DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));
 			addSequential(new GripperShootToSwitch());

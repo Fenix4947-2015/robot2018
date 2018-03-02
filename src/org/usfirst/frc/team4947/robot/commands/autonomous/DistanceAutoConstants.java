@@ -26,7 +26,7 @@ public class DistanceAutoConstants {
 	// constants for balance side crossover
 	//public static final double 
 	public static final double D_SWITCH_PLATEAU_X = 3.0 ; // ft largeur en X du plateau de la switch
-	public static final double DIST_CLEAR_SWITCH_Y = 55.0 /12.0;
+	public static final double DIST_CLEAR_SWITCH_Y = 1.0; // distance pour clearer le cube avec arriere du bumper
 	
 	// constants for second cube. 
 	public static final double CLEAR_PINCE_X = 1.3 ; //ft
