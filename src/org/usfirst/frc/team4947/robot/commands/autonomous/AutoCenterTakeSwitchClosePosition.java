@@ -22,7 +22,7 @@ public class AutoCenterTakeSwitchClosePosition extends CommandGroup {
 			addSequential(new DriveRotate(-90.0));
 			addSequential(new DriveDistance((DistanceAutoConstants.SWITCH_CENTER_CENTER_X/2) - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION /2.0 +DistanceAutoConstants.OFFSET_FROM_CENTER_X)); // Turn right.
 			addSequential(new DriveRotate(90.0)); 
-			addSequential(new DriveFinalApproach(DistanceAutoConstants.DWALLTOSWITCH_Y-DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
+			addSequential(new DriveFinalApproach(DistanceAutoConstants.DWALLTOSWITCH_CLOSESIDE_Y-DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
 			addSequential(new GripperShootToSwitch());
 		} else if (side == Side.RIGHT) {
 			addParallel(new GripperClose());
@@ -30,7 +30,7 @@ public class AutoCenterTakeSwitchClosePosition extends CommandGroup {
 			addSequential(new DriveRotate(90.0));	
 			addSequential(new DriveDistance((DistanceAutoConstants.SWITCH_CENTER_CENTER_X/2) - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0 -DistanceAutoConstants.OFFSET_FROM_CENTER_X));
 			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveFinalApproach(DistanceAutoConstants.DWALLTOSWITCH_Y-DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
+			addSequential(new DriveFinalApproach(DistanceAutoConstants.DWALLTOSWITCH_CLOSESIDE_Y-DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
 			addSequential(new GripperShootToSwitch());
 		} else {
 			addSequential(new AutoCenterFoward());
