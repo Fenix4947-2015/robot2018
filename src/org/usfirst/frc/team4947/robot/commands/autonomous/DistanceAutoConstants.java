@@ -17,7 +17,7 @@ public class DistanceAutoConstants {
 	public static final double DWALLTOSWITCH_CLOSESIDE_Y = 140.0 /12.0;
 	public static final double SWITCH_CENTER_CENTER_X = 9.0; // 9 feet between the middle of the switches
 	public static final double OFFSET_FROM_CENTER_X = 5.0 /12.0;
-	public static final double DIST_CLEAR_EXCHANGE_Y = 55.0 /12.0;
+	public static final double DIST_CLEAR_EXCHANGE_Y = 50.0 /12.0;
 	private static final double BUMPER_WIDTH_INCH = 3.0 ; // bumper thickness in inches (1 bumper)
 	public static final double ROBOT_LENGTH_FORWARD_DIRECTION = (32.5 + 2.0* BUMPER_WIDTH_INCH) / 12.0 ; // total robot length (frame + bumper) -> to feet
 	public static final double ROBOT_LENGTH_LATERAL_DIRECTION = (28 + 2.0* BUMPER_WIDTH_INCH) / 12.0 ; // total robot length (frame + bumper) -> to feet
@@ -26,6 +26,7 @@ public class DistanceAutoConstants {
 	// constants for balance side crossover
 	//public static final double 
 	public static final double D_SWITCH_PLATEAU_X = 3.0 ; // ft largeur en X du plateau de la switch
+	public static final double DIST_CLEAR_SWITCH_Y = 55.0 /12.0;
 	
 	// constants for second cube. 
 	public static final double CLEAR_PINCE_X = 1.3 ; //ft

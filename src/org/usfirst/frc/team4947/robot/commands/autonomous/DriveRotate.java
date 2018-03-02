@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveRotate extends Command {
 
 	// Constants.
-	private static final double DEFAULT_SPEED = 0.2;
-	private static final double ROTATION_SPEED_PID_P = 0.25/90.0; // 20 % more at 90 deg. from 45 % at 90 deg to 15 at 0.
+	private static final double DEFAULT_SPEED = 0.25;
+	private static final double ROTATION_SPEED_PID_P = 0.20/90.0; // 20 % more at 90 deg. from 45 % at 90 deg to 15 at 0.
 	private static final double Tolerance = 3.5; // degree	
 	
 	// Members.

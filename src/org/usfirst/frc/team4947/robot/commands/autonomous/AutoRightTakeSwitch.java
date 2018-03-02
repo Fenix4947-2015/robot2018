@@ -32,11 +32,11 @@ public class AutoRightTakeSwitch extends CommandGroup {
 			
 			// mécanique de crossover de la switch côté balance
 			addParallel(new GripperClose());
-			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y + DistanceAutoConstants.CLEAR_SWITCH_Y));
+			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y + DistanceAutoConstants.DIST_CLEAR_SWITCH_Y));
 			addSequential(new DriveRotate(-90.0));
 			addSequential(new DriveDistance(DistanceAutoConstants.DPORTALTOPORTAL_X - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION - DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X - DistanceAutoConstants.D_SWITCH_PLATEAU_X));
 			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveFinalApproach(DistanceAutoConstants.CLEAR_SWITCH_Y - DistanceAutoConstants.D_SWITCH_THICKNESS_Y/2.0)); // todo calculate this value
+			addSequential(new DriveFinalApproach(DistanceAutoConstants.DIST_CLEAR_SWITCH_Y - DistanceAutoConstants.D_SWITCH_THICKNESS_Y/2.0)); // todo calculate this value
 			addSequential(new GripperShootToSwitch());
 			
 		} else if (side == Side.RIGHT) {
