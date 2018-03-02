@@ -20,6 +20,7 @@ public class DistanceAutoConstants {
 	public static final double DIST_CLEAR_EXCHANGE_Y = 55.0 /12.0;
 	private static final double BUMPER_WIDTH_INCH = 3.0 ; // bumper thickness in inches (1 bumper)
 	public static final double ROBOT_LENGTH_FORWARD_DIRECTION = (32.5 + 2.0* BUMPER_WIDTH_INCH) / 12.0 ; // total robot length (frame + bumper) -> to feet
+	public static final double ROBOT_LENGTH_LATERAL_DIRECTION = (28 + 2.0* BUMPER_WIDTH_INCH) / 12.0 ; // total robot length (frame + bumper) -> to feet
 	public static final double D_SWITCH_THICKNESS_Y = 52.0/12.0; // epaisseur de la switch
 	
 	// constants for second cube. 
