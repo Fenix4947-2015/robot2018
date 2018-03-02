@@ -18,6 +18,9 @@ public class AutoRightTakeSwitch extends CommandGroup {
 		addSequential(new WaitCommand(waitBeforeAutonomous));
 		
 		if (side == Side.LEFT) {
+			
+			addSequential(new AutoLeftRightFoward());
+			/*
 			// code de crossover de la switch on side  pilote
 			
 			addParallel(new GripperClose());
@@ -29,7 +32,7 @@ public class AutoRightTakeSwitch extends CommandGroup {
 			addSequential(new DriveRotate(90.0));
 			addSequential(new DriveFinalApproach(DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));			
 			addSequential(new GripperShootToSwitch());
-			
+			*/
 			/*
 			// code de crossover de la switch on side balance
 			addParallel(new GripperClose());

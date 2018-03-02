@@ -23,6 +23,8 @@ public class AutoLeftTakeSwitch extends CommandGroup {
 			addSequential(new DriveFinalApproach(DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));			
 			addSequential(new GripperShootToSwitch());
 		} else if (side == Side.RIGHT) {
+			addSequential(new AutoLeftRightFoward());
+			/*
 			addParallel(new GripperClose());
 			addSequential(new DriveDistance(DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y));
 			addSequential(new DriveRotate(90.0));	
@@ -32,6 +34,7 @@ public class AutoLeftTakeSwitch extends CommandGroup {
 			addSequential(new DriveRotate(-90.0));
 			addSequential(new DriveFinalApproach(DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));			
 			addSequential(new GripperShootToSwitch());
+			*/
 		} 
 		else {
 			addSequential(new AutoLeftRightFoward());
