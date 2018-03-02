@@ -17,7 +17,7 @@ public class Platform extends Subsystem {
 	
 	private static final boolean STATE_UNLOCKED = true;
 	private static final boolean STATE_LOCKED = !STATE_UNLOCKED;
-	private static final boolean STATE_LIFT_LIMIT_REACHED = true;
+	private static final boolean STATE_LIFT_LIMIT_REACHED = false;
 
 	
 	public Platform() {

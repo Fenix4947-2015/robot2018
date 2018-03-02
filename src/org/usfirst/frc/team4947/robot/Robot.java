@@ -8,6 +8,7 @@ package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterTakeSwitch;
+import org.usfirst.frc.team4947.robot.commands.autonomous.AutoCenterTakeSwitchClosePosition;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftRightFoward;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoLeftTakeSwitch;
 import org.usfirst.frc.team4947.robot.commands.autonomous.AutoNothing;
@@ -64,7 +65,9 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Robot a droite - switch", AutoRightTakeSwitch.NAME);
 		m_chooser.addDefault("Robot a gauche ou droite - avance", AutoLeftRightFoward.NAME);
 		m_chooser.addDefault("Robot au centre - avance", AutoCenterFoward.NAME);		
-		waitBeforeAutonomous= SmartDashboard.getNumber("Wait Delay Before Start (s)", 0.0);
+		m_chooser.addDefault("Robot au centre-switch-coteproche", AutoCenterTakeSwitchClosePosition.NAME);
+		//SmartDashboard.putNumber("WaitDelayBeforeStart_sec", 0.0); // reset this line to make appear in smartdashboard.
+		waitBeforeAutonomous= SmartDashboard.getNumber("WaitDelayBeforeStart_sec", 5.0);
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		// Camera sur le dashboard
@@ -123,6 +126,7 @@ public class Robot extends TimedRobot {
 			case AutoNothing.NAME:
 				m_currentCommand = new AutoNothing();
 				m_currentCommand.start();
+				break;
 				
 			case AutoLeftRightFoward.NAME:
 				m_currentCommand = new AutoLeftRightFoward();

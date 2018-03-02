@@ -12,6 +12,7 @@ import org.usfirst.frc.team4947.robot.commands.DriveArcade;
 import org.usfirst.frc.team4947.robot.commands.PlatformLock;
 import org.usfirst.frc.team4947.robot.commands.PlatformPull;
 import org.usfirst.frc.team4947.robot.commands.PlatformRelease;
+import org.usfirst.frc.team4947.robot.commands.PlatformReleaseSequence;
 import org.usfirst.frc.team4947.robot.commands.ShiftDown;
 import org.usfirst.frc.team4947.robot.commands.ShiftUp;
 import org.usfirst.frc.team4947.robot.commands.autonomous.DriveDistance;
@@ -145,7 +146,7 @@ public class OI {
 		driverX.whenPressed(new ShiftUp());
 		driverA.whenPressed(new ShiftDown());
 		
-		driverStart.whileHeld(new PlatformRelease());
+		driverStart.whileHeld(new PlatformReleaseSequence());
 		driverY.whenPressed(new PlatformPull());
 		
 		driverBack.whenPressed(new AbortAll());

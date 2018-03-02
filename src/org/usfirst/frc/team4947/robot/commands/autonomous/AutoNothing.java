@@ -11,6 +11,6 @@ public class AutoNothing extends CommandGroup {
 	
     public AutoNothing() {
     	super(NAME);
-    	// does nothing
+    	// does nothing  	
     }
 }
