@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Robot au centre - avance", AutoCenterFoward.NAME);		
 		m_chooser.addDefault("Robot au centre-switch-coteproche", AutoCenterTakeSwitchClosePosition.NAME);
 		//SmartDashboard.putNumber("WaitDelayBeforeStart_sec", 0.0); // reset this line to make appear in smartdashboard.
-		waitBeforeAutonomous= SmartDashboard.getNumber("WaitDelayBeforeStart_sec", 1.5);
+		waitBeforeAutonomous= SmartDashboard.getNumber("WaitDelayBeforeStart_sec", 0.0);
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		// Camera sur le dashboard

@@ -25,7 +25,7 @@ public class AutoCenterTakeSwitch extends CommandGroup {
 			addSequential(new DriveRotate(90.0)); 
 			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y-DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
 			addSequential(new DriveRotate(90.0)); 
-			addSequential(new DriveFinalApproach(DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));			
+			addSequential(new DriveFinalApproach(DistanceAutoConstants.FINAL_MOTION_BOOST + DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));			
 			addSequential(new GripperShootToSwitchLoop());
 		} else if (side == Side.RIGHT) {
 			addParallel(new GripperClose());
@@ -35,7 +35,7 @@ public class AutoCenterTakeSwitch extends CommandGroup {
 			addSequential(new DriveRotate(-90.0));
 			addSequential(new DriveDistance(DistanceAutoConstants.DWALLTOSWITCH_Y-DistanceAutoConstants.DIST_CLEAR_EXCHANGE_Y - DistanceAutoConstants.ROBOT_LENGTH_FORWARD_DIRECTION/2.0));
 			addSequential(new DriveRotate(-90.0));
-			addSequential(new DriveFinalApproach(DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));
+			addSequential(new DriveFinalApproach(DistanceAutoConstants.FINAL_MOTION_BOOST + DistanceAutoConstants.D_EXCHANGE_TO_SWITCH_X));
 			addSequential(new GripperShootToSwitchLoop());
 		} else {
 			addSequential(new AutoCenterFoward());
