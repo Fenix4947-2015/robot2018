@@ -1,5 +1,8 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="GripperShootToSwitchLoop" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="699" y="228"/>
+	</widget>
 	<widget field="WaitDelayBeforeStart_sec" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="38" y="222"/>
 	</widget>
@@ -34,10 +37,10 @@
 		<location x="20" y="252"/>
 	</widget>
 	<widget field="Cube Presence" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="697" y="199"/>
+		<location x="705" y="267"/>
 	</widget>
 	<widget field="Manual pivot" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="694" y="514"/>
+		<location x="683" y="586"/>
 	</widget>
 	<widget field="Manual Gripper" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="695" y="166"/>
@@ -79,22 +82,22 @@
 		<location x="327" y="59"/>
 	</widget>
 	<widget field="WaitForLowLimitSwitch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="691" y="470"/>
+		<location x="680" y="546"/>
 	</widget>
 	<widget field="WaitForHighLimitSwitch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="689" y="433"/>
+		<location x="682" y="510"/>
 	</widget>
 	<widget field="PivotToVerticalFromLowPosition" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="691" y="395"/>
+		<location x="682" y="481"/>
 	</widget>
 	<widget field="PivotToVerticalFromHighPosition" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="692" y="279"/>
+		<location x="676" y="387"/>
 	</widget>
 	<widget field="PivotToLowPosition" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="691" y="360"/>
+		<location x="753" y="451"/>
 	</widget>
 	<widget field="PivotToHighPosition" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="693" y="320"/>
+		<location x="751" y="419"/>
 	</widget>
 	<widget field="GripperShootToSwitch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="692" y="131"/>
@@ -106,7 +109,7 @@
 		<location x="331" y="32"/>
 	</widget>
 	<widget field="-------Pivot--------" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="700" y="247"/>
+		<location x="680" y="363"/>
 	</widget>
 	<widget field="gripperClose" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="691" y="98"/>
@@ -139,48 +142,18 @@
 </dashboard>
 <live-window>
 	<widget field="Pivot" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="205"/>
+		<location x="0" y="574"/>
 	</widget>
 	<widget field="Platform" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="179"/>
+		<location x="0" y="548"/>
 	</widget>
 	<widget field="Gripper" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="153"/>
+		<location x="0" y="522"/>
 	</widget>
 	<widget field="DriveTrain" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="127"/>
+		<location x="0" y="496"/>
 	</widget>
 	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="Talon SRX [4]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="Talon SRX [4]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="Talon SRX [3]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="Talon SRX [3]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="Solenoid[0,4]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
-		<widget field="Solenoid[0,4]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="0" y="0"/>
-			<height>0</height>
-			<width>0</width>
-		</widget>
 		<widget field="Solenoid[0,5]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
 			<location x="0" y="0"/>
 			<height>0</height>
@@ -192,58 +165,118 @@
 			<width>0</width>
 		</widget>
 		<widget field="DigitalInput[0]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="6" y="18"/>
-			<height>22</height>
-			<width>309</width>
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="DigitalInput[0]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
 		<widget field="Talon SRX [9]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="40"/>
-			<height>51</height>
-			<width>309</width>
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="Talon SRX [9]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
 		<widget field="ADXRS450_Gyro[0]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
-			<location x="6" y="91"/>
-			<height>150</height>
-			<width>309</width>
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="ADXRS450_Gyro[0]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
 		<widget field="Talon SRX [2]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="241"/>
-			<height>51</height>
-			<width>309</width>
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="Talon SRX [2]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
 		<widget field="Solenoid[0,7]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="98" y="292"/>
-			<height>25</height>
-			<width>123</width>
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="Solenoid[0,7]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
 		<widget field="Talon SRX [8]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="317"/>
-			<height>51</height>
-			<width>309</width>
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="Talon SRX [8]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
 		<widget field="DigitalInput[1]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="6" y="368"/>
-			<height>22</height>
-			<width>309</width>
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="DigitalInput[1]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
 		<widget field="Solenoid[0,6]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
-			<location x="98" y="390"/>
-			<height>25</height>
-			<width>123</width>
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="Solenoid[0,6]" type="Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalOutputController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
 		<widget field="Talon SRX [6]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="415"/>
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="Talon SRX [6]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="DigitalInput[2]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="DigitalInput[2]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="Talon SRX [4]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="18"/>
 			<height>51</height>
 			<width>309</width>
 		</widget>
-		<widget field="DigitalInput[2]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="6" y="466"/>
-			<height>22</height>
+		<widget field="Talon SRX [3]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="69"/>
+			<height>51</height>
 			<width>309</width>
 		</widget>
 		<location x="0" y="0"/>
 		<width>321</width>
-		<height>495</height>
+		<height>127</height>
 	</widget>
 </live-window>
 </xml>

@@ -9,6 +9,7 @@ package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.AbortAll;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
+import org.usfirst.frc.team4947.robot.commands.GripperShootToSwitchLoop;
 import org.usfirst.frc.team4947.robot.commands.PlatformLock;
 import org.usfirst.frc.team4947.robot.commands.PlatformPull;
 import org.usfirst.frc.team4947.robot.commands.PlatformRelease;
@@ -124,6 +125,7 @@ public class OI {
 		SmartDashboard.putData("PlatformPull", new PlatformPull());		
 		SmartDashboard.putData("PlatformRelease", new PlatformRelease());
 		SmartDashboard.putData("PlatformLock", new PlatformLock());
+		SmartDashboard.putData("GripperShootToSwitchLoop", new GripperShootToSwitchLoop());
 		
 	}
 	
@@ -146,7 +148,7 @@ public class OI {
 		driverX.whenPressed(new ShiftUp());
 		driverA.whenPressed(new ShiftDown());
 		
-		driverStart.whileHeld(new PlatformReleaseSequence());
+		driverStart.whenPressed(new PlatformReleaseSequence());
 		driverY.whenPressed(new PlatformPull());
 		
 		driverBack.whenPressed(new AbortAll());
